@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
 
-function App() {
+import { BrowserRouter, Link, Route, Switch, Routes} from 'react-router-dom';
+
+// components
+import SignUp from './page/SignUp'
+import Verification from './page/Verification'
+import SignIn from './page/SignIn'
+import SignOut from './page/SignOut'
+
+import { CognitoUserPool } from "amazon-cognito-identity-js"
+import awsConfiguration from './conf/awsauth'
+
+// mini TODO resetpassword実装
+
+// 認証情報使用
+const userPool = new CognitoUserPool({
+  UserPoolId: awsConfiguration.UserPoolId,
+  ClientId: awsConfiguration.ClientId,
+})
+
+// カスタム属性を取得するいれもの
+var currentUserData = {}
+var i = 0;
+const App = () => {
+
+  const checkStatus = () => {
+    console.log(userPool)
+    console.log(localStorage)
+  }
+
+  const authentication = () => {
+    const cognitoUser = userPool.getCurrentUser()
+    //const username = cognitoUser.getUsername();
+    /*const session = cognitoUser.getSession();
+    const nickname = session.idToken.payload.nickname;*/
+    // サインアウトボタンはとりあえず直置きしてます。
+    if (cognitoUser) {
+      return (
+        <div className="authorizedMode">
+          <h1>ログインしました(ここをホーム画面遷移とかにすればいい？)</h1>
+          <SignOut />
+        </div>
+      )
+    } else {
+   
+      return (
+      <BrowserRouter>
+       <div className="unauthorizedMode">
+          <ul>
+            <Link to="/signup">新規登録</Link><br></br>
+            <Link to="/verify">確認</Link><br></br>
+            <Link to="/signin">ログイン</Link><br></br>
+         </ul>
+        <Routes>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/verify" element={<Verification/>}/>
+        </Routes>
+        </div>
+      </BrowserRouter>
+      )
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      { authentication() }
     </div>
-  );
+       
+  )
 }
 
-export default App;
+export default App
