@@ -1,5 +1,6 @@
 import React from 'react'
 import '../App.css'
+import { Link } from 'react-router-dom';
 
 import {
   CognitoUserPool,
@@ -31,6 +32,7 @@ const Verification = () => {
       }else{
         // 登録完了したら、のとこ。とりあえずアラート出してる
         alert('ユーザー登録が完了しました。')
+        window.location.href = "/signin"
       }
       console.log('verification succeeded')
       setEmail('')

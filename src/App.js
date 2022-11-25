@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-import { BrowserRouter, Link, Route, Switch, Routes} from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-router-dom';
 
 // components
 import SignUp from './page/SignUp'
@@ -23,6 +23,8 @@ const userPool = new CognitoUserPool({
 // カスタム属性を取得するいれもの
 var currentUserData = {}
 var i = 0;
+
+
 const App = () => {
 
   const checkStatus = () => {
@@ -44,16 +46,11 @@ const App = () => {
         </div>
       )
     } else {
-   
       return (
       <BrowserRouter>
        <div className="unauthorizedMode">
-          <ul>
-            <Link to="/signup">新規登録</Link><br></br>
-            <Link to="/verify">確認</Link><br></br>
-            <Link to="/signin">ログイン</Link><br></br>
-         </ul>
         <Routes>
+        <Route index element={<SignUp />} />
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/verify" element={<Verification/>}/>

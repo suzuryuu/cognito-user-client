@@ -1,5 +1,6 @@
 import '../App.css'
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 import {
@@ -47,12 +48,18 @@ const SignIn = () => {
     })
   }
 
+  const forgotPassword = () => {
+    
+  }
   return (
     <div className="SignIn">
       <h1>ログイン</h1>
       <input type="text" placeholder='email' onChange={changedEmailHaldler}/>
       <input type="text" placeholder='password' onChange={changedPasswordHandler}/>
       <button onClick={signIn}>ログイン</button>
+      <p>アカウントがない:<Link to="/signup">登録</Link></p>
+      パスワードを忘れた場合のコード送信用<input type="text" placeholder='email' onChange={changedEmailHaldler}/>
+      <button onClick={''}>コード要求</button>
     </div>
   )
 }
