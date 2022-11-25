@@ -1,5 +1,6 @@
 import React from 'react'
 import '../App.css'
+import '../style/auth.css'
 import { Link } from 'react-router-dom';
 
 import {
@@ -47,7 +48,7 @@ const Verification = () => {
     })
     cognitoUser.resendConfirmationCode(function(err){
       if (err) {
-        alert(err)
+        alert('emailの形式が正しくありません')
         console.log(err)
         return
       }else{
@@ -57,16 +58,36 @@ const Verification = () => {
       setEmail('')
     })
   }
-
-
+  // メールアドレスが正しくない形式でも確認コードを送信しようとする問題あり
   return (
-    <div className="Verification">
+    <div class="formContainer">
+      <div class="verify">
       <h1>コード確認</h1>
-      <input type="text" placeholder="verification code" onChange={changedVerificationCodeHandler} />
-      <input type="text" placeholder='email' onChange={changedEmailHandler} />
-      <button onClick={verifyCode}>確認</button>
-      <h1>コード再送</h1>
-      <input type="text" placeholder='email' onChange={changedEmailHandler} /><button onClick={reVerifyCode}>再送</button>
+        <div className="uiForm">
+          <div className="formField">
+            <label>コード</label>
+          <input type="text" 
+          placeholder="確認コード" 
+          onChange={changedVerificationCodeHandler} />
+            <label>メールアドレス</label>
+          <input type="text" 
+          placeholder='email' 
+          onChange={changedEmailHandler} />
+          <div class="buttonAjust">
+          <button onClick={verifyCode}>確認</button>
+          </div>
+
+          <div class="padding"></div>
+          <label>コード再送</label>
+          <input type="text" 
+          placeholder='email'
+          onChange={changedEmailHandler} />
+          <div class="buttonAjust">
+          <button onClick={reVerifyCode}>再送</button>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

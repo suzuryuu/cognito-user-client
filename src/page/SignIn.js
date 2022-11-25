@@ -1,4 +1,5 @@
 import '../App.css'
+import '../style/auth.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -52,7 +53,39 @@ const SignIn = () => {
     
   }
   return (
-    <div className="SignIn">
+    <div className="formContainer">
+    <div class="signin">
+      <h1>ログイン</h1>
+      <hr />
+      <div className="uiForm">
+        <div className="formField">
+          <label>メールアドレス</label>
+          <input
+            type="text"
+            name="email"
+            placeholder="メールアドレス"
+            value={email}
+            onChange={changedEmailHaldler}
+          />
+        </div>
+        <div className="formField">
+          <label>パスワード</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="パスワード"
+            value={password}
+            onChange={changedPasswordHandler}
+          />
+        </div>
+        <div class="buttonAjust">
+          <button onClick={signIn}>ログイン</button>
+        </div>
+        <p>アカウントをお持ちでない場合:<Link to="/signup">登録</Link></p>
+      </div>
+    </div>
+  </div>
+    /*<div className="SignIn">
       <h1>ログイン</h1>
       <input type="text" placeholder='email' onChange={changedEmailHaldler}/>
       <input type="text" placeholder='password' onChange={changedPasswordHandler}/>
@@ -60,7 +93,7 @@ const SignIn = () => {
       <p>アカウントがない:<Link to="/signup">登録</Link></p>
       パスワードを忘れた場合のコード送信用<input type="text" placeholder='email' onChange={changedEmailHaldler}/>
       <button onClick={''}>コード要求</button>
-    </div>
+  </div>*/
   )
 }
 

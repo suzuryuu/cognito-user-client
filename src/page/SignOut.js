@@ -28,7 +28,9 @@ const SignOut = () => {
   return (
     <div className="SignOut">
       <h1>サインアウト</h1>
+      <div class="buttonAjust">
       <button onClick={signOut}>サインアウト</button>
+      </div>
     </div>
   )
 }
