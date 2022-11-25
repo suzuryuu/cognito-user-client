@@ -11,7 +11,8 @@ Cognito利用で
 npm install
 ```
 
-src/conf/awsauth.jsのxxxxとなっているとこを修正
+src/conf/にawsauth.jsを追加し下記を記述
+xxxxとなっているとこを修正
 
 ```js
 const awsConfiguration = {
