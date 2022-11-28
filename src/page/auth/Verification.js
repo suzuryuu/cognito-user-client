@@ -1,13 +1,13 @@
 import React from 'react'
-import '../App.css'
-import '../style/auth.css'
+import '../../App.css'
+import '../../style/auth.css'
 import { Link } from 'react-router-dom';
 
 import {
   CognitoUserPool,
   CognitoUser
 } from "amazon-cognito-identity-js"
-import awsConfiguration from '../conf/awsauth'
+import awsConfiguration from '../../conf/awsauth'
 
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,

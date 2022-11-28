@@ -4,10 +4,10 @@ import './App.css'
 import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-router-dom';
 
 // components
-import SignUp from './page/SignUp'
-import Verification from './page/Verification'
-import SignIn from './page/SignIn'
-import SignOut from './page/SignOut'
+import SignUp from './page/auth/SignUp'
+import Verification from './page/auth/Verification'
+import SignIn from './page/auth/SignIn'
+import SignOut from './page/auth/SignOut'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from './conf/awsauth'
