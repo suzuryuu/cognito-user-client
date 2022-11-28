@@ -45,8 +45,8 @@ const SignUp = () => {
         alert(err)
         return
       }else{
+        // 登録がうまくいったら、のとこ。とりあえずアラート出してる
         if(isChecked){
-          // 登録がうまくいったら、のとこ。とりあえずアラート出してる
           alert('ユーザー情報を登録しました。メールより確認コードを確認してください。')
           window.location.href = "/verify"
         }else{
@@ -109,7 +109,7 @@ const SignUp = () => {
         <p>アカウントをお持ちですか？:<Link to="/signin">ログイン</Link></p>
       </div>
     </div>
-  </div>
+  </div>   
     /*<div className="SignUp">
       <h1>あなたはまだ未認証状態です</h1>
       <h1>登録</h1>
