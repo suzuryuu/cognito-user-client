@@ -21,9 +21,7 @@ const userPool = new CognitoUserPool({
 })
 
 // カスタム属性を取得するいれもの
-var currentUserData = {}
-var i = 0;
-
+var currentUserDataList = {}
 
 const App = () => {
 
@@ -34,14 +32,37 @@ const App = () => {
 
   const authentication = () => {
     const cognitoUser = userPool.getCurrentUser()
-    //const username = cognitoUser.getUsername();
-    /*const session = cognitoUser.getSession();
-    const nickname = session.idToken.payload.nickname;*/
-    // サインアウトボタンはとりあえず直置きしてます。
+   
     if (cognitoUser) {
+      /*var nickNameInfo = "";
+      if(cognitoUser !=null){
+        cognitoUser.getSession((err, session) => {
+          if (err) {
+            alert(err);
+          } else {
+            // ユーザの属性を取得
+          cognitoUser.getUserAttributes((err, result) => {
+              if (err) {
+                alert(err);
+              }
+              // 取得した属性情報を連想配列に格納
+              for (var i = 0; i < result.length; i++) {
+                currentUserDataList[result[i].getName()] = result[i].getValue();
+              }
+              
+              console.log(currentUserDataList)
+            })  
+          }  
+        })
+      }else{
+        alert('user info not found')
+      }*/
       return (
         <div className="authorizedMode">
+          <div>
           <h1>ログインしました(ここをホーム画面遷移とかにすればいい？)</h1>
+          <h2>ユーザー</h2>
+          </div>
           <SignOut />
         </div>
       )

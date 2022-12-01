@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 import {
   CognitoUserPool,
-  CognitoUserAttribute
+  CognitoUserAttribute,
+  AmazonCognitoIdentity
 } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth';
 
@@ -21,7 +22,6 @@ const SignUp = () => {
   // 規約同意bool 
   const [isChecked, setIsChecked] = React.useState(false);
 
-  
   const toggleCheckbox = () => {
     setIsChecked(!isChecked)
   }
@@ -61,7 +61,7 @@ const SignUp = () => {
 
   return (
     <div className="formContainer"> 
-    <div class="signup">
+    <div className="signup">
       <h1>新規ユーザ登録</h1>
       <hr />
       <div className="uiForm">
