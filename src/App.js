@@ -7,7 +7,11 @@ import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-ro
 import SignUp from './page/auth/SignUp'
 import Verification from './page/auth/Verification'
 import SignIn from './page/auth/SignIn'
-import SignOut from './page/auth/SignOut'
+import Signed from './page/auth/Signed'
+
+import Matchin from './page/matching/Matching'
+
+import Header from './page/common/Header'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from './conf/awsauth'
@@ -58,13 +62,13 @@ const App = () => {
         alert('user info not found')
       }*/
       return (
-        <div className="authorizedMode">
-          <div>
-          <h1>ログインしました(ここをホーム画面遷移とかにすればいい？)</h1>
-          <h2>ユーザー</h2>
-          </div>
-          <SignOut />
-        </div>
+        <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route index element={<Signed/>}/>
+          <Route path='/matching' element={<Matchin/>}/>
+        </Routes>
+        </BrowserRouter>
       )
     } else {
       return (
