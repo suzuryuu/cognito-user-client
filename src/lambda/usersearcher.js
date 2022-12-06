@@ -32,6 +32,7 @@ exports.handler = async(event, context) => {
             console.log(err);
         }else{
             data.Items.forEach(function(user, index){
+               // console.log("MatchedUserID:" +user.id)
                 console.log("マッチしたユーザー:" +user.nickname);
                 console.log("ユーザーが教えたいもの:" + user.haveSkill)
                 console.log("ユーザーが教わりたいもの:" + user.wantSkill)
@@ -46,6 +47,13 @@ exports.handler = async(event, context) => {
      // レスポンスを設定する
     const response = {
         statusCode: 200,
+        headers:{
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+            'Access-Control-Allow-Credentials' : true
+            
+        },
         body: JSON.stringify(items),
     };
     // 戻り値を設定する

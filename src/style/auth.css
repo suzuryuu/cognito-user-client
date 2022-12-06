@@ -67,7 +67,7 @@
     font-weight: 600;
     margin-bottom: 3px;
   }
-  button {
+  /*button {
     background: #0563b4;
     width: 100%;
     margin-top: 10px;
@@ -78,7 +78,7 @@
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s;
-  }
+  }*/
   .errorMsg {
     color: red;
     margin: 0;

@@ -10,7 +10,8 @@ import SignIn from './page/auth/SignIn'
 import Signed from './page/auth/Signed'
 
 import Matchin from './page/matching/Matching'
-import MatchResult from './page/matching/MatchingResult';
+import MatchResult from './page/matching/MatchingResult'
+import MatchedUserProfile  from './page/matching/UserProfile';
 import Header from './page/common/Header'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
@@ -45,7 +46,7 @@ const App = () => {
           <Route index element={<Signed/>}/>
           <Route path='/matching' element={<Matchin/>}/>
           <Route path='/matching/result' element={<MatchResult/>}/>
-          {/*<Route path='/matching/user/:id' element={<MatchedUserProfile/>}/>*/}
+          <Route path='/user' element={<MatchedUserProfile/>}/>*
         </Routes>
         </BrowserRouter>
       )
