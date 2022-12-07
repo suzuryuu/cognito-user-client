@@ -4,6 +4,7 @@ import './App.css'
 import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-router-dom';
 
 // components
+import Title from './page/Title'
 import SignUp from './page/auth/SignUp'
 import Verification from './page/auth/Verification'
 import SignIn from './page/auth/SignIn'
@@ -55,7 +56,7 @@ const App = () => {
       <BrowserRouter>
        <div className="unauthorizedMode">
         <Routes>
-        <Route index element={<SignUp />} />
+        <Route index element={<Title />} />
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/verify" element={<Verification/>}/>

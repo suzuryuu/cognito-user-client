@@ -3,6 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import AppBar from "@mui/material/AppBar";
+import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -19,7 +20,6 @@ export default function MenuAppBar() {
 
   const haveSkillHandler = (e) => setHaveSkill(e.target.value)
 
-  
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -71,6 +71,7 @@ export default function MenuAppBar() {
   };
 
   /*検索バー　プロフィールアイコン */
+  // 検索ボタンとホームに戻るリンクがほしい->任せる
   return (     <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
@@ -78,9 +79,7 @@ export default function MenuAppBar() {
          {haveSkillValue}
         </Typography>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          
         </Typography>
-        
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
@@ -88,7 +87,6 @@ export default function MenuAppBar() {
           <StyledInputBase
             placeholder="教えたいスキル"
             inputProps={{ "aria-label": "search" }}
-            
           />
         </Search>
         <Search>

@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../App.css'
+import '../../style/matching.css'
 import axios from 'axios'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
@@ -10,8 +11,11 @@ import { Link } from 'react-router-dom';
 import Autocomplete from "@mui/material/Autocomplete";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
-import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";*/ 
+import IconButton from "@mui/material/IconButton";*/
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField"
+import Button from '@material-ui/core/Button'
+import SignOut from '../auth/SignOut'
 
 // 認証情報使用
 const userPool = new CognitoUserPool({
@@ -64,8 +68,10 @@ const Matching = () =>{
             alert(error)
         }
     }
+
     // Stateから取ったjson文字列を再度jsonにしてパース
     const parseJSON = () =>{
+      
         var list = []
         // JSONResultStrは最初空なので空リストを返す
         if(JSONResultStr == ''){
@@ -84,9 +90,11 @@ const Matching = () =>{
                 list.push(
                 // listでDOM操作を仮で行ってます
                 <div>
-                    <p>ユーザー名:{json[i].nickname}</p>
+                    <Grid item xs={12} className="matchedUserItem" >
+                    <p>{json[i].nickname}</p>
                     {/*<p>user-id:{parsed[i].id}</p>*/}
                     <p><Link to={idToQueryPath}>プロフィールへ</Link></p>
+                    </Grid>
                 </div>
                 )
             }
@@ -97,14 +105,38 @@ const Matching = () =>{
     return(
         <div className='matchingform'>
         {/*<h1>UserID取得テスト:{currentUserID} これをDynamoDBへ</h1>*/}  
-        <h1>マッチする人を検索する</h1>
-        教えたい技術
-        <input type="text" placeholder="haveSkill" onChange={haveSkillHandler} /><br></br>
-        教わりたい技術
-        <input type="text" placeholder="wantSkil" onChange={wantSkillHandler}/><br></br>
-        <button onClick={handleCallAPI}>検索</button>
+        <h2>マッチする人を検索する</h2>
+        <Grid container justifyContent={'center'} columnGap={5}>
+            <TextField
+            name="taskName"
+            label="教えたい技術"
+            sx={{ display: "flex", maxWidth: 360 }}
+            helperText="あなたがマッチング相手に教えたい技術を入力"
+            margin="auto"
+            onChange={haveSkillHandler}
+            />
+           <TextField
+           name="taskName"
+           label="教わりたい技術"
+           sx={{ display: "flex", maxWidth: 360 }}
+           helperText="あなたがマッチング相手に教わりたい技術を入力"
+           margin="auto"
+           onChange={wantSkillHandler}
+           />
+           <Button
+           variant="contained"
+           color="primary"
+           style={{height: 55}}
+           onClick={handleCallAPI}
+           >検索
+           </Button>
+           </Grid>
+        <hr></hr>  
         <h2>検索結果(この下に表示されます)</h2>
-        {parseJSON()}
+
+        <Grid container justifyContent={'center'} columnGap={5} className='matchedUserContainer'>
+            {parseJSON()}
+        </Grid>
         </div>
     )
 }

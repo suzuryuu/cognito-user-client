@@ -67,7 +67,7 @@
     font-weight: 600;
     margin-bottom: 3px;
   }
-  /*button {
+  .authFormButton button{
     background: #0563b4;
     width: 100%;
     margin-top: 10px;

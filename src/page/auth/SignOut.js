@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
+import Button from '@material-ui/core/Button'
 
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
@@ -26,12 +27,15 @@ const SignOut = () => {
   }
 
   return (
-    <div className="SignOut">
-      <h1>サインアウト</h1>
-      <div class="buttonAjust">
-      <button onClick={signOut}>サインアウト</button>
+      <div>
+         <Button
+           variant="contained"
+           color="primary"
+           style={{height: 100, width: 250}}
+           onClick={signOut}
+           >サインアウト
+          </Button>
       </div>
-    </div>
   )
 }
 

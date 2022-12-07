@@ -78,7 +78,7 @@ const SignIn = () => {
             onChange={changedPasswordHandler}
           />
         </div>
-        <div class="buttonAjust">
+        <div class="authFormButton">
           <button onClick={signIn}>ログイン</button>
         </div>
         <p>アカウントをお持ちでない場合:<Link to="/signup">登録</Link></p>

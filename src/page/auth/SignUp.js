@@ -103,7 +103,7 @@ const SignUp = () => {
           />
         </div>
         </div>
-        <div class="buttonAjust">
+        <div class="authFormButton">
         <button onClick={signUp}>登録</button>
         </div>
         <p>アカウントをお持ちですか？:<Link to="/signin">ログイン</Link></p>

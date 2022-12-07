@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-router-dom';
 import { useContext } from 'react'
 
-
+// json パースのテストページ
 // API gatewayから取る
 var json = [
     {"nickname":"HelloMan","email":"test@jc-22.jp","id":"test-id-value-00","haveSkill":"ApexLegends","wantSkill":"Valorant"},
@@ -28,7 +28,7 @@ const MacthedUsersComponent = () =>{
         const idToQueryPath = "/user?id=" + parsed[i].id
         list.push(
         <div>
-            <p>ユーザー名:{parsed[i].nickname}</p>
+            <p>{parsed[i].nickname}</p>
             {/*<p>user-id:{parsed[i].id}</p>*/}
             <p><Link to={idToQueryPath}>プロフィールへ</Link></p>
         </div>,

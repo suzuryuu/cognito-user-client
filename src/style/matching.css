@@ -1,0 +1,10 @@
+/* マッチング画面のスタイルシートです。*/
+
+.matchedUserItem{
+    padding-top: 25px;
+    background-color: rgb(253, 241, 203);
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px gray;
+}
