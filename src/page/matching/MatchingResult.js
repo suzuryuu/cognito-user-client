@@ -7,7 +7,7 @@ import awsConfiguration from '../../conf/awsauth'
 import {useNavigate} from 'react-router-dom';
 import { BrowserRouter, Link, Route, Switch, Routes, useLocation} from 'react-router-dom';
 import { useContext } from 'react'
-import { JSONcontext } from './Matching'
+
 
 // API gatewayから取る
 var json = [

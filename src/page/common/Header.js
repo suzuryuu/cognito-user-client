@@ -88,16 +88,20 @@ export default function MenuAppBar() {
           <StyledInputBase
             placeholder="教えたいスキル"
             inputProps={{ "aria-label": "search" }}
-            value={haveSkillValue}
-            /* 検索UI部分値取得 */
-            onChange={haveSkillHandler}
+            
           />
         </Search>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-       
+          <StyledInputBase
+            placeholder="教わりたいスキル"
+            inputProps={{ "aria-label": "search" }}
+            value={haveSkillValue}
+            /* 検索UI部分値取得 */
+            onChange={''}
+          />
         </Search>
         <Button aria-label="aaa"></Button>
         {auth && (
