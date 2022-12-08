@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField"
 import Button from '@material-ui/core/Button'
 import SignOut from '../auth/SignOut'
+import apigatewayConf from '../../conf/apigateway'
 
 // 認証情報使用
 const userPool = new CognitoUserPool({
@@ -30,7 +31,6 @@ if(cognitoUser != null){
     currentUserID = cognitoUser.getUsername()
 }
 
-const API_ENDPOINT = 'https://6c1o3159qj.execute-api.ap-northeast-1.amazonaws.com'
 var res_json =""
 // haveSkill: 教えたい技術, wantSkill: 教わりたい技術
 // userAにとってのhaveSkill -> userBのwantSkill,  A wantSkill -> B haveSkill
@@ -48,7 +48,7 @@ const Matching = () =>{
         // CORS対策
         axios.defaults.withCredentials = true;
         axios.defaults.baseURL = 'http://localhost:3000'
-            
+        const API_ENDPOINT = apigatewayConf.END_POINT_URL
         const matchingRoute = '/dev/m-result'
         const query = '?wskill=' + wantSkill + '&hskill=' + haveSkill
         const requestUrl = API_ENDPOINT + matchingRoute + query
@@ -71,7 +71,6 @@ const Matching = () =>{
 
     // Stateから取ったjson文字列を再度jsonにしてパース
     const parseJSON = () =>{
-      
         var list = []
         // JSONResultStrは最初空なので空リストを返す
         if(JSONResultStr == ''){
@@ -86,7 +85,7 @@ const Matching = () =>{
             //console.log("current-json-value<string>:"+JSONResultStr)
             const json = JSON.parse(JSONResultStr)
             for(var i = 0; i < json.length; i++){
-                const idToQueryPath = "/user?id=" + json[i].id
+                const idToQueryPath = "/matching/user?id=" + json[i].id
                 list.push(
                 // listでDOM操作を仮で行ってます
                 <div>
@@ -112,7 +111,6 @@ const Matching = () =>{
             label="教えたい技術"
             sx={{ display: "flex", maxWidth: 360 }}
             helperText="あなたがマッチング相手に教えたい技術を入力"
-            margin="auto"
             onChange={haveSkillHandler}
             />
            <TextField
@@ -120,7 +118,6 @@ const Matching = () =>{
            label="教わりたい技術"
            sx={{ display: "flex", maxWidth: 360 }}
            helperText="あなたがマッチング相手に教わりたい技術を入力"
-           margin="auto"
            onChange={wantSkillHandler}
            />
            <Button
@@ -130,7 +127,7 @@ const Matching = () =>{
            onClick={handleCallAPI}
            >検索
            </Button>
-           </Grid>
+        </Grid>
         <hr></hr>  
         <h2>検索結果(この下に表示されます)</h2>
 
