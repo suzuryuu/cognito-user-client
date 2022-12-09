@@ -51,8 +51,7 @@ const NormalUserProfile = () => {
         wantSkill = json[0].wantSkill
     }
     return (
-        <div className="matcheduser">
-            <p>クエリパラムからの値取得テスト:{id}</p>
+        <div className="matcheduser">          
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>
@@ -61,4 +60,5 @@ const NormalUserProfile = () => {
         </div>
     )
 }
+
 export default NormalUserProfile

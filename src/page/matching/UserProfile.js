@@ -21,7 +21,7 @@ const UserProfile = () => {
     const matchingRoute = '/dev/users'
     const requestUrl = API_ENDPOINT + matchingRoute + queryParam
 
-    
+
     // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
     useEffect(() => {
         axios.get(requestUrl, {
@@ -31,7 +31,7 @@ const UserProfile = () => {
             setJSONStr(JSON.stringify(res.data))
             console.log(res.data)
             console.log("データ取得成功")
-        }).catch((e)=>{
+        }).catch((e) => {
             alert('マッチングの為の入力が不十分です。')
         })
     }, [])
@@ -44,7 +44,7 @@ const UserProfile = () => {
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
-    }else if (!JSONResultStr == '') {
+    } else if (!JSONResultStr == '') {
         json = JSON.parse(JSONResultStr)
         nickname = json[0].nickname
         userID = json[0].id
@@ -52,12 +52,11 @@ const UserProfile = () => {
         wantSkill = json[0].wantSkill
     }
 
-    const handleCallCoachingRequestAPI = () =>{
+    const handleCallCoachingRequestAPI = () => {
 
     }
     return (
         <div className="matcheduser">
-            <p>クエリパラムからの値取得テスト:{id}</p>
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>

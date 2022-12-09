@@ -12,11 +12,18 @@ import Autocomplete from "@mui/material/Autocomplete";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
 import IconButton from "@mui/material/IconButton";*/
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import Button from '@material-ui/core/Button'
+import Autocomplete from "@mui/material/Autocomplete"
+import NotificationsIcon from "@mui/icons-material/Notifications"
+import ForumIcon from "@mui/icons-material/Forum"
+import IconButton from "@mui/material/IconButton"
+
 import SignOut from '../auth/SignOut'
 import apigatewayConf from '../../conf/apigateway'
+
+
 
 // 認証情報使用
 const userPool = new CognitoUserPool({
@@ -100,13 +107,78 @@ const Matching = () =>{
         }
         return list
     }
+
+    // gametag
+    const haveSkillTags = [
+        { label: "ApexLegends" },
+        { label: "Valorant" },
+        { label: "Splatoon" },
+        { label: "Other" },
+    ];
+
+    const wantSkillTags = [
+        { label: "ApexLegends" },
+        { label: "Valorant" },
+        { label: "Splatoon" },
+        { label: "Other" },
+      ];
     // マッチング機能はLambda + APIゲートウェイから呼び出しで行く
     return(
         <div className='matchingform'>
         {/*<h1>UserID取得テスト:{currentUserID} これをDynamoDBへ</h1>*/}  
         <h2>マッチする人を検索する</h2>
-        <Grid container justifyContent={'center'} columnGap={5}>
-            <TextField
+        <Grid container justifyContent={'center'} columnGap={7}>
+        {/*<Grid item>
+          <Autocomplete
+            disablePortal
+            id="combo-box"
+            options={haveSkillTags}
+            sx={{ width: 200, pt: 10, flex: 1, flexGrow: 1 }}
+            renderInput={
+                (params) => 
+                <TextField {...params} 
+                label="教えたい技術があるゲーム"
+                onChange={haveSkillHandler}     
+            />}
+          />
+        </Grid>
+
+        <Grid item>
+          <Autocomplete
+            disablePortal
+            id="combo-box"
+            options={wantSkillTags}
+            sx={{ width: 200, pt: 10, flex: 1, flexGrow: 1 }}
+            renderInput={(params) => (
+              <TextField {...params} 
+              label="教わりたい技術があるゲーム" 
+              onChange={wantSkillHandler}
+              />
+            )}
+          />
+            </Grid>*/}
+        <TextField
+            name="taskName"
+            label="教えたい技術"
+            sx={{ display: "flex", maxWidth: 360 }}
+            helperText="あなたがマッチング相手に教えたい技術を入力"
+            onChange={haveSkillHandler}
+            />
+           <TextField
+           name="taskName"
+           label="教わりたい技術"
+           sx={{ display: "flex", maxWidth: 360 }}
+           helperText="あなたがマッチング相手に教わりたい技術を入力"
+           onChange={wantSkillHandler}
+           />
+        <Button
+           variant="contained"
+           color="primary"
+           style={{height: 55}}
+           onClick={handleCallAPI}
+           >検索
+        </Button>
+           {/* <TextField
             name="taskName"
             label="教えたい技術"
             sx={{ display: "flex", maxWidth: 360 }}
@@ -126,7 +198,7 @@ const Matching = () =>{
            style={{height: 55}}
            onClick={handleCallAPI}
            >検索
-           </Button>
+           </Button>*/}
         </Grid>
         <hr></hr>  
         <h2>検索結果(この下に表示されます)</h2>

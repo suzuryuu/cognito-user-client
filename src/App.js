@@ -13,10 +13,12 @@ import Signed from './page/auth/Signed'
 import Matchin from './page/matching/Matching'
 import MatchResult from './page/matching/MatchingResult'
 import UserProfile  from './page/matching/UserProfile';
+import NormalUserProfile from './page/user/UserProfile';
 import Header from './page/common/Header'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from './conf/awsauth'
+import RequestIndex from './page/crequest/RequestIndex';
 
 // mini TODO resetpassword実装
 
@@ -47,7 +49,10 @@ const App = () => {
           <Route index element={<Signed/>}/>
           <Route path='/matching' element={<Matchin/>}/>
           <Route path='/matching/result' element={<MatchResult/>}/>
-          <Route path='/matching/user' element={<UserProfile/>}/>*
+          <Route path='/matching/user' element={<UserProfile/>}/>
+          <Route path='/user' element={<NormalUserProfile/>}/>
+          <Route path='/requests' element={<RequestIndex/>}/>
+        
         </Routes>
         </BrowserRouter>
       )
