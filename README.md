@@ -58,14 +58,14 @@ npm start
 
 # API Gateway Doc
 エンドポイントはTeamsのapi-url.txtを参照
-# マッチング(GET)
+## マッチング(GET)
 /dev/m-result?wskill={教わりたいスキル,ゲーム}&hskill={教えたいスキル,ゲーム}
 
-# IDからUser情報取得(GET)
+## IDからUser情報取得(GET)
 /dev/users?userid={ユーザーのid(マッチしたユーザーのidから取得しているもの)}
 
-# 通知の取得(GET)
+## 通知の取得(GET)
 dev/coaching/notify?requid={current user id(cognito)}
 
-# 自分が送ったリクエストの一覧を取得(GET)
+## 自分が送ったリクエストの一覧を取得(GET)
 dev/coaching/myreq?suid={current user id(cognito)}
