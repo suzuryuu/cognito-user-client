@@ -8,6 +8,8 @@ Cognito利用で
 ## マッチング
 - 条件に合致したユーザーを検索し表示
 - リクエストの通知と来ているリクエストの一覧の表示
+- 自分が送ったリクエストの一覧とその状態表示
+
 
 ※AWS Lambdaの関数自体ではサービスを成立させるための機能は実装済みです。
 # 起動
@@ -53,3 +55,17 @@ npm start
 - 確認コード再送画面でeメール以外の文字列を打ち込んでもコードを送信しようとする
 - コーチングリクエストを送る、ユーザー情報の編集などではAPI GatewayのPOSTを使おうと
 しているが、Key-ValueでBodyを送っても500エラーが返ってくる
+
+# API Gateway Doc
+エンドポイントはTeamsのapi-url.txtを参照
+# マッチング(GET)
+/dev/m-result?wskill={教わりたいスキル,ゲーム}&hskill={教えたいスキル,ゲーム}
+
+# IDからUser情報取得(GET)
+/dev/users?userid={ユーザーのid(マッチしたユーザーのidから取得しているもの)}
+
+# 通知の取得(GET)
+dev/coaching/notify?requid={current user id(cognito)}
+
+# 自分が送ったリクエストの一覧を取得(GET)
+dev/coaching/myreq?suid={current user id(cognito)}
