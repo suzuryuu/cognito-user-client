@@ -8,6 +8,10 @@ import { useEffect } from 'react'
 
 import axios from 'axios'
 import { paste } from '@testing-library/user-event/dist/paste'
+
+
+
+
 // マッチしてなくてもとにかくユーザーのリンクとして機能させるほう
 const NormalUserProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')

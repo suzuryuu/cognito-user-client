@@ -11,7 +11,6 @@ import SignIn from './page/auth/SignIn'
 import Signed from './page/auth/Signed'
 
 import Matchin from './page/matching/Matching'
-import MatchResult from './page/matching/MatchingResult'
 import UserProfile  from './page/matching/UserProfile';
 import NormalUserProfile from './page/user/UserProfile';
 import Header from './page/common/Header'

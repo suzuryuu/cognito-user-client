@@ -25,6 +25,7 @@ if (cognitoUser != null) {
 
 const RequestIndex = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
+    var requestPartionKey  = "";
     const queryParam = '?requid=' + currentUserID;
 
     const API_ENDPOINT = apigatewayConf.END_POINT_URL
@@ -45,6 +46,14 @@ const RequestIndex = () => {
         })
     }, [])
 
+    const onClickAccept = () =>{
+        callEditStatusAPI("accept")
+    }
+
+    const onClickDecline = () =>{
+        callEditStatusAPI("decline")
+    }
+
     const JSONparse = ()=>{
         var list = []
         // JSONResultStrは最初空なので空リストを返す
@@ -61,21 +70,48 @@ const RequestIndex = () => {
             const json = JSON.parse(JSONResultStr)
             for(var i = 0; i < json.length; i++){
                 const sendersID = json[i].sender_uid
+                requestPartionKey = json[i].id
                 const idToQueryPath = "/matching/user?id=" + sendersID
                 list.push(
                 // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
                 <div>リクエストを送信したユーザー(id表記):{sendersID}
                 <p><Link to={idToQueryPath}>プロフィールへ</Link></p>
+               
+                <button onClick={onClickAccept}>承認</button>
+                <button onClick={onClickDecline}>拒否</button>
                 </div>
                 )
             }
         }
         return list
     }
-    return (
-        <div><h2>リクエスト一覧</h2>
+    const callEditStatusAPI = async(reqStatus) =>{
+        const API_ENDPOINT = apigatewayConf.END_POINT_URL
+        const editStsRoute = "/dev/coaching/chreq"
+        const editStsQuery = "?crPK="+ requestPartionKey +"&reqsts="+reqStatus
+        const editStsReqUrl = API_ENDPOINT + editStsRoute + editStsQuery
+        try {
+            const response = await axios.post(editStsReqUrl,{
+                'x-api-key': apigatewayConf.API_KEY,
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials':'true'
+            });
+            console.log(response.data)
+            alert('リクエスト状態書き換え:'+reqStatus)
+        } catch (error) {
+            console.error(error)
+
+            if(reqStatus == "accept"){
+                alert("承認に失敗しました")
+            }else if(reqStatus == "decline"){
+                alert("拒否に失敗しました")
+            }
+        }
+    }
+    return(
+    <div><h2>リクエスト一覧</h2>
         {JSONparse()}
-        </div>)
+    </div>)
 }
 
 export default RequestIndex
