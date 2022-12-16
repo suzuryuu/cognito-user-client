@@ -5,32 +5,17 @@ import '../../App.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import apigatewayConf from '../../conf/apigateway'
 import { useEffect } from 'react'
-
 import axios from 'axios'
-import { paste } from '@testing-library/user-event/dist/paste'
 
-import { CognitoUserPool } from "amazon-cognito-identity-js"
-import awsConfiguration from '../../conf/awsauth'
-import { ConstructionOutlined } from '@mui/icons-material'
-// 認証情報使用
-const userPool = new CognitoUserPool({
-    UserPoolId: awsConfiguration.UserPoolId,
-    ClientId: awsConfiguration.ClientId,
-})
-const cognitoUser = userPool.getCurrentUser()
-var currentUserID = 'User-ID-Value-From-Cognito' // 値を代入したいのでvarで定義
+// リクエストを送って来たuserのプロフィール
 
-// 認証してる状態じゃないと取得できないので
-if (cognitoUser != null) {
-    currentUserID = cognitoUser.getUsername()
-}
-
-const UserProfile = () => {
+const RequestedUserProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
 
     const search = useLocation().search
     const query = new URLSearchParams(search)
     const id = query.get('id')
+    const reqIdparam = query.get('reqIdprm')
     const queryParam = '?userid=' + id;
 
     const API_ENDPOINT = apigatewayConf.END_POINT_URL
@@ -69,39 +54,53 @@ const UserProfile = () => {
         wantSkill = json[0].wantSkill
     }
 
-    // 'Access-Control-Allow-Credentials' はAPIGatewayのCORS有効化時にtrueにしてます
-    const useCallCoachingRequestAPI = async() => {
+    const callEditStatusAPI = async (reqStatus) => {
         const API_ENDPOINT = apigatewayConf.END_POINT_URL
-        const creqRoute = "/dev/coaching/send"
-        const creqQuery = "?reqUID="+userID+"&senderUID="+currentUserID
-        const creqURL = API_ENDPOINT + creqRoute + creqQuery;
+        const editStsRoute = "/dev/coaching/chreq"
+        const editStsQuery = "?crPK=" + reqIdparam + "&reqsts=" + reqStatus
+        const editStsReqUrl = API_ENDPOINT + editStsRoute + editStsQuery
         try {
-            const response = await axios.post(creqURL,{},
+            const response = await axios.post(editStsReqUrl, {},
+                // data empty
                 {
                     headers: {
                         'X-Api-Key': apigatewayConf.API_KEY,
-                        'Content-Type':'text/plain',           
+                        'Content-Type': 'text/plain',
                     }
-                }         
+                }
             );
-            console.log("APIキー認証込みでコーチングリクエストを送信しました。詳細は以下です。")
             console.log(response.data)
-            alert('コーチングリクエストを送信しました')
+            alert('リクエスト状態書き換え:' + reqStatus)
         } catch (error) {
             console.error(error)
-            alert('リクエスト処理に失敗しました')
+
+            if (reqStatus == "accept") {
+                alert("承認に失敗しました")
+            } else if (reqStatus == "decline") {
+                alert("拒否に失敗しました")
+            }
         }
     }
-    
+
+    const onClickAccept = () => {
+        callEditStatusAPI("accept")
+    }
+
+    const onClickDecline = () => {
+        callEditStatusAPI("decline")
+    }
+
     return (
         <div className="matcheduser">
+            <p>リクエストID:{reqIdparam}</p>
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>
             <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
-            <button onClick={useCallCoachingRequestAPI}>コーチングリクエストを送る</button><br></br>
-            <a href='/matching'>戻る</a>
+            <button onClick={onClickAccept}>承認</button>
+            <button onClick={onClickDecline}>拒否</button>
         </div>
     )
 }
-export default UserProfile
+
+export default RequestedUserProfile

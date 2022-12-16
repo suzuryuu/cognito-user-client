@@ -13,12 +13,15 @@ import Signed from './page/auth/Signed'
 import Matchin from './page/matching/Matching'
 import UserProfile  from './page/matching/UserProfile';
 import NormalUserProfile from './page/user/UserProfile';
+import RequestedUserProfile from './page/crequest/UserProfile';
 import Header from './page/common/Header'
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from './conf/awsauth'
 import RequestIndex from './page/crequest/RequestIndex';
 import MyRequestIndex from './page/crequest/MyRequestIndex';
+
+
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -50,6 +53,7 @@ const App = () => {
           {/*<Route path='/matching/result' element={<MatchResult/>}/>*/}
           <Route path='/matching/user' element={<UserProfile/>}/>
           <Route path='/user' element={<NormalUserProfile/>}/>
+          <Route path='/requests/user' element={<RequestedUserProfile/>}/>
           <Route path='/requests' element={<RequestIndex/>}/>
           <Route path='/requests/yourself' element={<MyRequestIndex/>}/>
         </Routes>

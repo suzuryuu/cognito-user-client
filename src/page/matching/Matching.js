@@ -50,11 +50,12 @@ const Matching = () =>{
  
     const haveSkillHandler = (e) => setHaveSkill(e.target.value)
     const wantSkillHandler = (e) => setWantSkill(e.target.value)
-    // API呼び出し
+    // マッチング部分のAPI呼び出し
     const handleCallAPI = async()=>{
-        // CORS対策
+        // CORS対策これ多分あまり意味ないですね
         axios.defaults.withCredentials = true;
         axios.defaults.baseURL = 'http://localhost:3000'
+
         const API_ENDPOINT = apigatewayConf.END_POINT_URL
         const matchingRoute = '/dev/m-result'
         const query = '?wskill=' + wantSkill + '&hskill=' + haveSkill

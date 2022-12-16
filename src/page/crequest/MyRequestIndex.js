@@ -74,7 +74,7 @@ const MyRequestIndex = () => {
                 }else if(status == "decline"){
                     message = "拒否されました。"
                 }
-                const idToQueryPath = "/matching/user?id=" + requestedID
+                const idToQueryPath = "/user?id=" + requestedID
 
                 list.push(
                 // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
