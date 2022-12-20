@@ -25,8 +25,7 @@ Material UIの導入に伴い依存関係で問題が起きていますが、応
 npm install --legacy-peer-deps 
 ```
 
-src/conf/にawsauth.jsを追加し下記を記述
-xxxxとなっているとこを修正
+src/conf/awsauth.js xxxxとなっているとこを修正
 
 ```js
 const awsConfiguration = {
@@ -36,6 +35,17 @@ const awsConfiguration = {
 };
   
 export default awsConfiguration;
+```
+
+src/conf/apigateway.js xxxxをapiキーに変更
+
+```js 
+const apigatewayConf = {
+    END_POINT_URL: 'https://6c1o3159qj.execute-api.ap-northeast-1.amazonaws.com',
+    API_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+};
+ 
+export default apigatewayConf;
 ```
 
 起動する
