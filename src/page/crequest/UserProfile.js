@@ -59,18 +59,27 @@ const RequestedUserProfile = () => {
         const editStsRoute = "/dev/coaching/chreq"
         const editStsQuery = "?crPK=" + reqIdparam + "&reqsts=" + reqStatus
         const editStsReqUrl = API_ENDPOINT + editStsRoute + editStsQuery
+        
         try {
             const response = await axios.post(editStsReqUrl, {},
                 // data empty
                 {
                     headers: {
-                        'X-Api-Key': apigatewayConf.API_KEY,
                         'Content-Type': 'text/plain',
+                        'X-Api-Key': apigatewayConf.API_KEY,
+                      //  'Access-Control-Allow-Origin' : 'http://localhost:3000'
                     }
                 }
             );
             console.log(response.data)
-            alert('リクエスト状態書き換え:' + reqStatus)
+            var statusToJapanese = ""
+            if (reqStatus == "accept") {
+               statusToJapanese = "承認"
+            } else if (reqStatus == "decline") {
+               statusToJapanese = "拒否"
+            }
+            alert('リクエスト確認完了:' + statusToJapanese)
+            window.location.href="/requests"
         } catch (error) {
             console.error(error)
 

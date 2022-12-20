@@ -61,14 +61,26 @@ const RequestIndex = () => {
             //console.log("current-json-value<string>:"+JSONResultStr)
             const json = JSON.parse(JSONResultStr)
             for(var i = 0; i < json.length; i++){
-
                 const sendersID = json[i].sender_uid
                 // リクエストモデルのid
                 const reqPKprm = json[i].id
                 const idToQueryPath = "/requests/user?id=" + sendersID + "&reqIdprm=" + reqPKprm
+                const requestStatus = json[i].reqStatus
+                var message=  ""
+                var dmLink = ""
+                if(requestStatus == "unconfirm"){
+                    message = "まだ確認していません。"
+                }
+                else if(requestStatus == "accept"){
+                    message = "承認しました。"
+                    dmLink = <a href="/">dmへ</a>
+                }else if(requestStatus == "decline"){
+                    message = "拒否しました。"
+                }
                 list.push(
                 // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
                 <div>リクエストを送信したユーザー(id表記):{sendersID}
+                <p>リクエストを{message}{dmLink}</p>
                 <p><Link to={idToQueryPath}>詳細を確認する</Link></p>
                 </div>
                 )
