@@ -8,3 +8,15 @@
     border-radius: 10px;
     box-shadow: 2px 2px 4px gray;
 }
+
+.matchedUserInfo{
+    padding-top: 50px;
+}
+
+.requestSenderInfo{
+    padding-top: 50px;
+}
+
+.normalUserProfile{
+    padding-top: 50px;
+}

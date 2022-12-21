@@ -9,8 +9,17 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { paste } from '@testing-library/user-event/dist/paste'
 
+import { Button } from "primereact/button";
+// S3とか使って好きなアイコン設定できるようにする？
+import img from "../../style/user.jpg";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import ReactStars from "react-rating-stars-component";
+import '../../style/matching.css'
 
-
+/*星マークの受付*/
+const ratingChanged = (newRating) => {};
 
 // マッチしてなくてもとにかくユーザーのリンクとして機能させるほう
 const NormalUserProfile = () => {
@@ -55,13 +64,60 @@ const NormalUserProfile = () => {
         wantSkill = json[0].wantSkill
     }
     return (
-        <div className="matcheduser">          
+        <div className="normalUserProfile">
+        <Box>
+          {/*全体位置指定*/}
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid>
+              {/*画像サイズ指定　初期画像は{img}user.jpg*/}
+              <img
+                src={img}
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </Grid>
+    
+            {/*マッチングしたユーザ名*/}
+            <Grid>名前:{nickname}</Grid>
+            <Grid>ID:{userID}</Grid>
+            {/*星マーク指定　星の数 星のサイズ*/}
+            <Grid>
+              評価(このへんはあとで機能追加するとこ)
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={24}
+                activeColor="#ffd700"
+              />
+              <label>実績: 件</label>
+            </Grid>
+    
+            <Grid>
+              <p>自己紹介:(自己紹介投稿機能が完成したら取得するようにする)</p>
+            </Grid>
+            <Grid>
+                <p>教えたいスキルがあるゲーム:{haveSkill}</p>
+                <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
+            </Grid>
+            </Grid>
+        </Box>
+        </div>
+        /* <div className="matcheduser">          
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>
             <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             <a href='/matching'>戻る</a>
-        </div>
+        </div> */
     )
 }
 

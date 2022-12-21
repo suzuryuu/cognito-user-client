@@ -21,7 +21,7 @@ import awsConfiguration from './conf/awsauth'
 import RequestIndex from './page/crequest/RequestIndex';
 import MyRequestIndex from './page/crequest/MyRequestIndex';
 
-
+import Matchinguser from './page/front-end-test/MatchingUser';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -56,6 +56,7 @@ const App = () => {
           <Route path='/requests/user' element={<RequestedUserProfile/>}/>
           <Route path='/requests' element={<RequestIndex/>}/>
           <Route path='/requests/yourself' element={<MyRequestIndex/>}/>
+          <Route path='/testmatchuser' element={<Matchinguser/>}/>
         </Routes>
         </BrowserRouter>
       )

@@ -12,6 +12,17 @@ import { paste } from '@testing-library/user-event/dist/paste'
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
 import { ConstructionOutlined } from '@mui/icons-material'
+
+import { Button } from "primereact/button";
+// S3とか使って好きなアイコン設定できるようにする？
+import img from "../../style/user.jpg";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import ReactStars from "react-rating-stars-component";
+import '../../style/matching.css'
+
+
 // 認証情報使用
 const userPool = new CognitoUserPool({
     UserPoolId: awsConfiguration.UserPoolId,
@@ -24,6 +35,10 @@ var currentUserID = 'User-ID-Value-From-Cognito' // 値を代入したいのでv
 if (cognitoUser != null) {
     currentUserID = cognitoUser.getUsername()
 }
+
+
+/*星マークの受付*/
+const ratingChanged = (newRating) => {};
 
 const UserProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
@@ -94,14 +109,81 @@ const UserProfile = () => {
     }
     
     return (
-        <div className="matcheduser">
+        <div className="matchedUserInfo">
+        <Box>
+          {/*全体位置指定*/}
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid>
+              {/*画像サイズ指定　初期画像は{img}user.jpg*/}
+              <img
+                src={img}
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </Grid>
+    
+            {/*マッチングしたユーザ名*/}
+            <Grid>名前:{nickname}</Grid>
+            <Grid>ID:{userID}</Grid>
+            {/*星マーク指定　星の数 星のサイズ*/}
+            <Grid>
+              評価(このへんはあとで機能追加するとこ)
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={24}
+                activeColor="#ffd700"
+              />
+              <label>実績: 件</label>
+            </Grid>
+    
+            <Grid>
+              <p>自己紹介:(自己紹介投稿機能が完成したら取得するようにする)</p>
+            </Grid>
+            <Grid>
+                <p>教えたいスキルがあるゲーム:{haveSkill}</p>
+                <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
+            </Grid>
+            <Grid item xs={5} sm={8} pt={5}>
+              <Button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                }}
+                label="コーチングリクエストを送る"
+                onClick={useCallCoachingRequestAPI}
+              />
+            </Grid>
+    
+            <Grid item xs={5} sm={8} pt={5}>
+              <Button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                }}
+                label="保留する"
+              />
+            </Grid>
+          </Grid>
+        </Box>
+        </div>
+        /*<div className="matcheduser">
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>
             <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             <button onClick={useCallCoachingRequestAPI}>コーチングリクエストを送る</button><br></br>
             <a href='/matching'>戻る</a>
-        </div>
+        </div>*/
     )
 }
 export default UserProfile

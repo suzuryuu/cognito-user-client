@@ -7,8 +7,18 @@ import apigatewayConf from '../../conf/apigateway'
 import { useEffect } from 'react'
 import axios from 'axios'
 
-// リクエストを送って来たuserのプロフィール
+import { Button } from "primereact/button";
+// S3とか使って好きなアイコン設定できるようにする？
+import img from "../../style/user.jpg";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import ReactStars from "react-rating-stars-component";
+import '../../style/matching.css'
 
+// リクエストを送って来たuserのプロフィール
+/*星マークの受付*/
+const ratingChanged = (newRating) => {};
 const RequestedUserProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
 
@@ -100,7 +110,73 @@ const RequestedUserProfile = () => {
     }
 
     return (
-        <div className="matcheduser">
+        <div className="requestSenderInfo">
+               <Box>
+      {/*全体位置指定*/}
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid>
+          {/*画像サイズ指定　初期画像は{img}user.jpg*/}
+          <img
+            src={img}
+            style={{
+              width: "200px",
+              height: "200px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        </Grid>
+
+        {/*マッチングしたユーザ名*/}
+        <Grid>名前:{nickname}</Grid>
+        <Grid>ID:{userID}</Grid>
+        
+        {/*星マーク指定　星の数 星のサイズ*/}
+        <Grid>
+          評価
+          <ReactStars
+            count={5}
+            onChange={ratingChanged}
+            size={24}
+            activeColor="#ffd700"
+          />
+          <label>実績: 件</label>
+        </Grid>
+
+        <Grid>
+          <p>自己紹介:</p>
+        </Grid>
+
+        <Grid item xs={5} sm={8} pt={5}>
+          <Button
+            style={{
+              width: "300px",
+              height: "50px",
+            }}
+            label="承認"
+            onClick={onClickAccept}
+          />
+        </Grid>
+
+        <Grid item xs={5} sm={8} pt={5}>
+          <Button
+            style={{
+              width: "300px",
+              height: "50px",
+            }}
+            label="拒否"
+            onClick={onClickDecline}
+          />
+        </Grid>
+      </Grid>
+    </Box>
+        </div>
+        /*<div className="matcheduser">
             <p>リクエストID:{reqIdparam}</p>
             <p>ユーザー名:{nickname}</p>
             <p>id: {userID}</p>
@@ -108,7 +184,7 @@ const RequestedUserProfile = () => {
             <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             <button onClick={onClickAccept}>承認</button>
             <button onClick={onClickDecline}>拒否</button>
-        </div>
+        </div>*/
     )
 }
 
