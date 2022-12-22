@@ -87,3 +87,5 @@ dev/coaching/notify?requid={current user id(cognito)}
 ## 自分が送ったリクエストの一覧を取得(GET)
 dev/coaching/myreq?suid={current user id(cognito)}
 
+## ユーザー情報編集(POST)(別APIでつくってる為エンドポイント変わってます。)
+/deploy0_0/send
