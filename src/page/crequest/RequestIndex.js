@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../App.css'
+import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 import SignOut from '../../page/auth/SignOut'
 import Button from '@material-ui/core/Button'
@@ -78,10 +79,12 @@ const RequestIndex = () => {
                     message = "拒否しました。"
                 }
                 list.push(
-                // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
-                <div>リクエストを送信したユーザー(id表記):{sendersID}
-                <p>リクエストを{message}{dmLink}</p>
-                <p><Link to={idToQueryPath}>詳細を確認する</Link></p>
+                    <div>
+                    <Grid item xs={12} className="reqIndex">
+                    <p>リクエストを送信したユーザーID:{sendersID}</p>
+                    <p>リクエストを{message}{dmLink}</p>
+                    <p><Link to={idToQueryPath}>詳細を確認する</Link></p>
+                    </Grid>
                 </div>
                 )
             }
@@ -90,7 +93,9 @@ const RequestIndex = () => {
     }
     return(
     <div><h2>リクエスト一覧</h2>
-        {JSONparse()}
+        <Grid container justifyContent={'center'} columnGap={5}  className='myreqUserContainer'>
+            {JSONparse()}
+        </Grid>
     </div>)
 }
 

@@ -2,11 +2,28 @@
 
 .matchedUserItem{
     padding-top: 25px;
+    padding-bottom: 25px;
+
     background-color: rgb(253, 241, 203);
-    height: 150px;
+    height: 240px;
     width: 150px;
     border-radius: 10px;
     box-shadow: 2px 2px 4px gray;
+}
+
+/* list自体*/
+.imageList{
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    width: 200px;
+    height: 200px;
+
+}
+/* 画像の調整 */
+.imageList img{
+    width: 200px;
+    height: 200px;
 }
 
 .matchedUserInfo{

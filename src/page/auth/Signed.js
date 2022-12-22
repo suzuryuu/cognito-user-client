@@ -105,6 +105,7 @@ const Signed = () => {
   return (
     <div className="authorizedMode">
           <h1>Home</h1>
+          <h2>ここにデザイン要素追加出来るといいかも</h2>
           <Grid container justifyContent={'center'} columnGap={3}>
           <Button
            variant="contained"
@@ -114,13 +115,24 @@ const Signed = () => {
            to="/matching"
            >マッチするユーザーを探す
            </Button>
-           <SignOut />
+           <Button
+           variant="contained"
+           color="primary"
+           style={{height: 100, width: 250}}
+           component={Link}
+           to="requests"
+           >届いたリクエスト(<p style={{color: 'yellow'}}>{notifycount}</p>)
+           </Button>
+           <Button
+           variant="contained"
+           color="primary"
+           style={{height: 100, width: 250}}
+           component={Link}
+           to="requests/yourself"
+           >送ったリクエスト(承認:<p style={{color: 'yellow'}}>{acceptedCount}</p>/<p style={{color: 'white'}}>{requestedYourSelfCount}</p>)
+           </Button>
+           {/*<SignOut />*/}
           </Grid>
-
-          <h2>あなたに{notifycount}件のコーチングリクエストが届きました。</h2>
-          <h2>あなたの送った{requestedYourSelfCount}件のリクエストのうち{acceptedCount}件が承認されています。</h2>
-          <a href="/requests">リクエスト一覧へ</a><br></br>
-          <a href="/requests/yourself">あなたが送ったリクエストの一覧</a>
     </div>
   )
 }

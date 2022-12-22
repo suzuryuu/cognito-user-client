@@ -28,7 +28,7 @@ if(cognitoUser != null){
 }
 
 // UserProfileへのパス
-const currentUserProfileLinkPath = "/user?id=" + currentUserID
+const currentUserProfileLinkPath = "/profile?id=" + currentUserID
 
 const signOut = () => {
   if (cognitoUser) {

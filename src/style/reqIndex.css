@@ -1,0 +1,22 @@
+.reqIndex{
+    
+    background-color: lightcyan;
+    height:140px;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px gray;
+}
+
+.reqIndexAccepted{
+    background-color: #73d5ff;
+    height:140px;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px gray
+}
+.reqIndex p{
+    padding-top: 10px;
+}
+.reqIndexAccepted p{
+    padding-top: 10px;
+}

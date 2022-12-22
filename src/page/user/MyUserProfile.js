@@ -17,14 +17,13 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import ReactStars from "react-rating-stars-component";
 import '../../style/matching.css'
-import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 
 /*星マークの受付*/
 const ratingChanged = (newRating) => {};
 
-// マッチしてなくてもとにかくユーザーのリンクとして機能させるほう
-const NormalUserProfile = () => {
+
+const MyProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
 
     const search = useLocation().search
@@ -110,6 +109,18 @@ const NormalUserProfile = () => {
                 <p>教えたいスキルがあるゲーム:{haveSkill}</p>
                 <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             </Grid>
+
+            <Grid item xs={5} sm={8} pt={5}>
+              <Button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                }}
+                label="編集する"
+                component={Link}
+                to="#"
+              />
+            </Grid>
             </Grid>
         </Box>
         </div>
@@ -123,4 +134,4 @@ const NormalUserProfile = () => {
     )
 }
 
-export default NormalUserProfile
+export default MyProfile
