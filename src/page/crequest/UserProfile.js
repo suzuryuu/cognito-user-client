@@ -53,6 +53,7 @@ const RequestedUserProfile = () => {
     var userID = ""
     var haveSkill = ""
     var wantSkill = ""
+    var intro = ""
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
@@ -62,6 +63,7 @@ const RequestedUserProfile = () => {
         userID = json[0].id
         haveSkill = json[0].haveSkill
         wantSkill = json[0].wantSkill
+        intro = json[0].intro
     }
 
     const callEditStatusAPI = async (reqStatus) => {
@@ -149,7 +151,7 @@ const RequestedUserProfile = () => {
         </Grid>
 
         <Grid>
-          <p>自己紹介:</p>
+          <p>自己紹介:{intro}</p>
         </Grid>
 
         <Grid item xs={5} sm={8} pt={5}>

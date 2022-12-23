@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import ReactStars from "react-rating-stars-component";
 import '../../style/matching.css'
+import { Link } from "react-router-dom";
 export default function Matchinguser() {
 
   /*星マークの受付*/
@@ -32,7 +33,6 @@ export default function Matchinguser() {
             }}
           />
         </Grid>
-
         {/*マッチングしたユーザ名*/}
         <Grid>名前</Grid>
         

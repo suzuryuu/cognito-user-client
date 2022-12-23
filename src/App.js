@@ -24,6 +24,7 @@ import MyRequestIndex from './page/crequest/MyRequestIndex';
 
 import Matchinguser from './page/front-end-test/MatchingUser';
 import Home from './page/front-end-test/TestIndex';
+import Edit from './page/user/Edit';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -51,14 +52,19 @@ const App = () => {
         <Header />
         <Routes>
           <Route index element={<Signed/>}/>
+           {/** マッチング */}
           <Route path='/matching' element={<Matchin/>}/>
-          {/*<Route path='/matching/result' element={<MatchResult/>}/>*/}
           <Route path='/matching/user' element={<UserProfile/>}/>
+           {/** ユーザー */}
           <Route path='/user' element={<NormalUserProfile/>}/>
+           {/** アカウント */}
           <Route path='/profile' element={<MyProfile/>}/>
+          <Route path='/profile/edit' element={<Edit/>}/>
+           {/** コーチングリクエスト */}
           <Route path='/requests/user' element={<RequestedUserProfile/>}/>
           <Route path='/requests' element={<RequestIndex/>}/>
           <Route path='/requests/yourself' element={<MyRequestIndex/>}/>
+      
           {/** フロントエンドテスト表示よう */}
           <Route path='/testmatchuser' element={<Matchinguser/>}/>
           <Route path='/testindex' element={<Home />}/>

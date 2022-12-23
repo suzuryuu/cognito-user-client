@@ -55,6 +55,7 @@ const NormalUserProfile = () => {
     var userID = ""
     var haveSkill = ""
     var wantSkill = ""
+    var intro = ""
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
@@ -64,6 +65,7 @@ const NormalUserProfile = () => {
         userID = json[0].id
         haveSkill = json[0].haveSkill
         wantSkill = json[0].wantSkill
+        intro = json[0].intro
     }
     return (
         <div className="normalUserProfile">
@@ -104,7 +106,7 @@ const NormalUserProfile = () => {
             </Grid>
     
             <Grid>
-              <p>自己紹介:(自己紹介投稿機能が完成したら取得するようにする)</p>
+              <p>自己紹介:{intro}</p>
             </Grid>
             <Grid>
                 <p>教えたいスキルがあるゲーム:{haveSkill}</p>

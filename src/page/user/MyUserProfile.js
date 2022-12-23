@@ -7,20 +7,18 @@ import apigatewatConf from '../../conf/apigateway'
 import { useEffect } from 'react'
 
 import axios from 'axios'
-import { paste } from '@testing-library/user-event/dist/paste'
 
-import { Button } from "primereact/button";
+import { Button } from "primereact/button"
 // S3とか使って好きなアイコン設定できるようにする？
-import img from "../../style/user.jpg";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import ReactStars from "react-rating-stars-component";
+import img from "../../style/user.jpg"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
+import ReactStars from "react-rating-stars-component"
 import '../../style/matching.css'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 /*星マークの受付*/
-const ratingChanged = (newRating) => {};
+const ratingChanged = (newRating) => {}
 
 
 const MyProfile = () => {
@@ -54,6 +52,7 @@ const MyProfile = () => {
     var userID = ""
     var haveSkill = ""
     var wantSkill = ""
+    var intro = ""
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
@@ -63,6 +62,7 @@ const MyProfile = () => {
         userID = json[0].id
         haveSkill = json[0].haveSkill
         wantSkill = json[0].wantSkill
+        intro = json[0].intro
     }
     return (
         <div className="normalUserProfile">
@@ -103,25 +103,26 @@ const MyProfile = () => {
             </Grid>
     
             <Grid>
-              <p>自己紹介:(自己紹介投稿機能が完成したら取得するようにする)</p>
+              <p>自己紹介:{intro}</p>
             </Grid>
             <Grid>
                 <p>教えたいスキルがあるゲーム:{haveSkill}</p>
                 <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             </Grid>
-
+            ボタンにLinktoを指定してもなぜか飛ばないので臨時でptag link to いれてる
             <Grid item xs={5} sm={8} pt={5}>
               <Button
                 style={{
                   width: "300px",
                   height: "50px",
                 }}
-                label="編集する"
-                component={Link}
-                to="#"
-              />
+                /*label="編集する"
+                href="/edit"*/
+              >{<p><Link to="/profile/edit">編集する</Link></p>}</Button>
             </Grid>
+          
             </Grid>
+            
         </Box>
         </div>
         /* <div className="matcheduser">          
