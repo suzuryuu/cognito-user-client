@@ -94,5 +94,5 @@ npm start
 
 ## cognitoユーザープールからユーザーを削除
 /dev/user/destroy?userid={current user id}
-## dynamoDB Userテーブルからユーザーのidとemailを削除
+## dynamoDB Userテーブルからユーザーを削除
 /dev/user/destroydb?userid={current user id}
