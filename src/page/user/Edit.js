@@ -12,6 +12,7 @@ import awsConfiguration from "../../conf/awsauth";
 import apigatewayConf from "../../conf/apigateway";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 const userPool = new CognitoUserPool({
     UserPoolId: awsConfiguration.UserPoolId,
@@ -263,19 +264,22 @@ export default function Edit() {
           />
         </Grid>
         
-
-        <Grid item xs={5} sm={8} pt={5}>
-          <Button
-            onClick={onClickGetAPI}
-            variant="outlined"
-            color="primary"
-            style={{
-              width: "60px",
-              height: "50px",
-              marginLeft: "440px",
-            }}
-            label="保存"
-          />
+        <Grid container justifyContent={'center'} columnGap={3} style={{paddingTop:25}}>
+        <Button
+           variant="contained"
+           color="primary"
+           style={{height: 100, width: 180}}
+           onClick={onClickGetAPI}
+           >保存
+           </Button>
+           <Button
+           variant="contained"
+           color="primary"
+           style={{height: 100, width: 180,}}
+           component={Link}
+           to="/matching"
+           >退会する
+           </Button>
         </Grid>
       </Grid>
     </Box>

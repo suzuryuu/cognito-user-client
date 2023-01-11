@@ -25,6 +25,7 @@ import MyRequestIndex from './page/crequest/MyRequestIndex';
 import Matchinguser from './page/front-end-test/MatchingUser';
 import Home from './page/front-end-test/TestIndex';
 import Edit from './page/user/Edit';
+import DeleteUsers from './page/user/DeleteUser';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -57,6 +58,7 @@ const App = () => {
           <Route path='/matching/user' element={<UserProfile/>}/>
            {/** ユーザー */}
           <Route path='/user' element={<NormalUserProfile/>}/>
+          <Route path='/user/delete' element={<DeleteUsers/>}/>
            {/** アカウント */}
           <Route path='/profile' element={<MyProfile/>}/>
           <Route path='/profile/edit' element={<Edit/>}/>
