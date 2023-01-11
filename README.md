@@ -1,10 +1,12 @@
 # 出来てること
-## 認証
+## ユーザー関係
 Cognito利用で
 - 新規登録
 - コード確認、再送
-- ログイン
+- ログイン(この時DynamoのUserテーブルにidとemailが保存される)
 - ログアウト
+- ユーザー退会機能(cognito, dynamo共に削除)
+
 ## マッチング
 - 条件に合致したユーザーを検索し表示
 - リクエストの通知と来ているリクエストの一覧の表示
@@ -82,10 +84,15 @@ npm start
 /dev/users?userid={ユーザーのid(マッチしたユーザーのidから取得しているもの)}
 
 ## 送られてきたリクエストの一覧を取得(GET)
-dev/coaching/notify?requid={current user id(cognito)}
+/dev/coaching/notify?requid={current user id(cognito)}
 
 ## 自分が送ったリクエストの一覧を取得(GET)
-dev/coaching/myreq?suid={current user id(cognito)}
+/dev/coaching/myreq?suid={current user id(cognito)}
 
 ## ユーザー情報編集(POST)(別APIでつくってる為エンドポイント変わってます。)
 /deploy0_0/send
+
+## cognitoユーザープールからユーザーを削除
+/dev/user/destroy?userid={current user id}
+## dynamoDB Userテーブルからユーザーのidとemailを削除
+/dev/user/destroydb?userid={current user id}
