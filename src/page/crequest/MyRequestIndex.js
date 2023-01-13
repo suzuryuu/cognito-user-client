@@ -55,7 +55,7 @@ const MyRequestIndex = () => {
         }
         // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
         else if(JSONResultStr == '[]'){
-            list = ["あなたはまだリクエストを送っていないようです。"];
+            list = [""];
         }
         else{
             //console.log("current-json-value<string>:"+JSONResultStr)

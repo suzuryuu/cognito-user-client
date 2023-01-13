@@ -10,27 +10,36 @@ import axios from 'axios'
 
 import { Button } from "primereact/button"
 // S3とか使って好きなアイコン設定できるようにする？
+import { useState } from "react";
 import img from "../../style/user.jpg"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import ReactStars from "react-rating-stars-component"
 import '../../style/matching.css'
 import { Link } from 'react-router-dom'
-
+import currentUser from '../common/getCurrentUser';
 /*星マークの受付*/
 const ratingChanged = (newRating) => {}
 
+// Box要素内はButtonのLink toが効かないのでonClickで遷移メソッドを呼ぶ
+const onClickMoveToEdit = () =>{
+  window.location.href = "/profile/edit"
+}
 
 const MyProfile = () => {
     var [JSONResultStr, setJSONStr] = React.useState('')
 
-    const search = useLocation().search
-    const query = new URLSearchParams(search)
-    const id = query.get('id')
-    const queryParam = '?userid=' + id;
+    /*プロフィール画像処理*/
+  const [imagecrop, setimagecrop] = useState("");
+  const [src] = useState(false);
+  const [profile, setprofile] = useState([]);
+  const [pview, setpview] = useState(false);
+  const profileFinal = profile.map((item) => item.pview);
 
+    
     const API_ENDPOINT = apigatewatConf.END_POINT_URL
     const matchingRoute = '/dev/users'
+    const queryParam = '?userid=' + currentUser.ID;
     const requestUrl = API_ENDPOINT + matchingRoute + queryParam
 
     // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
@@ -41,11 +50,32 @@ const MyProfile = () => {
         }).then((res) => {
             setJSONStr(JSON.stringify(res.data))
             console.log(res.data)
+            setpview(
+              res.data[0].picture
+            )
             console.log("データ取得成功")
         }).catch((e)=>{
             alert('マッチングの為の入力が不十分です。')
         })
     }, [])
+    
+    /*
+    編集処理
+    const onClose = () => {
+      setpview(null);
+    };
+  
+    const onCrop = (view) => {
+      setpview(view);
+    };
+  
+    const saveCropImage = () => {
+      if (pview != pview) {
+        setprofile([...profile, { pview }]);
+      } else {
+        setimagecrop(false);
+      }
+    }*/
 
     var json = ""
     var nickname = ""
@@ -77,14 +107,16 @@ const MyProfile = () => {
             <Grid>
               {/*画像サイズ指定　初期画像は{img}user.jpg*/}
               <img
-                src={img}
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-              />
+            style={{
+              width: "200px",
+              height: "200px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+            /*初期画像*/
+            src={profileFinal.length ? profileFinal : pview}
+            alt=""
+          />
             </Grid>
     
             {/*マッチングしたユーザ名*/}
@@ -109,20 +141,19 @@ const MyProfile = () => {
                 <p>教えたいスキルがあるゲーム:{haveSkill}</p>
                 <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             </Grid>
-            ボタンにLinktoを指定してもなぜか飛ばないので臨時でptag link to いれてる
+            {/*ボタンにLinktoを指定してもなぜか飛ばないので臨時でptag link to いれてる*/}
             <Grid item xs={5} sm={8} pt={5}>
               <Button
                 style={{
                   width: "300px",
                   height: "50px",
                 }}
+                onClick={onClickMoveToEdit}
                 /*label="編集する"
                 href="/edit"*/
-              >{<p><Link to="/profile/edit">編集する</Link></p>}</Button>
+              >{<p>編集する</p>}</Button>
             </Grid>
-          
             </Grid>
-            
         </Box>
         </div>
         /* <div className="matcheduser">          

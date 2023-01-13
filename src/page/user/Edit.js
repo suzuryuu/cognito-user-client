@@ -31,7 +31,23 @@ export default function Edit() {
   const [src] = useState(false);
   const [profile, setprofile] = useState([]);
   const [pview, setpview] = useState(false);
+
+  /*サムネイル画像処理*/
+  const [thumbnail_imagecrop, setthumbnail_imagecrop] = useState("");
+  const [thumbnail_src] = useState(false);
+  const [thumbnail_profile, setthumbnail_profile] = useState([]);
+  const [thumbnail_pview, setthumbnail_pview] = useState(false);
+
   const profileFinal = profile.map((item) => item.pview);
+
+    //マウント時に初期プロフィール画像を設定
+    useEffect(() => {
+      // Update the document title using the browser API
+      setpview(
+        img
+      );
+  
+    },[]);
   // 入力欄に現在の名前を表示してみる
   var [JSONResultStr, setJSONStr] = React.useState('')
 
@@ -47,8 +63,17 @@ export default function Edit() {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
       }).then((res) => {
-          setJSONStr(JSON.stringify(res.data))
-          console.log(res.data)
+        console.log(res.data[0].picture)
+        setpview(
+          res.data[0].picture
+        )
+        values.nickname = res.data[0].nickname
+        values.intro = res.data[0].intro
+        values.haveSkill = res.data[0].haveSkill
+        values.wantSkill = res.data[0].wantSkill
+        values.picture = res.data[0].picture
+        values.thumbnail = res.data[0].thumbnail
+        console.log(values)
           console.log("データ取得成功")
       }).catch((e)=>{
           alert('データ取得エラー')
@@ -99,11 +124,13 @@ export default function Edit() {
 
   // 値を変更した時にvalueに一時保存
   const [values, setValues] = React.useState({
+    uid : currentUserID,
     nickname : '',
     intro : '',
     haveSkill : '',
     wantSkill : '',
-    uid : currentUserID
+    picture : '',
+    thumbnail : '',
   });
 
   //nicknameの値を更新
@@ -125,7 +152,11 @@ export default function Edit() {
 
   //　APIで編集結果を送信
   const onClickGetAPI = async() => {
+    //pictureにプレビューした画像のバイナリを格納
+    values.picture = pview
+    values.thumbnail = "アイコン"
 
+    console.log(values)
     const URL = apigatewayConf.EDIT_END_POINT + "/deploy0_0/send"
     
     try {
@@ -138,14 +169,17 @@ export default function Edit() {
         });
         console.log(response.data)
         alert('編集内容を保存しました。')
-        window.location.href = "/profile?id="+currentUserID
+        window.location.href = "/profile"
     } catch (error) {
         console.error(error)
         alert('リクエスト処理に失敗しました')
       }
     }
 
-
+   // Link toがBox内のボタンだと効かないので 
+   const onClickMoveToDelete = () =>{
+    window.location.href = "/user/delete" 
+   } 
   return (
     <Box>
       <Button
@@ -176,7 +210,7 @@ export default function Edit() {
             }}
             onClick={() => setimagecrop(true)}
             /*初期画像*/
-            src={profileFinal.length ? profileFinal : img}
+            src={profileFinal.length ? profileFinal : pview}
             alt=""
           />
 
@@ -271,15 +305,14 @@ export default function Edit() {
            style={{height: 100, width: 180}}
            onClick={onClickGetAPI}
            >保存
-           </Button>
-           <Button
+        </Button>
+        <Button
            variant="contained"
            color="primary"
            style={{height: 100, width: 180,}}
-           component={Link}
-           to="/matching"
+           onClick={onClickMoveToDelete}
            >退会する
-           </Button>
+        </Button>
         </Grid>
       </Grid>
     </Box>

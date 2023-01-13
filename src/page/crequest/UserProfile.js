@@ -87,20 +87,37 @@ const RequestedUserProfile = () => {
             var statusToJapanese = ""
             if (reqStatus == "accept") {
                statusToJapanese = "承認"
-            } else if (reqStatus == "decline") {
-               statusToJapanese = "拒否"
             }
-            alert('リクエスト確認完了:' + statusToJapanese)
+            alert('リクエスト確認完了: 承認')
             window.location.href="/requests"
         } catch (error) {
             console.error(error)
-
-            if (reqStatus == "accept") {
-                alert("承認に失敗しました")
-            } else if (reqStatus == "decline") {
-                alert("拒否に失敗しました")
-            }
+            alert("承認に失敗しました")
         }
+    }
+    // 拒否したらリクエストを削除するように変更
+    const callDeleteReqSession = async() =>{
+      const API_ENDPOINT = apigatewayConf.END_POINT_URL
+      const route = "/dev/coaching/destroyreq"
+      const query = "?crPK=" + reqIdparam
+      const reqUrl = API_ENDPOINT + route + query
+      
+      try {
+        const response = await axios.delete(reqUrl,
+          {
+              headers: {
+                  'X-Api-Key': apigatewayConf.API_KEY,
+                  'Content-Type': 'text/plain',
+              }
+          }
+        );
+          console.log(response.data)
+          alert('リクエスト確認完了: 拒否')
+          window.location.href="/requests"
+      } catch (error) {
+          console.error(error)
+          alert("拒否に失敗しました。")
+      }
     }
 
     const onClickAccept = () => {
@@ -108,7 +125,7 @@ const RequestedUserProfile = () => {
     }
 
     const onClickDecline = () => {
-        callEditStatusAPI("decline")
+        callDeleteReqSession()
     }
 
     return (

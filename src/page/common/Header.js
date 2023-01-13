@@ -20,15 +20,6 @@ const userPool = new CognitoUserPool({
   ClientId: awsConfiguration.ClientId,
 })
 const cognitoUser = userPool.getCurrentUser()
-var currentUserID = 'User-ID-Value-From-Cognito' // 値を代入したいのでvarで定義
-
-// 認証してる状態じゃないと取得できないので
-if(cognitoUser != null){
-    currentUserID = cognitoUser.getUsername()
-}
-
-// UserProfileへのパス
-const currentUserProfileLinkPath = "/profile?id=" + currentUserID
 
 const signOut = () => {
   if (cognitoUser) {
@@ -99,7 +90,7 @@ export default function MenuAppBar() {
             >
               <MenuItem onClick={handleClose}>
                 <a /*href={currentUserProfileLinkPath} target={"_blank"}*/>
-                  <Link to={currentUserProfileLinkPath}>Profile</Link>
+                  <Link to={'/profile'}>Profile</Link>
                 </a>
               </MenuItem>
               <MenuItem onClick={handleClose}>

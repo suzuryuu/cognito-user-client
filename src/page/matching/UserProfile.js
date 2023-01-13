@@ -21,6 +21,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import ReactStars from "react-rating-stars-component";
 import '../../style/matching.css'
+import currentUser from '../common/getCurrentUser'
 
 
 // 認証情報使用
@@ -107,7 +108,30 @@ const UserProfile = () => {
             alert('リクエスト処理に失敗しました')
         }
     }
-    
+    // ユーザー保留機能
+    const pendingUserForRequest = async() =>{
+      const API_ENDPOINT = apigatewayConf.END_POINT_URL
+      const creqRoute = "/dev/coaching/pending"
+      // uid = 保留されるユーザー puid = 保留をするユーザー(自分)
+      const creqQuery = "?uid="+ userID + "&puid=" + currentUser.ID
+      const creqURL = API_ENDPOINT + creqRoute + creqQuery;
+      try {
+          const response = await axios.post(creqURL,{},
+              {
+                  headers: {
+                      'X-Api-Key': apigatewayConf.API_KEY,
+                      'Content-Type':'text/plain',           
+                  }
+              }         
+          );
+          console.log(response.data)
+          alert('ユーザーを保留しました')
+      } catch (error) {
+          console.error(error)
+          alert('リクエスト処理に失敗しました')
+      }
+    }
+
     return (
         <div className="matchedUserInfo">
         <Box>
@@ -171,6 +195,7 @@ const UserProfile = () => {
                   height: "50px",
                 }}
                 label="保留する"
+                onClick={pendingUserForRequest}
               />
             </Grid>
           </Grid>
