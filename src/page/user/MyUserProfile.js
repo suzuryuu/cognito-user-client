@@ -27,7 +27,9 @@ const onClickMoveToEdit = () =>{
 }
 
 const MyProfile = () => {
-    var [JSONResultStr, setJSONStr] = React.useState('')
+
+
+  var [JSONResultStr, setJSONStr] = React.useState('')
 
     /*プロフィール画像処理*/
   const [imagecrop, setimagecrop] = useState("");
@@ -55,7 +57,7 @@ const MyProfile = () => {
             )
             console.log("データ取得成功")
         }).catch((e)=>{
-            alert('マッチングの為の入力が不十分です。')
+            console.log(e)
         })
     }, [])
     

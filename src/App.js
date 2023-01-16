@@ -28,6 +28,7 @@ import Edit from './page/user/Edit';
 import DeleteUsers from './page/user/DeleteUser';
 import ChatWithMatchedUser from './page/chat/chat';
 import PendingUserIndex from './page/crequest/pending/PendingIndex';
+import TESTChat from './page/front-end-test/TESTchat';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -74,6 +75,7 @@ const App = () => {
           {/** フロントエンドテスト表示よう */}
           <Route path='/testmatchuser' element={<Matchinguser/>}/>
           <Route path='/testindex' element={<Home />}/>
+          <Route path='/testChat' element={<TESTChat />}/>
         </Routes>
         </BrowserRouter>
       )
