@@ -65,16 +65,25 @@ const RequestIndex = () => {
                 const sendersID = json[i].sender_uid
                 // リクエストモデルのid
                 const reqPKprm = json[i].id
+                const chatRoomId = json[i].room_id
+
+                // roomidが初期値の場合 chat?id=noneにアクセスしてチャットを投稿することを防ぐ
+                if(chatRoomId == "none"){
+                    chatRoomId = ""
+                }
                 const idToQueryPath = "/requests/user?id=" + sendersID + "&reqIdprm=" + reqPKprm
+                const pathForChat = "/chat?id=" + chatRoomId;
                 const requestStatus = json[i].reqStatus
                 var message=  ""
                 var dmLink = ""
+                var linkToDetails = ""
                 if(requestStatus == "unconfirm"){
                     message = "まだ確認していません。"
+                    linkToDetails = <Link to={idToQueryPath}>詳細を確認する</Link>
                 }
                 else if(requestStatus == "accept"){
                     message = "承認しました。"
-                    dmLink = <a href="/">dmへ</a>
+                    dmLink = <a href={pathForChat}>dmへ</a>
                 }else if(requestStatus == "decline"){
                     message = "拒否しました。"
                 }
@@ -83,7 +92,7 @@ const RequestIndex = () => {
                     <Grid item xs={12} className="reqIndex">
                     <p>リクエストを送信したユーザーID:{sendersID}</p>
                     <p>リクエストを{message}{dmLink}</p>
-                    <p><Link to={idToQueryPath}>詳細を確認する</Link></p>
+                    <p>{linkToDetails}</p>
                     </Grid>
                 </div>
                 )

@@ -63,7 +63,8 @@ const MyRequestIndex = () => {
             for(var i = 0; i < json.length; i++){
                 const requestedID = json[i].requested_uid
                 const status = json[i].reqStatus;
-
+                const chatRoomId = json[i].room_id;
+                const pathForChat = "/chat?id=" + chatRoomId;
                 //　状態分け
                 var message = "";
                 var link = ""
@@ -71,7 +72,7 @@ const MyRequestIndex = () => {
                     message = "未確認です。"
                 }else if(status == "accept"){
                     message = "承認されました。" 
-                    link = <a href="">dmへ</a>
+                    link = <a href={pathForChat}>dmへ</a>
                 }else if(status == "decline"){
                     message = "拒否されました。"
                 }

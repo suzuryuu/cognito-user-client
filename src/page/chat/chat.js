@@ -1,44 +1,49 @@
-import React,{ useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import apigatewayConf from '../../conf/apigateway'
 import currentUser from '../common/getCurrentUser'
 
-const ChatWithMatchedUser = () =>{
+const ChatWithMatchedUser = () => {
     const search = useLocation().search
     const query = new URLSearchParams(search)
-    const id = query.get('mid')
+    const chatRoomId = query.get('id')
 
     var [JSONResultStr, setJSONStr] = React.useState('')
+    var [ChatJSONStr, setChatJSON] = React.useState('')
     var [chatView, setChatView] = React.useState([])
     //const [userid, setUserId] = React.useState('')
     //const [name, setNickName]  = React.useState('') 
     const [message, setMessage] = React.useState('')
-    
+
     const changedMessageHanldler = (e) => setMessage(e.target.value)
     //chatView = "This is initial view"
     // APIから得たチャット一覧だと仮定する
-    var mList = []
-
-    const API_ENDPOINT = apigatewayConf.END_POINT_URL
-    const matchingRoute = '/dev/users'
-    const queryParam = '?userid=' + currentUser.ID;
-    const requestUrl = API_ENDPOINT + matchingRoute + queryParam
-
-    // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
-    useEffect(() => {
-        axios.get(requestUrl, {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': '*',
-        }).then((res) => {
-            setJSONStr(JSON.stringify(res.data))
-            console.log(res.data)
-            console.log("データ取得成功")
-        }).catch((e)=>{
-            console.log(e)
-        })
-    }, [])
     
+
+    const useUserInfo = async () => {
+        const API_ENDPOINT = apigatewayConf.END_POINT_URL
+        const matchingRoute = '/dev/users'
+        const queryParam = '?userid=' + currentUser.ID;
+        const requestUrl = API_ENDPOINT + matchingRoute + queryParam
+
+        // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+        useEffect(() => {
+            axios.get(requestUrl, {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            }).then((res) => {
+                setJSONStr(JSON.stringify(res.data))
+                console.log(res.data)
+                console.log("データ取得成功")
+            }).catch((e) => {
+                console.log(e)
+            })
+        }, [])
+    }
+
+    useUserInfo()
+
     // レスポンスで使うデータ
     var json = ""
     var nickname = ""
@@ -49,7 +54,7 @@ const ChatWithMatchedUser = () =>{
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
-    }else if (!JSONResultStr == '') {
+    } else if (!JSONResultStr == '') {
         json = JSON.parse(JSONResultStr)
         nickname = json[0].nickname
         userID = json[0].id
@@ -58,38 +63,117 @@ const ChatWithMatchedUser = () =>{
         intro = json[0].intro
     }
 
-    const UpDateView = () =>{
-        try{
-            var json = "";
-            for(var i = 0; i< json.length; i++){
-                // mList.push ( jsonの要素 ) マッチング相手の一覧表示の時をイメージする
-            }
-            setChatView(mList)
-        }catch(e){
-            alert("更新失敗")
-            alert(e)
-        }
+    const useInitialChatView = async() =>{
+        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid="+ chatRoomId
+
+        // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+        useEffect(() => {
+            axios.get(URL,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apigatewayConf.API_KEY
+                    }
+                }).then((res) => {
+                setChatJSON(JSON.stringify(res.data))
+                console.log(res.data)
+                console.log("データ取得成功")
+            }).catch((e) => {
+                console.log(e)
+            })
+        }, [])
     }
-    const PostChatMessage = () =>{
-        mList.push(
-            <p>nickname:{nickname}</p>,
-            <p>id:{userID}</p>,
-            <p>mesage: {message}</p>
-        )
+    useInitialChatView()
+    const updateChatView = async() =>{
+        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid="+ chatRoomId
+
+        try {
+            const response = await axios.get(URL,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apigatewayConf.API_KEY
+                    }
+                });
+            console.log(response.data)
+
+            const json = JSON.stringify(response.data)
+
+            setChatJSON(json)
+        } catch (error) {
+            console.error(error)
+            alert('リクエスト処理に失敗しました')
+        }
+        //return chatMessageList;
     }
 
-    const OnClickUpdateChat = () =>{
-        UpDateView()
+    //useUpdateChatView()
+    const JSONparse = ()=>{
+        var list = []
+        // JSONResultStrは最初空なので空リストを返す
+        if(ChatJSONStr == ''){
+            //console.log("current-json-value<string>:"+JSONResultStr)
+            list = [""]
+        }
+        // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
+        else if(ChatJSONStr == '[]'){
+            list = [""];
+        }
+        else{
+            //console.log("current-json-value<string>:"+JSONResultStr)
+            const json = JSON.parse(ChatJSONStr)
+            for(var i = 0; i < json.length; i++){
+                list.push(
+                    <p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
+                    <p>内容:{json[i].message}</p>,
+                )
+            }
+        }
+        return list
+    }
+
+
+    // チャット投稿API呼び出し(これは動く)
+    const PostChatMessage = async () => {
+        const valueForPostChat = {
+            room_id: chatRoomId,
+            nickname: nickname,
+            uid: currentUser.ID,
+            message: message
+        }
+
+        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/create"
+
+        try {
+            const response = await axios.post(URL, valueForPostChat,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apigatewayConf.API_KEY
+                    }
+                });
+            console.log(response.data)
+            //alert('チャット投稿成功')
+        } catch (error) {
+            console.error(error)
+            alert('リクエスト処理に失敗しました')
+        }
+    }
+
+    const OnClickUpdateChat = () => {
+        //useUserInfo()
+        updateChatView()
         PostChatMessage()
     }
-    return(
+   
+    return (
         <div className="chatwithmatchuser">
-            <p>マッチング相手をqueryより取る:{id}</p>
-            <p>{chatView}</p>
+        
+            <p>{JSONparse()}</p>
             <p>画面</p>
             <input type="text"
-            value={message}
-            onChange={changedMessageHanldler}
+                value={message}
+                onChange={changedMessageHanldler}
             ></input>
             <button onClick={OnClickUpdateChat}>チャット</button>
         </div>
