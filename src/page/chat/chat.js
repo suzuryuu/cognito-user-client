@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import apigatewayConf from '../../conf/apigateway'
 import currentUser from '../common/getCurrentUser'
+import "../../style/Chat.css";
 
 const ChatWithMatchedUser = () => {
     const search = useLocation().search
@@ -19,7 +20,7 @@ const ChatWithMatchedUser = () => {
     const changedMessageHanldler = (e) => setMessage(e.target.value)
     //chatView = "This is initial view"
     // APIから得たチャット一覧だと仮定する
-    
+
 
     const useUserInfo = async () => {
         const API_ENDPOINT = apigatewayConf.END_POINT_URL
@@ -63,8 +64,9 @@ const ChatWithMatchedUser = () => {
         intro = json[0].intro
     }
 
-    const useInitialChatView = async() =>{
-        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid="+ chatRoomId
+    // チャットメッセージ一覧を読み込み時に取得する
+    const useInitialChatView = async () => {
+        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid=" + chatRoomId
 
         // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
         useEffect(() => {
@@ -75,58 +77,56 @@ const ChatWithMatchedUser = () => {
                         'x-api-key': apigatewayConf.API_KEY
                     }
                 }).then((res) => {
-                setChatJSON(JSON.stringify(res.data))
-                console.log(res.data)
-                console.log("データ取得成功")
-            }).catch((e) => {
-                console.log(e)
-            })
+                    const jsonData = res.data
+                    setChatJSON(JSON.stringify(jsonData))
+                    console.log(jsonData)
+                    console.log("データ取得成功")
+                }).catch((e) => {
+                    console.log(e)
+                })
         }, [])
     }
     useInitialChatView()
-    const updateChatView = async() =>{
-        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid="+ chatRoomId
 
-        try {
-            const response = await axios.get(URL,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': apigatewayConf.API_KEY
-                    }
-                });
-            console.log(response.data)
-
-            const json = JSON.stringify(response.data)
-
-            setChatJSON(json)
-        } catch (error) {
-            console.error(error)
-            alert('リクエスト処理に失敗しました')
-        }
-        //return chatMessageList;
-    }
-
-    //useUpdateChatView()
-    const JSONparse = ()=>{
+    //jsonデータをパースしてListで返す
+    const JSONparse = () => {
         var list = []
         // JSONResultStrは最初空なので空リストを返す
-        if(ChatJSONStr == ''){
+        if (ChatJSONStr == '') {
             //console.log("current-json-value<string>:"+JSONResultStr)
             list = [""]
         }
         // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
-        else if(ChatJSONStr == '[]'){
+        else if (ChatJSONStr == '[]') {
             list = [""];
         }
-        else{
+        else {
             //console.log("current-json-value<string>:"+JSONResultStr)
             const json = JSON.parse(ChatJSONStr)
-            for(var i = 0; i < json.length; i++){
+            for (var i = 0; i < json.length; i++) {
+
+                const idForDevideMessageColor = json[i].user_id;
+                if(idForDevideMessageColor == currentUser.ID){
+                    list.push(
+                        <div class='mychatMessage'>
+                            <p>{json[i].nickname}({json[i].created_at})</p>
+                            <p>{json[i].message}</p>
+                        </div>,
+                        /*<p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
+                        <p>内容:{json[i].message}</p>,*/
+                    )
+
+                }else{
+
                 list.push(
-                    <p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
-                    <p>内容:{json[i].message}</p>,
+                    <div class='chatMessage'>
+                        <p>{json[i].nickname}({json[i].created_at})</p>
+                        <p>{json[i].message}</p>
+                    </div>,
+                    /*<p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
+                    <p>内容:{json[i].message}</p>,*/
                 )
+                }
             }
         }
         return list
@@ -135,6 +135,7 @@ const ChatWithMatchedUser = () => {
 
     // チャット投稿API呼び出し(これは動く)
     const PostChatMessage = async () => {
+        // POSTで投稿するList型データ
         const valueForPostChat = {
             room_id: chatRoomId,
             nickname: nickname,
@@ -152,6 +153,7 @@ const ChatWithMatchedUser = () => {
                         'x-api-key': apigatewayConf.API_KEY
                     }
                 });
+            console.log("チャットに投稿できました:")
             console.log(response.data)
             //alert('チャット投稿成功')
         } catch (error) {
@@ -161,21 +163,57 @@ const ChatWithMatchedUser = () => {
     }
 
     const OnClickUpdateChat = () => {
-        //useUserInfo()
-        updateChatView()
         PostChatMessage()
+        // 書き込みの後に更新を走らせたいので ReactHooksのルール的な感じで関数を入れることが出来ない？ので処理ごと書いてます
+        // 投稿から0.3秒後に更新APIを呼ぶことにしました
+        setTimeout(async () => {
+            const URL = apigatewayConf.END_POINT_URL + "/dev/chat/getchats?roomid=" + chatRoomId
+
+            try {
+                const response = await axios.get(URL,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key': apigatewayConf.API_KEY
+                        }
+                    });
+
+                const jsonData = response.data
+                console.log("書き込み処理の0.5秒あとに更新しました")
+                console.log(jsonData)
+
+                const json = JSON.stringify(jsonData)
+                setChatJSON(json)
+            } catch (error) {
+                console.error(error)
+                alert('リクエスト処理に失敗しました')
+            }
+            //return chatMessageList;
+
+        }, 500);
     }
-   
+
     return (
+
         <div className="chatwithmatchuser">
-        
-            <p>{JSONparse()}</p>
+            <div class="center">
+                <div class="title">チャット</div><br />
+                {/*ユーザの名前*/}
+                {JSONparse()}
+                <div class="yohaku"></div>
+                {/*入力場所*/}
+            </div>
+            <div className='chatBox'>
+                <textarea value={message} onChange={changedMessageHanldler}></textarea>
+                <button class="button" onClick={OnClickUpdateChat}>送信</button>
+                </div>
+            {/*<p>{JSONparse()}</p>
             <p>画面</p>
             <input type="text"
                 value={message}
                 onChange={changedMessageHanldler}
             ></input>
-            <button onClick={OnClickUpdateChat}>チャット</button>
+    <button onClick={OnClickUpdateChat}>送信</button>*/}
         </div>
     )
 }

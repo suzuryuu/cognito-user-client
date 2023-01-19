@@ -1,46 +1,20 @@
-//準備されているチャットのCSSのインポート
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import {
-  MainContainer,
-  ChatContainer,
-  MessageList,
-  Message,
-  MessageInput,
-} from "@chatscope/chat-ui-kit-react";
+import "../../style/Chat.css";
 
-export default function TESTChat() {
+export default function Chat() {
   return (
-    //画面サイズ
-    <div style={{ position: "relative", height: "700px" }}>
-      <MainContainer>
-        <ChatContainer>
-          <MessageList>
-            {/*左側のユーザ messageに文字*/}
-            <Message
-              model={{
-                message: "Hello my friend",
-              }}
-            >
-              {/*senderで名前*/}
-              <Message.Footer sender="name" />
-            </Message>
-
-            <Message
-              model={{
-                message: "Hello my friend",
-              }}
-            >
-              {/*senderで名前*/}
-              <Message.Footer sender="name" />
-            </Message>
-          </MessageList>
-          {/*attachButtonは添付を使うかのもの MessageInputはメッセージを送信するためにいれるもの*/}
-          <MessageInput
-            placeholder="メッセージを入力してください"
-            attachButton={false}
-          />
-        </ChatContainer>
-      </MainContainer>
+    <div class="center">
+    <div class="title">チャット</div>
+    <br/>
+    {/*ユーザの名前*/}
+    <div>user</div>
+    <br/>
+    {/*入力したものが表示したい場所*/}
+    <text class='arrow_box'>abcaaaaaaaaaaaaaaaaaaaa</text>
+    
+    <div class="yohaku"></div>
+    {/*入力場所*/}
+    <textarea></textarea>
+    <button class="button" onClick={''}>送信</button>
     </div>
   );
 }

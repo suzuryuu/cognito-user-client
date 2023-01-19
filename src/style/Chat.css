@@ -1,0 +1,81 @@
+.center{
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 800px;
+  }
+  
+  .title{
+    background: #273246;
+    padding: 10px;
+    text-align: center;
+    font-size: 150%;
+    color: #ffffff;
+  }
+  
+  .yohaku{
+    margin: 40px;
+  }
+  
+  .chatMessage{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightcyan;
+    min-height: 80px;
+    max-height: 100%;
+    width: 420px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px gray;
+  }
+  .mychatMessage{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightskyblue;
+    min-height: 80px;
+    max-height: 100%;
+    width: 420px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px gray;
+  }
+ 
+  textarea{
+    resize: none;
+    font-size: 19px;
+    background:white;
+    height: 48px;
+    width: 500px;
+  }
+  
+  .arrow_box{
+    position:relative;
+    width:500px;
+    height:140px;
+    background: lightblue;
+    padding:20px;
+    text-align:left;
+    color:#333333;
+    font-size:14px;
+    font-weight:bold;
+  }
+  
+ 
+  .button  {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 240px;
+    padding: 10px 25px;
+    color: #FFF;
+    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    background: #6bb6ff;
+    border-radius: 8px;
+    border-bottom: solid 5px #1d7fde;
+  }
+  
+  .button:hover {
+    border-bottom: solid 2px #1d7fde;
+    transform: translateY(3px);
+  }
