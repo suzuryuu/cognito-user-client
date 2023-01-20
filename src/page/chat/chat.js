@@ -9,23 +9,31 @@ const ChatWithMatchedUser = () => {
     const search = useLocation().search
     const query = new URLSearchParams(search)
     const chatRoomId = query.get('id')
+    // chat相手uid 
+    const chatPartnerId = query.get('uid')
 
+    // current user data json(str)
     var [JSONResultStr, setJSONStr] = React.useState('')
+    // chat相手 user data json(str)
+    var [JSONPartnerInfo, setPartnerInfo] = React.useState('')
     var [ChatJSONStr, setChatJSON] = React.useState('')
-    var [chatView, setChatView] = React.useState([])
-    //const [userid, setUserId] = React.useState('')
-    //const [name, setNickName]  = React.useState('') 
     const [message, setMessage] = React.useState('')
 
     const changedMessageHanldler = (e) => setMessage(e.target.value)
     //chatView = "This is initial view"
     // APIから得たチャット一覧だと仮定する
 
-
-    const useUserInfo = async () => {
+    const useUserInfo = async (useridType) => {
         const API_ENDPOINT = apigatewayConf.END_POINT_URL
         const matchingRoute = '/dev/users'
-        const queryParam = '?userid=' + currentUser.ID;
+        var queryParam = '?userid=' + currentUser.ID
+
+        if(useridType == "current"){
+            queryParam = '?userid=' + currentUser.ID
+        }else if(useridType == "another"){
+            queryParam = '?userid=' + chatPartnerId
+        }
+
         const requestUrl = API_ENDPOINT + matchingRoute + queryParam
 
         // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
@@ -34,7 +42,11 @@ const ChatWithMatchedUser = () => {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': '*',
             }).then((res) => {
-                setJSONStr(JSON.stringify(res.data))
+                if(useridType == "current"){
+                    setJSONStr(JSON.stringify(res.data))
+                }else if(useridType == "another"){
+                    setPartnerInfo(JSON.stringify(res.data))
+                }
                 console.log(res.data)
                 console.log("データ取得成功")
             }).catch((e) => {
@@ -43,15 +55,18 @@ const ChatWithMatchedUser = () => {
         }, [])
     }
 
-    useUserInfo()
+    // current userの情報を取る
+    useUserInfo("current")
+    // 他のユーザー(今回はチャット相手)の情報を取る
+    useUserInfo("another")
 
     // レスポンスで使うデータ
     var json = ""
     var nickname = ""
     var userID = ""
-    var haveSkill = ""
+    /*var haveSkill = ""
     var wantSkill = ""
-    var intro = ""
+    var intro = ""*/
     if (JSONResultStr == '[]') {
         // 取得データが空の時
         nickname = "IDが該当するユーザー見つかりませんでした"
@@ -59,9 +74,22 @@ const ChatWithMatchedUser = () => {
         json = JSON.parse(JSONResultStr)
         nickname = json[0].nickname
         userID = json[0].id
-        haveSkill = json[0].haveSkill
+        /*haveSkill = json[0].haveSkill
         wantSkill = json[0].wantSkill
-        intro = json[0].intro
+        intro = json[0].intro*/
+    }
+
+    // chat相手のレスポンスデータ(partnerの頭文字をとってる)
+    var pJson = ""
+    var pUID = ""
+    var pNickname = ""
+
+    if(JSONPartnerInfo == '[]'){
+        nickname = "usr not found"
+    }else if (!JSONPartnerInfo == '') {
+        pJson = JSON.parse(JSONPartnerInfo)
+        pNickname = pJson[0].nickname
+        pUID = pJson[0].id
     }
 
     // チャットメッセージ一覧を読み込み時に取得する
@@ -104,7 +132,6 @@ const ChatWithMatchedUser = () => {
             //console.log("current-json-value<string>:"+JSONResultStr)
             const json = JSON.parse(ChatJSONStr)
             for (var i = 0; i < json.length; i++) {
-
                 const idForDevideMessageColor = json[i].user_id;
                 if(idForDevideMessageColor == currentUser.ID){
                     list.push(
@@ -163,7 +190,6 @@ const ChatWithMatchedUser = () => {
     }
 
     const OnClickUpdateChat = () => {
-        PostChatMessage()
         // 書き込みの後に更新を走らせたいので ReactHooksのルール的な感じで関数を入れることが出来ない？ので処理ごと書いてます
         // 投稿から0.3秒後に更新APIを呼ぶことにしました
         setTimeout(async () => {
@@ -191,22 +217,25 @@ const ChatWithMatchedUser = () => {
             //return chatMessageList;
 
         }, 500);
+
+        PostChatMessage()
     }
 
     return (
 
         <div className="chatwithmatchuser">
             <div class="center">
-                <div class="title">チャット</div><br />
+                <div class="title">ダイレクトメッセージ:{pNickname}(id:{pUID})</div><br />
                 {/*ユーザの名前*/}
                 {JSONparse()}
-                <div class="yohaku"></div>
+                {/*<div class="yohaku"></div>
                 {/*入力場所*/}
             </div>
+            {/** テキストボックスと送信ボタンをもう少しデザイン性が高いものにしてほしい */}
             <div className='chatBox'>
                 <textarea value={message} onChange={changedMessageHanldler}></textarea>
                 <button class="button" onClick={OnClickUpdateChat}>送信</button>
-                </div>
+            </div>
             {/*<p>{JSONparse()}</p>
             <p>画面</p>
             <input type="text"

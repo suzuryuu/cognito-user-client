@@ -2,10 +2,12 @@
     align-items: center;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 800px;
+    height: 700px;
   }
   
   .title{
+   /* position: absolute;
+    width: 100%;*/
     background: #273246;
     padding: 10px;
     text-align: center;
@@ -38,11 +40,15 @@
     box-shadow: 2px 2px 4px gray;
   }
  
+  .chatBox{
+    
+  }
+
   textarea{
     resize: none;
     font-size: 19px;
     background:white;
-    height: 48px;
+    height: 130px;
     width: 500px;
   }
   

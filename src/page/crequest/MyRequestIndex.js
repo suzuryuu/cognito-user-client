@@ -64,7 +64,7 @@ const MyRequestIndex = () => {
                 const requestedID = json[i].requested_uid
                 const status = json[i].reqStatus;
                 const chatRoomId = json[i].room_id;
-                const pathForChat = "/chat?id=" + chatRoomId;
+                const pathForChat = "/chat?id=" + chatRoomId + "&uid=" + requestedID;
                 //　状態分け
                 var message = "";
                 var link = ""
