@@ -85,7 +85,7 @@ const ChatWithMatchedUser = () => {
     var pNickname = ""
 
     if(JSONPartnerInfo == '[]'){
-        nickname = "usr not found"
+        pNickname = "usr not found"
     }else if (!JSONPartnerInfo == '') {
         pJson = JSON.parse(JSONPartnerInfo)
         pNickname = pJson[0].nickname
