@@ -63,7 +63,7 @@ export default function Edit() {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
       }).then((res) => {
-        console.log(res.data[0].picture)
+        console.log("画像データ"+ res.data[0].picture)
         setpview(
           res.data[0].picture
         )
@@ -76,6 +76,7 @@ export default function Edit() {
         console.log(values)
           console.log("データ取得成功")
       }).catch((e)=>{
+          // 基本問題ないのになぜかエラー起きる(APIリクエストを送るのが非同期だから)
           alert('データ取得エラー')
       })
   }, [])

@@ -18,7 +18,6 @@ const PendingUserIndex = () => {
     // 保留モデルのID
     var pendingID = ""
 
-
     const requestUrl = API_ENDPOINT + route + query
     // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
     useEffect(() => {

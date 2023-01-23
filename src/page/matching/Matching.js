@@ -100,6 +100,7 @@ const Matching = () => {
             //console.log("current-json-value<string>:"+JSONResultStr)
             const json = JSON.parse(JSONResultStr)
             for (var i = 0; i < json.length; i++) {
+                // console.log("画像データ:"+ json[i].picture)
                 const idToQueryPath = "/matching/user?id=" + json[i].id
                 list.push(
                     <div className="imageList">
@@ -107,7 +108,7 @@ const Matching = () => {
                             <ImageListItem key={img} cols={2}>
                                 <Link to={idToQueryPath}>
                                     <img
-                                        src={img}
+                                        src={json[i].picture}
                                     />
                                     <ImageListItemBar
                                         title={json[i].nickname}
