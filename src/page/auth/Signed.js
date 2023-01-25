@@ -11,6 +11,12 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import currentUser from '../common/getCurrentUser';
 
+//newsカード
+import valo from "../../style/valosen.jpg";
+import apex from "../../style/apexsen.jpg";
+import spla from "../../style/splasen.jpg";
+import "../../style/Home.css";
+
 // 認証情報使用
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
@@ -145,8 +151,7 @@ const Signed = () => {
   useCountFor("pending")
   return (
     <div className="authorizedMode">
-      <h1>Home</h1>
-      <h2>ここにデザイン要素追加出来るといいかも</h2>
+      <h2>HOME</h2>
       <Grid container justifyContent={'center'} columnGap={3} style={{}}>
         <Button
           variant="contained"
@@ -182,6 +187,51 @@ const Signed = () => {
         </Button>
         {/*<SignOut />*/}
       </Grid>
+
+      <div className='newscontent'>
+      {/*ニュース的なもの(dummy)**/}
+      <text class="text">
+        <>News</>
+      </text>
+      <hr />
+      <br />
+      <div class="hrtitle" />
+      <text class="game">VALORANT</text>
+      <p class="ichigyou">
+        <img src={valo} width="500" />
+        <a>
+          <span>まさか!?ヨル使いのエキスパート現る!!!～逆張りに学べ～</span>
+          <br />
+          <br />
+          <span>先週アクティブユーザー20人</span>
+        </a>
+      </p>
+      <hr />
+
+      <text class="game">Apex Legends</text>
+      <p class="ichigyou">
+        <img src={apex} width="500" />
+        <a>
+          <span>プレデターに挑戦中の猛者現る!!!</span>
+          <br />
+          <br />
+          <span>先週アクティブユーザー最多!!!</span>
+        </a>
+      </p>
+      <hr />
+
+      <text class="game">Splatoon</text>
+      <p class="ichigyou">
+        <img src={spla} width="500" />
+         <a>
+          <span>コーチングによりX帯到達者現る!!!</span>
+          <br />
+          <br />
+          <span>先週アクティブユーザー46人</span>
+          </a>
+      </p>
+      <hr />
+      </div>
     </div>
   )
 }

@@ -111,6 +111,7 @@ const PendingUserIndex = () => {
     return (
         <div className="pendingcontent">
             <h2>保留したユーザーの一覧</h2>
+            <p style={{color: 'gray', fontSize: 13}}>コーチングリクエストを送るかどうかで保留してるユーザーの一覧です</p>
             <Grid container justifyContent={'center'} columnGap={5} className='myreqUserContainer'>
                 {JSONparse()}
             </Grid>

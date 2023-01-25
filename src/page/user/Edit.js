@@ -63,7 +63,7 @@ export default function Edit() {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
       }).then((res) => {
-        console.log("画像データ"+ res.data[0].picture)
+        // console.log("画像データ"+ res.data[0].picture)
         setpview(
           res.data[0].picture
         )

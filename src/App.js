@@ -29,6 +29,10 @@ import DeleteUsers from './page/user/DeleteUser';
 import ChatWithMatchedUser from './page/chat/chat';
 import PendingUserIndex from './page/crequest/pending/PendingIndex';
 import TESTChat from './page/front-end-test/TESTchat';
+import Footer from './page/common/Footer';
+import TESTTITLE from './page/front-end-test/TitleTEST';
+import TestHome from './page/front-end-test/TESTHome';
+import Titleunder from './page/front-end-test/TestTitleUnder';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -42,14 +46,14 @@ var currentUserDataList = {}
 
 const App = () => {
 
-  const checkStatus = () => {
+  /** const checkStatus = () => {
     console.log(userPool)
     console.log(localStorage)
-  }
-
+  }*/
+  // 認証・未認証で表示ページを分ける
   const authentication = () => {
     const cognitoUser = userPool.getCurrentUser()
-   
+  
     if (cognitoUser) {
       return (
         <BrowserRouter>
@@ -76,7 +80,11 @@ const App = () => {
           <Route path='/testmatchuser' element={<Matchinguser/>}/>
           <Route path='/testindex' element={<Home />}/>
           <Route path='/testChat' element={<TESTChat />}/>
+          <Route path='/testHome' element={<TestHome />}/>
+          <Route path='/testTitleUnder' element={<Titleunder />}/>
+          <Route path='/testTitle' element={<TESTTITLE />}/>
         </Routes>
+        {/** <Footer></Footer>*/}
         </BrowserRouter>
       )
     } else {
@@ -98,8 +106,7 @@ const App = () => {
   return (
     <div className="App">
       { authentication() }
-    </div>
-       
+    </div>   
   )
 }
 

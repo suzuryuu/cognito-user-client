@@ -37,6 +37,7 @@
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-share": "^4.4.1",
     "react-star-ratings": "^2.3.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"

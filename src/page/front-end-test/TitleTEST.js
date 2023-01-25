@@ -5,10 +5,10 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import '../style/Title.css';
+import '../../style/Title.css';
 
 
-export default function Title() {
+export default function title() {
   return (
     <body class="ttlcontent">
     <Box class="body2">
@@ -37,7 +37,7 @@ export default function Title() {
             class="text1"
           />
           <Typography gutterBottom variant="h5" component="div" align="center">
-            <a href="/signup">登録はこちらから</a>
+            <a href="logon.html">登録はこちらから</a>
           </Typography>
 
           <Typography color="text.secondary"align="center" style={{color: "white"}}>
@@ -60,7 +60,7 @@ export default function Title() {
               component="div"
               align="center"
             >
-              <a href="/signin">登録済みの方はこちらから</a>
+              <a href="login.html">登録済みの方はこちらから</a>
             </Typography>
             <Typography color="text.secondary"align="center" style={{color: "white"}}>
             ＊メールアドレス、パスワードが必要になります。
@@ -77,10 +77,10 @@ export default function Title() {
             class="text1"
           />
           <Typography gutterBottom variant="h5" component="div" align="center">
-          <a href="/signin">退会はこちらから</a>
+          <a href="login.html">退会はこちらから</a>
           </Typography>
           <Typography color="text.secondary"align="center" style={{color: "white"}}>
-            ＊退会するとアカウントが消えます。ログイン後、ユーザー編集ページから退会してください。
+            ＊退会するとアカウントが消えます。
             </Typography>
         </CardContent>
       </Card>
@@ -88,4 +88,3 @@ export default function Title() {
     </body>
   );
 }
-
