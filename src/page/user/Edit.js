@@ -183,7 +183,8 @@ export default function Edit() {
    } 
   return (
     <Box>
-      <Button
+      <p>アカウント情報編集</p>
+      {/*<Button
         variant="outlined"
         color="primary"
         style={{
@@ -191,7 +192,7 @@ export default function Edit() {
           height: "50px",
         }}
         label="戻る"
-      />
+      />*/}
     
       {/*全体位置指定*/}
       <Grid

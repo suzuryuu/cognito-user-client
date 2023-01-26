@@ -55,7 +55,8 @@ const RequestedUserProfile = () => {
       )
       console.log("データ取得成功")
     }).catch((e) => {
-      alert('マッチングの為の入力が不十分です。')
+      console.log(e)
+      //alert('マッチングの為の入力が不十分です。')
     })
   }, [])
 

@@ -156,7 +156,7 @@ const Signed = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ height: 100, width: 250 }}
+          style={{ height: 80, width: 250}}
           component={Link}
           to="/matching"
         >マッチするユーザーを探す
@@ -164,7 +164,7 @@ const Signed = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ height: 100, width: 250 }}
+          style={{ height: 80, width: 250 }}
           component={Link}
           to="requests"
         >届いたリクエスト(<p style={{ color: 'yellow' }}>{notifycount}</p>)
@@ -172,7 +172,7 @@ const Signed = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ height: 100, width: 250 }}
+          style={{ height: 80, width: 250 }}
           component={Link}
           to="requests/yourself"
         >送ったリクエスト(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)
@@ -180,7 +180,7 @@ const Signed = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ height: 100, width: 250 }}
+          style={{ height: 80, width: 250 }}
           component={Link}
           to="requests/pending"
         >保留したユーザー(<p>{pendingUserCount}</p>)

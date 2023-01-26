@@ -19,7 +19,7 @@ import ReactStars from "react-rating-stars-component";
 import '../../style/matching.css'
 import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
-
+import { Rating } from '@mui/material'
 
 /*星マークの受付*/
 const ratingChanged = (newRating) => { };
@@ -57,7 +57,7 @@ const NormalUserProfile = () => {
       )
       console.log("データ取得成功")
     }).catch((e) => {
-      alert('マッチングの為の入力が不十分です。')
+      console.log(e)
     })
   }, [])
 
@@ -78,6 +78,11 @@ const NormalUserProfile = () => {
     wantSkill = json[0].wantSkill
     intro = json[0].intro
   }
+  
+  const onClickOpenFeedBackPage = () =>{
+    window.location.href = "/user/feedback?uid="+ userID
+  }
+
   return (
     <div className="normalUserProfile">
       <Box>
@@ -108,14 +113,13 @@ const NormalUserProfile = () => {
           <Grid>ID:{userID}</Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
-            評価(このへんはあとで機能追加するとこ)
-            <ReactStars
+            評価:
+            {/*<ReactStars
               count={5}
               onChange={ratingChanged}
               size={24}
               activeColor="#ffd700"
-            />
-            <label>実績: 件</label>
+            />*/}<Rating name="half-rating" defaultValue={4.5} precision={0.5} readOnly/>
           </Grid>
 
           <Grid>
@@ -124,6 +128,19 @@ const NormalUserProfile = () => {
           <Grid>
             <p>教えたいスキルがあるゲーム:{haveSkill}</p>
             <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
+          </Grid>
+          {/*<Grid>
+          <Button
+              style={{
+                width: "300px",
+                height: "50px",
+              }}
+              label="このユーザーを評価する"
+              onClick={onClickOpenFeedBackPage}
+            />
+            </Grid>*/}
+          <Grid>
+                   
           </Grid>
         </Grid>
       </Box>

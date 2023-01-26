@@ -10,6 +10,9 @@ import awsConfiguration from '../../conf/awsauth'
 import apigatewayConf from '../../conf/apigateway'
 import { useEffect } from 'react'
 import axios from 'axios'
+import ChatIcon from '@mui/icons-material/Chat'
+
+
 // 認証情報使用
 const userPool = new CognitoUserPool({
     UserPoolId: awsConfiguration.UserPoolId,
@@ -72,14 +75,17 @@ const RequestIndex = () => {
                     chatRoomId = ""
                 }
                 const idToQueryPath = "/requests/user?id=" + sendersID + "&reqIdprm=" + reqPKprm
+                // 承認したら普通のプロフィールに飛ぶようにする
+                const idToQueryPath2 = "/user?id=" + sendersID;
                 const pathForChat = "/chat?id=" + chatRoomId + "&uid=" + sendersID;
                 const requestStatus = json[i].reqStatus
-                var message=  ""
-                var dmLink = ""
-                var linkToDetails = ""
+                var message = ""
+                var dmLink  = ""
+                const linkToDetails = <Link to={idToQueryPath}>{sendersID}</Link>
+                const linkToNormalUserProfile = <Link to={idToQueryPath2}>{sendersID}</Link>
+                
                 if(requestStatus == "unconfirm"){
                     message = "まだ確認していません。"
-                    linkToDetails = <Link to={idToQueryPath}>詳細を確認する</Link>
                 }
                 else if(requestStatus == "accept"){
                     message = "承認しました。"
@@ -87,21 +93,35 @@ const RequestIndex = () => {
                 }else if(requestStatus == "decline"){
                     message = "拒否しました。"
                 }
-                list.push(
-                    <div>
-                    <Grid item xs={12} className="reqIndex">
-                    <p>リクエストを送信したユーザーID:{sendersID}</p>
-                    <p>リクエストを{message}{dmLink}</p>
-                    <p>{linkToDetails}</p>
-                    </Grid>
-                </div>
-                )
+
+                if(message == "承認しました。"){
+                    list.push(
+                        <div>
+                        <Grid item xs={12} className="reqIndexAccepted">
+                        <p>id:{linkToNormalUserProfile}</p>
+                        <p>リクエストを{message}<ChatIcon></ChatIcon>{dmLink}</p>
+                        </Grid>
+                    </div>
+                    )
+
+                }else if(message == "まだ確認していません。"){
+                    list.push(
+                        <div>
+                        <Grid item xs={12} className="reqIndex">
+                        <p>id:{linkToDetails}</p>
+                        <p>リクエストを{message}{dmLink}</p>
+                        </Grid>
+                    </div>
+                    )
+                }
+              
             }
         }
         return list
     }
     return(
-    <div><h2>リクエスト一覧</h2>
+    <div><h2>あなたに届いたリクエスト一覧</h2>
+        <p style={{ color: '', fontSize: 13 }}>最新順表示。承認したものは色が濃くなっています。</p>
         <Grid container justifyContent={'center'} columnGap={5}  className='myreqUserContainer'>
             {JSONparse()}
         </Grid>

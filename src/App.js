@@ -33,6 +33,7 @@ import Footer from './page/common/Footer';
 import TESTTITLE from './page/front-end-test/TitleTEST';
 import TestHome from './page/front-end-test/TESTHome';
 import Titleunder from './page/front-end-test/TestTitleUnder';
+import FeedBack from './page/user/FeedBack';
 // mini TODO resetpassword実装
 
 // 認証情報使用
@@ -66,6 +67,7 @@ const App = () => {
            {/** ユーザー */}
           <Route path='/user' element={<NormalUserProfile/>}/>
           <Route path='/user/delete' element={<DeleteUsers/>}/>
+          <Route path='/user/feedback' element={<FeedBack/>}/>
            {/** アカウント */}
           <Route path='/profile' element={<MyProfile/>}/>
           <Route path='/profile/edit' element={<Edit/>}/>
