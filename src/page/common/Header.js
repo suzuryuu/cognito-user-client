@@ -110,13 +110,13 @@ export default function MenuAppBar() {
   /*検索バー　プロフィールアイコン */
   // 検索ボタンとホームに戻るリンクがほしい->任せる
   return (<Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
+    <AppBar position="static" style={{ backgroundColor: "#3d3d3d"}}>
       <Toolbar>
         {/*ホームボタン　aタグにリンク*/}
         <Grid container sx={{ flexGrow: 1 }}>
           <a href="/">
             <IconButton>
-              <HomeIcon sx={{ fontSize: 49 }} color="black" />
+              <HomeIcon sx={{ fontSize: 49 }} style={{ backgroundColor: "white"}} />
             </IconButton>
           </a>
         </Grid>

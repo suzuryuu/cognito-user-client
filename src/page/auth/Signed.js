@@ -17,6 +17,13 @@ import apex from "../../style/apexsen.jpg";
 import spla from "../../style/splasen.jpg";
 import "../../style/Home.css";
 
+
+// MUIのアイコン
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import SendIcon from '@mui/icons-material/Send';
+import PendingIcon from '@mui/icons-material/Pending';
+
+
 // 認証情報使用
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
@@ -156,7 +163,7 @@ const Signed = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ height: 80, width: 250}}
+          style={{ height: 80, width: 250, }}
           component={Link}
           to="/matching"
         >マッチするユーザーを探す
@@ -167,7 +174,7 @@ const Signed = () => {
           style={{ height: 80, width: 250 }}
           component={Link}
           to="requests"
-        >届いたリクエスト(<p style={{ color: 'yellow' }}>{notifycount}</p>)
+        ><NotificationsActiveIcon></NotificationsActiveIcon>届いたリクエスト(<p style={{ color: 'yellow' }}>{notifycount}</p>)
         </Button>
         <Button
           variant="contained"
@@ -175,7 +182,7 @@ const Signed = () => {
           style={{ height: 80, width: 250 }}
           component={Link}
           to="requests/yourself"
-        >送ったリクエスト(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)
+        ><SendIcon></SendIcon>送ったリクエスト(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)
         </Button>
         <Button
           variant="contained"
@@ -183,7 +190,7 @@ const Signed = () => {
           style={{ height: 80, width: 250 }}
           component={Link}
           to="requests/pending"
-        >保留したユーザー(<p>{pendingUserCount}</p>)
+        ><PendingIcon></PendingIcon>保留したユーザー(<p>{pendingUserCount}</p>)
         </Button>
         {/*<SignOut />*/}
       </Grid>
