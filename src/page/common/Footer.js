@@ -13,49 +13,11 @@ import {
 
 export default function Footer() {
   return (
-    <Box>
-      <AppBar position="fixed" color="primary" sx={{top: "auto", bottom:0}}>
-        <Toolbar >
-          {/*利用規約に行く？　画面作成未定？*/}
-          <a href="#" target="_blank" style={{ color: "white" }}>
-            <Typography variant="h10" component="div">
-              利用規約
-            </Typography>
-          </a>
-
-          <Typography
-            variant="h10"
-            component="div"
-            textAlign={"center"}
-            sx={{ flexGrow: 1 }}
-          >
-            ©2023-team22
-          </Typography>
-
-          <Typography>
-            <FacebookShareButton
-              url={["シェアしたいURL"]}
-              quote={["シェア時に一緒に投稿したいテキスト"]}
-            >
-              <FacebookIcon round={true} />
-            </FacebookShareButton>
-
-            <LineShareButton
-              url={["シェアしたいURL"]}
-              quote={["シェア時に一緒に投稿したいテキスト"]}
-            >
-              <LineIcon round={true} />
-            </LineShareButton>
-
-            <TwitterShareButton
-              url={["シェアしたいURL"]}
-              quote={["シェア時に一緒に投稿したいテキスト"]}
-            >
-              <TwitterIcon round={true} />
-            </TwitterShareButton>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <div className="FooterContent">
+        <h2 style={{color: "white", paddingTop: 40}}>Copyright 2023 team22</h2>
+        <a href="#" style={{ color: "white", fontSize: 20}}>
+           利用規約
+        </a>
+    </div>
   );
 }

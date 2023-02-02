@@ -86,7 +86,7 @@ const App = () => {
           <Route path='/testTitleUnder' element={<Titleunder />}/>
           <Route path='/testTitle' element={<TESTTITLE />}/>
         </Routes>
-        {/** <Footer></Footer>*/}
+        
         </BrowserRouter>
       )
     } else {

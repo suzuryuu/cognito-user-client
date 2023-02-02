@@ -205,6 +205,13 @@ const Matching = () => {
                     variant="contained"
                     color="primary"
                     style={{ height: 55 }}
+                    onKeyPress={e =>{
+                        if (e.key == 'Enter') {
+                          e.preventDefault()
+                          handleCallAPI()
+                        }
+                       }
+                    }
                     onClick={handleCallAPI}
                 >検索
                 </Button>
