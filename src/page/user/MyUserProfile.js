@@ -7,8 +7,6 @@ import apigatewatConf from '../../conf/apigateway'
 import { useEffect } from 'react'
 
 import axios from 'axios'
-
-import { Button } from "primereact/button"
 // S3とか使って好きなアイコン設定できるようにする？
 import { useState } from "react";
 import img from "../../style/user.jpg"
@@ -18,6 +16,33 @@ import ReactStars from "react-rating-stars-component"
 import '../../style/matching.css'
 import { Link } from 'react-router-dom'
 import currentUser from '../common/getCurrentUser';
+import { Button } from "@mui/material";
+
+
+import { CognitoUserPool } from "amazon-cognito-identity-js"
+import awsConfiguration from '../../conf/awsauth'
+
+
+const userPool = new CognitoUserPool({
+  UserPoolId: awsConfiguration.UserPoolId,
+  ClientId: awsConfiguration.ClientId,
+})
+
+
+const signOut = () => {
+  const cognitoUser = userPool.getCurrentUser()
+  if (cognitoUser) {
+    cognitoUser.signOut()
+    // サインアウトしたらリロード
+    window.location.href="/"
+    localStorage.clear()
+    console.log('signed out')
+  } else {
+    localStorage.clear()
+    console.log('no user signing in')
+  }
+}
+
 /*星マークの受付*/
 const ratingChanged = (newRating) => {}
 
@@ -96,9 +121,13 @@ const MyProfile = () => {
         wantSkill = json[0].wantSkill
         intro = json[0].intro
     }
+    
+   
+     
+
     return (
         <div className="normalUserProfile">
-        <Box>
+        
           {/*全体位置指定*/}
           <Grid
             container
@@ -122,11 +151,11 @@ const MyProfile = () => {
             </Grid>
     
             {/*マッチングしたユーザ名*/}
-            <Grid>名前:{nickname}</Grid>
-            <Grid>ID:{userID}</Grid>
+            <Grid><h2>{nickname}</h2></Grid>
+            <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
             {/*星マーク指定　星の数 星のサイズ*/}
             <Grid>
-              評価(このへんはあとで機能追加するとこ)
+              平均評価
               <ReactStars
                 count={5}
                 onChange={ratingChanged}
@@ -144,19 +173,33 @@ const MyProfile = () => {
                 <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
             </Grid>
             {/*ボタンにLinktoを指定してもなぜか飛ばないので臨時でptag link to いれてる*/}
-            <Grid item xs={5} sm={8} pt={5}>
+            <Grid container justifyContent={"center"} columnGap={2}>
               <Button
+                variant="outlined"
+                color="warning"
                 style={{
-                  width: "300px",
+                  width: "150px",
                   height: "50px",
                 }}
                 onClick={onClickMoveToEdit}
                 /*label="編集する"
                 href="/edit"*/
               >{<p>編集する</p>}</Button>
+       
+              <Button
+                variant="contained"
+                color="error"
+                style={{
+                  width: "150px",
+                  height: "50px",
+                }}
+                onClick={signOut}
+                /*label="編集する"
+                href="/edit"*/
+              >{<p>ログアウト</p>}</Button>
             </Grid>
-            </Grid>
-        </Box>
+        </Grid>
+        
         </div>
         /* <div className="matcheduser">          
             <p>ユーザー名:{nickname}</p>

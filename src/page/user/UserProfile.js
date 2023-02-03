@@ -78,11 +78,56 @@ const NormalUserProfile = () => {
     wantSkill = json[0].wantSkill
     intro = json[0].intro
   }
+
+  // 評価一覧取得
+  console.log(userID)
   
-  const onClickOpenFeedBackPage = () =>{
-    window.location.href = "/user/feedback?uid="+ userID
+  var [JSONResultStrForFeedback, setJSONStrForFeedback] = React.useState('')
+  const useFeedBackInfo = () =>{
+    const URL =  apigatewatConf.END_POINT_URL + "/dev/users/feedback/get?id=" + id
+      // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+      useEffect(() => {
+          axios.get(URL, {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': '*',
+          }).then((res) => {
+              setJSONStrForFeedback(JSON.stringify(res.data))
+              console.log(res.data)
+              console.log("評価データ取得成功")
+          }).catch((e)=>{
+              console.log(e)
+          })
+      }, [])
   }
 
+  useFeedBackInfo()
+  // 評価一覧のDOM listを返す
+  const JSONparse = ()=>{
+      var list = []
+      // JSONResultStrは最初空なので空リストを返す
+      if(JSONResultStrForFeedback == ''){
+          //console.log("current-json-value<string>:"+JSONResultStr)
+          list = [""]
+      }
+      // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
+      else if(JSONResultStrForFeedback == '[]'){
+          list = ["評価した人はまだいないようです"];
+      }
+      else{
+          const json = JSON.parse(JSONResultStrForFeedback)
+          for(var i = 0; i < json.length; i++){
+
+
+              list.push(
+               <img src={json[i].picture } width="12%"></img>, 
+              <p>評価者:{json[i].fdb_nickname}</p>,
+              <p>☆{json[i].star}</p>,
+              <p>評価コメント:{json[i].content}</p>,
+              )
+          }
+      }
+      return list
+  }
   return (
     <div className="normalUserProfile">
       <Box>
@@ -109,8 +154,8 @@ const NormalUserProfile = () => {
           </Grid>
 
           {/*マッチングしたユーザ名*/}
-          <Grid>名前:{nickname}</Grid>
-          <Grid>ID:{userID}</Grid>
+          <Grid><h2>{nickname}</h2></Grid>
+          <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
             評価:
@@ -139,10 +184,11 @@ const NormalUserProfile = () => {
               onClick={onClickOpenFeedBackPage}
             />
             </Grid>*/}
-          <Grid>
-                   
-          </Grid>
+         
         </Grid>
+
+        <h2>このユーザーの評価</h2>
+        {JSONparse()}
       </Box>
     </div>
     /* <div className="matcheduser">          

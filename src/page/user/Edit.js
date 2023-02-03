@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Avatar from "react-avatar-edit";
 import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
+import { Button } from "@mui/material";
 import img from "../../style/user.jpg";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,6 +13,10 @@ import apigatewayConf from "../../conf/apigateway";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import { useEffect } from "react";
 import { Link } from 'react-router-dom';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
+
+import "../../style/edit.css"
 
 const userPool = new CognitoUserPool({
     UserPoolId: awsConfiguration.UserPoolId,
@@ -77,7 +81,7 @@ export default function Edit() {
           console.log("データ取得成功")
       }).catch((e)=>{
           // 基本問題ないのになぜかエラー起きる(APIリクエストを送るのが非同期だから)
-          alert('データ取得エラー')
+          // alert('データ取得エラー')
       })
   }, [])
 
@@ -120,7 +124,18 @@ export default function Edit() {
     { label: "ApexLegends" },
     { label: "Splatoon3" },
     { label: "Valorant" },
-    { label: "League of Legends" },
+    { label: "Rainbow Six Siege" },
+    { label: "Minecraft(PVP)" },
+    { label: "Fortnite" },
+    { label: "Superpeople" },
+    { label: "ApexLegends(エイム)" },
+    { label: "ApexLegends(立ち回り)" },
+    { label: "ApexLegends(キャラコン)" },
+    { label: "Valorant(エイム)" },
+    { label: "Valorant(マップ知識)" },
+    { label: "Valorant(立ち回り)" },
+    { label: "Splatoon3(立ち回り)" },
+
   ];
 
   // 値を変更した時にvalueに一時保存
@@ -183,7 +198,8 @@ export default function Edit() {
    } 
   return (
     <Box>
-      <p>アカウント情報編集</p>
+      <p style={{fontWeight: "bold"}}><ModeEditIcon></ModeEditIcon>プロフィール編集</p>
+      <hr class="edittitleLine"></hr>
       {/*<Button
         variant="outlined"
         color="primary"
@@ -300,18 +316,18 @@ export default function Edit() {
           />
         </Grid>
         
-        <Grid container justifyContent={'center'} columnGap={3} style={{paddingTop:25}}>
+        <Grid container justifyContent={'center'} columnGap={2} style={{paddingTop:25}}>
         <Button
-           variant="contained"
-           color="primary"
-           style={{height: 100, width: 180}}
+           variant="outlined"
+           color="secondary"
+           style={{height: 50, width: 150}}
            onClick={onClickGetAPI}
            >保存
         </Button>
         <Button
            variant="contained"
-           color="primary"
-           style={{height: 100, width: 180,}}
+           color="error"
+           style={{height: 50, width: 150,}}
            onClick={onClickMoveToDelete}
            >退会する
         </Button>

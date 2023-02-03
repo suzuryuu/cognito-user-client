@@ -38,18 +38,6 @@ const userPool = new CognitoUserPool({
 })
 const cognitoUser = userPool.getCurrentUser()
 
-const signOut = () => {
-  if (cognitoUser) {
-    cognitoUser.signOut()
-    // サインアウトしたらリロード
-    window.location.href = "/"
-    localStorage.clear()
-    console.log('signed out')
-  } else {
-    localStorage.clear()
-    console.log('no user signing in')
-  }
-}
 
 
 export default function MenuAppBar() {
@@ -246,7 +234,7 @@ export default function MenuAppBar() {
   return (<Box sx={{ flexGrow: 1 }}>
     <AppBar position="static" style={{ backgroundColor: "#f78b60", height: 160, display: "flex" }}>
       <Grid container justifyContent={"center"}  style={{}}columnGap={5} className="functions">
-        <h2><SportsEsportsIcon></SportsEsportsIcon>Mu-Tech</h2>
+        <a href="/" className="titleHref"><SportsEsportsIcon></SportsEsportsIcon>Mu-Tech</a>
         <Button
           variant="contained"
           color="warning"
@@ -276,11 +264,6 @@ export default function MenuAppBar() {
           to="/requests/pending"
         ><PendingIcon></PendingIcon>保留したユーザー(<p>{pendingUserCount}</p>)</Button>
         <div className="usercontent" style={{}}>
-          <a href="/">
-            <IconButton>
-              <HomeIcon sx={{ fontSize: 50 , paddingTop: 5,}}/>
-            </IconButton>
-          </a>
       
           <a href="/profile">
           <IconButton

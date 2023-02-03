@@ -12,8 +12,7 @@ import { paste } from '@testing-library/user-event/dist/paste'
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
 import { ConstructionOutlined } from '@mui/icons-material'
-
-import { Button } from "primereact/button";
+import { Button } from "@mui/material";
 // S3とか使って好きなアイコン設定できるようにする？
 import img from "../../style/user.jpg";
 import Box from "@mui/material/Box";
@@ -170,8 +169,8 @@ const UserProfile = () => {
           </Grid>
 
           {/*マッチングしたユーザ名*/}
-          <Grid>名前:{nickname}</Grid>
-          <Grid>ID:{userID}</Grid>
+          <Grid><h2>{nickname}</h2></Grid>
+          <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
             評価(このへんはあとで機能追加するとこ)
@@ -193,24 +192,28 @@ const UserProfile = () => {
           </Grid>
           <Grid item xs={5} sm={8} pt={5}>
             <Button
+              variant="contained"
+              color="warning"
               style={{
                 width: "300px",
                 height: "50px",
               }}
-              label="コーチングリクエストを送る"
               onClick={useCallCoachingRequestAPI}
-            />
+            >コーチングリクエストを送る</Button>
           </Grid>
 
           <Grid item xs={5} sm={8} pt={5}>
             <Button
+             variant="contained"
+             color="warning"
               style={{
                 width: "300px",
                 height: "50px",
+                marginBottom: 150
               }}
-              label="保留する"
+          
               onClick={pendingUserForRequest}
-            />
+            >保留する</Button>
           </Grid>
         </Grid>
       </Box>

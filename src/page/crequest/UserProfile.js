@@ -6,8 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import apigatewayConf from '../../conf/apigateway'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-
-import { Button } from "primereact/button";
+import { Button } from "@mui/material";
 // S3とか使って好きなアイコン設定できるようにする？
 import img from "../../style/user.jpg";
 import Box from "@mui/material/Box";
@@ -166,8 +165,8 @@ const RequestedUserProfile = () => {
           </Grid>
 
           {/*マッチングしたユーザ名*/}
-          <Grid>名前:{nickname}</Grid>
-          <Grid>ID:{userID}</Grid>
+          <Grid><h2>{nickname}</h2></Grid>
+          <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
 
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
@@ -187,24 +186,26 @@ const RequestedUserProfile = () => {
 
           <Grid item xs={5} sm={8} pt={5}>
             <Button
+              variant="contained"
+              color="success"
               style={{
                 width: "300px",
                 height: "50px",
               }}
-              label="承認"
               onClick={onClickAccept}
-            />
+            >✔承認</Button>
           </Grid>
 
           <Grid item xs={5} sm={8} pt={5}>
             <Button
+              variant="contained"
+              color="error"
               style={{
                 width: "300px",
                 height: "50px",
               }}
-              label="拒否"
               onClick={onClickDecline}
-            />
+            >✖拒否</Button>
           </Grid>
         </Grid>
       </Box>
