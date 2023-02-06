@@ -1,0 +1,23 @@
+.usrfdContent{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    min-height: 150px;
+    
+    border-radius: 10px;
+    background-color:  #e4eef5;
+    box-shadow: 2px 2px 4px gray;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+.picnamestar{
+    text-align: left;
+    padding-left: 20px;
+    width: 200px;    
+}
+
+.feedbackcomment p{
+    text-align: left;
+}
+

@@ -14,7 +14,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import IconButton from "@mui/material/IconButton";*/
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
-import Button from '@material-ui/core/Button'
+import { Button } from '@mui/material'
 import Autocomplete from "@mui/material/Autocomplete"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import ForumIcon from "@mui/icons-material/Forum"
@@ -203,8 +203,8 @@ const Matching = () => {
                 />
                 <Button
                     variant="contained"
-                    color="primary"
-                    style={{ height: 55 }}
+                    color="warning"
+                    style={{ height: 55, width: 70 }}
                     onKeyPress={e =>{
                         if (e.key == 'Enter') {
                           e.preventDefault()

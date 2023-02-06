@@ -9,17 +9,18 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { paste } from '@testing-library/user-event/dist/paste'
 
-import { Button } from "primereact/button";
+import { Button } from "@mui/material";
 // S3とか使って好きなアイコン設定できるようにする？
 import img from "../../style/user.jpg";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import ReactStars from "react-rating-stars-component";
-import '../../style/matching.css'
-import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 import { Rating } from '@mui/material'
+import '../../style/profile.css'
+import { margin } from '@mui/system'
+
 
 /*星マークの受付*/
 const ratingChanged = (newRating) => { };
@@ -101,6 +102,11 @@ const NormalUserProfile = () => {
   }
 
   useFeedBackInfo()
+
+  // 平均評価用
+  var avgScoreList = []
+  // 平均値
+  var avgScore = 0
   // 評価一覧のDOM listを返す
   const JSONparse = ()=>{
       var list = []
@@ -111,23 +117,31 @@ const NormalUserProfile = () => {
       }
       // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
       else if(JSONResultStrForFeedback == '[]'){
-          list = ["評価した人はまだいないようです"];
+          list.push(<h2>評価した人はまだいません</h2>)
       }
       else{
           const json = JSON.parse(JSONResultStrForFeedback)
           for(var i = 0; i < json.length; i++){
-
-
+              // user feedback content
               list.push(
-               <img src={json[i].picture } width="12%"></img>, 
-              <p>評価者:{json[i].fdb_nickname}</p>,
-              <p>☆{json[i].star}</p>,
-              <p>評価コメント:{json[i].content}</p>,
+              <div className="usrfdContent">
+                <div className="picnamestar">
+                <img src={json[i].picture } width="18%"></img>
+                <p><a href={"/user?id="+ json[i].fdb_user_id}>{json[i].fdb_nickname}</a>さん</p>
+                <Rating name="half-rating" defaultValue={json[i].star} precision={0.5} readOnly/>
+                </div>
+                <div className="feedbackcomment">
+                <p style={{fontWeight:"bold" ,marginBottom: 5}}>コメント</p>  
+                <p style={{marginTop: 5}}>{json[i].content}</p>
+                </div>
+              </div>  
               )
+            // avgScoreList.push(json[i].star)
           }
       }
       return list
   }
+ 
   return (
     <div className="normalUserProfile">
       <Box>
@@ -164,7 +178,7 @@ const NormalUserProfile = () => {
               onChange={ratingChanged}
               size={24}
               activeColor="#ffd700"
-            />*/}<Rating name="half-rating" defaultValue={4.5} precision={0.5} readOnly/>
+            />*/}<Rating name="half-rating" defaultValue={2} precision={0.5} readOnly/>
           </Grid>
 
           <Grid>
@@ -188,6 +202,13 @@ const NormalUserProfile = () => {
         </Grid>
 
         <h2>このユーザーの評価</h2>
+        <Button
+          variant="outlined"
+          color="info"
+          style={{ height: 40, width: 200, marginTop: 20, marginBottom: 20 }}
+          component={Link}
+          to={"/user/fdback?id="+ id}
+        >あなたもこのユーザーを評価する</Button>
         {JSONparse()}
       </Box>
     </div>

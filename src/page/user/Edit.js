@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Avatar from "react-avatar-edit";
 import { Dialog } from "primereact/dialog";
-import { Button } from "@mui/material";
+import { Button } from "primereact/button";
+
 import img from "../../style/user.jpg";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -237,8 +238,8 @@ export default function Edit() {
             header={() => <p>プロフィール画像選択</p>}
             onHide={() => setimagecrop(false)} 
           >
-            <Button onHide={() => setimagecrop(false)} label="cansel"/> {/*キャンセルボタン*/}
-            <Button onClick={saveCropImage} label="save" icon="pi pi-check" />{/*保存ボタン*/}
+            <Button onHide={() => setimagecrop(false)} label="cansel" style={{ width: 150}}/> {/*キャンセルボタン*/}
+            <Button onClick={saveCropImage} label="save" icon="pi pi-check" style={{width: 150}} />{/*保存ボタン*/}
             <Avatar
               width={500}
               height={400}
@@ -326,8 +327,7 @@ export default function Edit() {
         </Button>
         <Button
            variant="contained"
-           color="error"
-           style={{height: 50, width: 150,}}
+           style={{height: 50, width: 150, backgroundColor: "red"}}
            onClick={onClickMoveToDelete}
            >退会する
         </Button>

@@ -15,25 +15,41 @@ import { useEffect } from 'react';
 
 
 export default function UserFeedBackPage() {
-    var [JSONResultStr, setJSONStr] = React.useState('')
+    // 評価対象者のidはクエリでとることに
+    const search = useLocation().search
+    const query = new URLSearchParams(search)
+    const feedbackTargetUserId = query.get('id')
 
-    const useUserInfo = () =>{
+    // 値を変更した時にvalueに一時保存
+    // nicknameと画像のデータ持たせたいけど空になる
+    const [values, setValues] = React.useState({
+        // uid : crrentUserID,
+        userid: feedbackTargetUserId,
+        fuid: currentUser.ID,
+        nickname: '',
+        picture: '',
+        star: '',
+        content: ''
+    })
+
+    const useUserInfo = () => {
 
         const API_ENDPOINT = apigatewayConf.END_POINT_URL
         const matchingRoute = '/dev/users'
         const queryParam = '?userid=' + currentUser.ID;
         const requestUrl = API_ENDPOINT + matchingRoute + queryParam
-    
+
         // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
         useEffect(() => {
             axios.get(requestUrl, {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': '*',
             }).then((res) => {
-                setJSONStr(JSON.stringify(res.data))
+                values.nickname = res.data[0].nickname
+                values.picture = res.data[0].picture
                 console.log(res.data)
                 console.log("データ取得成功")
-            }).catch((e)=>{
+            }).catch((e) => {
                 console.log(e)
             })
         }, [])
@@ -58,41 +74,6 @@ export default function UserFeedBackPage() {
       }
     }*/
     // userにかかわる情報
-    
-
-    var json = ""
-    var name = ""
-    var picturedata = ""
-    var usrvalue = []
-
-    if (JSONResultStr == '[]') {
-        // 取得データが空の時
-       console.log("value empty error")
-    }else if(JSONResultStr == ''){
-       console.log("value empty error")
-    }else{
-        json = JSON.parse(JSONResultStr)
-        name = json[0].nickname
-        picturedata = json[0].picture
-        usrvalue.push(name)
-    }
-     
-    // 評価対象者のidはクエリでとることに
-    const search = useLocation().search
-    const query = new URLSearchParams(search)
-    const feedbackTargetUserId = query.get('id')
-
-    // 値を変更した時にvalueに一時保存
-    // nicknameと画像のデータ持たせたいけど空になる
-    const [values, setValues] = React.useState({
-        // uid : crrentUserID,
-        userid: feedbackTargetUserId,
-        fuid: currentUser.ID,
-        nickname: name,
-        picture: picturedata,
-        star: '',
-        content: ''
-    })
 
     // starデータ取得部分
     const ratingChanged = newValue => {
@@ -121,6 +102,7 @@ export default function UserFeedBackPage() {
             console.log("評価の投稿に成功しました。")
             console.log(response.data)
             // ユーザープロフィールにリダイレクトする
+            window.location = "/user?id="+feedbackTargetUserId
         }
         catch (error) {
             console.error(error)
@@ -131,16 +113,15 @@ export default function UserFeedBackPage() {
 
     return (
         <div className='feedbackcontent'>
-            test my nickname{name}
-            test my picture data {picturedata}
+            <h2>評価ページ(ID:{feedbackTargetUserId})</h2>
             <div className="formContainer">
                 <form onSubmit>
-                    <h1>評価(ID:{feedbackTargetUserId})</h1>
                     <div className="uiForm">
                         <Grid>
                             <h2>5段階評価(必須)</h2>
                             <ReactStars
                                 count={5}
+                                style={{ texiAlign: "center"}}
                                 onChange={ratingChanged}
                                 size={24}
                             />
@@ -152,6 +133,7 @@ export default function UserFeedBackPage() {
                                         id="outlined-multiline-static"
                                         multiline
                                         rows={8}
+                                        style={{width: 400}}
                                         onChange={evalute_commentChanged('content')}
                                     />
                                 </div>

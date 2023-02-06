@@ -121,10 +121,7 @@ const MyProfile = () => {
         wantSkill = json[0].wantSkill
         intro = json[0].intro
     }
-    
-   
-     
-
+  
     return (
         <div className="normalUserProfile">
         
