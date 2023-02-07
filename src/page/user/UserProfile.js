@@ -3,7 +3,7 @@
 import React from 'react'
 import '../../App.css'
 import { useLocation, useNavigate } from 'react-router-dom'
-import apigatewatConf from '../../conf/apigateway'
+import apigatewayConf from '../../conf/apigateway'
 import { useEffect, useState } from 'react'
 
 import axios from 'axios'
@@ -41,7 +41,7 @@ const NormalUserProfile = () => {
   const id = query.get('id')
   const queryParam = '?userid=' + id;
 
-  const API_ENDPOINT = apigatewatConf.END_POINT_URL
+  const API_ENDPOINT = apigatewayConf.END_POINT_URL
   const matchingRoute = '/dev/users'
   const requestUrl = API_ENDPOINT + matchingRoute + queryParam
 
@@ -86,7 +86,7 @@ const NormalUserProfile = () => {
   var [JSONResultStrForFeedback, setJSONStrForFeedback] = React.useState('')
   var [avgScoreOfStar, setScore] = React.useState()
   const useFeedBackInfo = () =>{
-    const URL =  apigatewatConf.END_POINT_URL + "/dev/users/feedback/get?id=" + id
+    const URL =  apigatewayConf.END_POINT_URL + "/dev/users/feedback/get?id=" + id
       // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
       useEffect(() => {
           axios.get(URL, {
