@@ -84,6 +84,7 @@ const NormalUserProfile = () => {
   console.log(userID)
   
   var [JSONResultStrForFeedback, setJSONStrForFeedback] = React.useState('')
+  var [avgScoreOfStar, setScore] = React.useState()
   const useFeedBackInfo = () =>{
     const URL =  apigatewatConf.END_POINT_URL + "/dev/users/feedback/get?id=" + id
       // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
@@ -93,6 +94,16 @@ const NormalUserProfile = () => {
               'Access-Control-Allow-Headers': '*',
           }).then((res) => {
               setJSONStrForFeedback(JSON.stringify(res.data))
+              //　平均評価取得部分
+              var sum = 0;
+              for(var i = 0; i< res.data.length; i++){
+                sum += parseInt(res.data[i].star,10) // starデータは文字列なので
+              }
+              const data = sum / res.data.length
+              const digit = 1 // 少数点 n位まで四捨五入
+              const avgResult = data.toFixed(digit)
+              setScore(avgResult)
+              console.log("平均評価:"+avgResult)
               console.log(res.data)
               console.log("評価データ取得成功")
           }).catch((e)=>{
@@ -103,10 +114,6 @@ const NormalUserProfile = () => {
 
   useFeedBackInfo()
 
-  // 平均評価用
-  var avgScoreList = []
-  // 平均値
-  var avgScore = 0
   // 評価一覧のDOM listを返す
   const JSONparse = ()=>{
       var list = []
@@ -136,7 +143,6 @@ const NormalUserProfile = () => {
                 </div>
               </div>  
               )
-            // avgScoreList.push(json[i].star)
           }
       }
       return list
@@ -172,13 +178,14 @@ const NormalUserProfile = () => {
           <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
-            評価:
+            平均評価:
             {/*<ReactStars
               count={5}
               onChange={ratingChanged}
               size={24}
               activeColor="#ffd700"
-            />*/}<Rating name="half-rating" defaultValue={2} precision={0.5} readOnly/>
+            />*/}{/* これやりたいけどできない<Rating name="half-rating" defaultValue={parseInt(avgScoreOfStar,10)} precision={0.5} readOnly/>*/}
+            {avgScoreOfStar}/5
           </Grid>
 
           <Grid>

@@ -14,10 +14,12 @@ import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import ReactStars from "react-rating-stars-component"
 import '../../style/matching.css'
+import '../../style/profile.css'
+
 import { Link } from 'react-router-dom'
 import currentUser from '../common/getCurrentUser';
 import { Button } from "@mui/material";
-
+import { Rating } from "@mui/material";
 
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
@@ -122,6 +124,73 @@ const MyProfile = () => {
         intro = json[0].intro
     }
   
+
+      
+  var [JSONResultStrForFeedback, setJSONStrForFeedback] = React.useState('')
+  var [avgScoreOfStar, setScore] = React.useState()
+  const useFeedBackInfo = () =>{
+    const URL =  apigatewatConf.END_POINT_URL + "/dev/users/feedback/get?id=" + currentUser.ID
+      // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+      useEffect(() => {
+          axios.get(URL, {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': '*',
+          }).then((res) => {
+              setJSONStrForFeedback(JSON.stringify(res.data))
+              //　平均評価取得部分
+              var sum = 0;
+              for(var i = 0; i< res.data.length; i++){
+                sum += parseInt(res.data[i].star,10) // starデータは文字列なので
+              }
+              const data = sum / res.data.length
+              const digit = 1 // 少数点 n位まで四捨五入
+              const avgResult = data.toFixed(digit)
+              setScore(avgResult)
+              console.log("平均評価:"+avgResult)
+              console.log(res.data)
+              console.log("評価データ取得成功")
+          }).catch((e)=>{
+              console.log(e)
+          })
+      }, [])
+  }
+
+  useFeedBackInfo()
+
+  // 評価一覧のDOM listを返す
+  const JSONparse = ()=>{
+      var list = []
+      // JSONResultStrは最初空なので空リストを返す
+      if(JSONResultStrForFeedback == ''){
+          //console.log("current-json-value<string>:"+JSONResultStr)
+          list = [""]
+      }
+      // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
+      else if(JSONResultStrForFeedback == '[]'){
+          list.push(<h2>評価した人はまだいません</h2>)
+      }
+      else{
+          const json = JSON.parse(JSONResultStrForFeedback)
+          for(var i = 0; i < json.length; i++){
+              // user feedback content
+              list.push(
+              <div className="usrfdContent">
+                <div className="picnamestar">
+                <img src={json[i].picture } width="18%"></img>
+                <p><a href={"/user?id="+ json[i].fdb_user_id}>{json[i].fdb_nickname}</a>さん</p>
+                <Rating name="half-rating" defaultValue={json[i].star} precision={0.5} readOnly/>
+                </div>
+                <div className="feedbackcomment">
+                <p style={{fontWeight:"bold" ,marginBottom: 5}}>コメント</p>  
+                <p style={{marginTop: 5}}>{json[i].content}</p>
+                </div>
+              </div>  
+              )
+          }
+      }
+      return list
+  }
+ 
     return (
         <div className="normalUserProfile">
         
@@ -150,26 +219,7 @@ const MyProfile = () => {
             {/*マッチングしたユーザ名*/}
             <Grid><h2>{nickname}</h2></Grid>
             <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
-            {/*星マーク指定　星の数 星のサイズ*/}
-            <Grid>
-              平均評価
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={24}
-                activeColor="#ffd700"
-              />
-              <label>実績: 件</label>
-            </Grid>
-    
-            <Grid>
-              <p>自己紹介:{intro}</p>
-            </Grid>
-            <Grid>
-                <p>教えたいスキルがあるゲーム:{haveSkill}</p>
-                <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
-            </Grid>
-            {/*ボタンにLinktoを指定してもなぜか飛ばないので臨時でptag link to いれてる*/}
+
             <Grid container justifyContent={"center"} columnGap={2}>
               <Button
                 variant="outlined"
@@ -195,6 +245,27 @@ const MyProfile = () => {
                 href="/edit"*/
               >{<p>ログアウト</p>}</Button>
             </Grid>
+            {/*星マーク指定　星の数 星のサイズ*/}
+            <Grid>
+            平均評価:
+            {/*<ReactStars
+              count={5}
+              onChange={ratingChanged}
+              size={24}
+              activeColor="#ffd700"
+            />*/}{/* これやりたいけどできない<Rating name="half-rating" defaultValue={parseInt(avgScoreOfStar,10)} precision={0.5} readOnly/>*/}
+            {avgScoreOfStar}/5
+          </Grid>
+    
+            <Grid>
+              <p>自己紹介:{intro}</p>
+            </Grid>
+            <Grid>
+                <p>教えたいスキルがあるゲーム:{haveSkill}</p>
+                <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
+            </Grid>
+            <h2>あなたの評価</h2>
+            {JSONparse()}
         </Grid>
         
         </div>

@@ -20,8 +20,9 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import ReactStars from "react-rating-stars-component";
 import '../../style/matching.css'
+import '../../style/profile.css'
 import currentUser from '../common/getCurrentUser'
-
+import { Rating } from '@mui/material'
 
 // 認証情報使用
 const userPool = new CognitoUserPool({
@@ -142,6 +143,74 @@ const UserProfile = () => {
       alert('リクエスト処理に失敗しました')
     }
   }
+  // 評価一覧用の追加記述
+    
+  var [JSONResultStrForFeedback, setJSONStrForFeedback] = React.useState('')
+  var [avgScoreOfStar, setScore] = React.useState()
+  const useFeedBackInfo = () =>{
+    const URL =  apigatewayConf.END_POINT_URL + "/dev/users/feedback/get?id=" + id
+      // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+      useEffect(() => {
+          axios.get(URL, {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': '*',
+          }).then((res) => {
+              setJSONStrForFeedback(JSON.stringify(res.data))
+              //　平均評価取得部分
+              var sum = 0;
+              for(var i = 0; i< res.data.length; i++){
+                sum += parseInt(res.data[i].star,10) // starデータは文字列なので
+              }
+              const data = sum / res.data.length
+              const digit = 1 // 少数点 n位まで四捨五入
+              const avgResult = data.toFixed(digit)
+              setScore(avgResult)
+              console.log("平均評価:"+avgResult)
+              console.log(res.data)
+              console.log("評価データ取得成功")
+          }).catch((e)=>{
+              console.log(e)
+          })
+      }, [])
+  }
+
+  useFeedBackInfo()
+
+  // 評価一覧のDOM listを返す
+  const JSONparse = ()=>{
+      var list = []
+      // JSONResultStrは最初空なので空リストを返す
+      if(JSONResultStrForFeedback == ''){
+          //console.log("current-json-value<string>:"+JSONResultStr)
+          list = [""]
+      }
+      // 該当ユーザーが見つからない場合空のjson配列が返ってくるので
+      else if(JSONResultStrForFeedback == '[]'){
+          list.push(<h2>評価した人はまだいません</h2>)
+      }
+      else{
+          const json = JSON.parse(JSONResultStrForFeedback)
+          for(var i = 0; i < json.length; i++){
+              // user feedback content
+              list.push(
+              <div className="usrfdContent">
+                <div className="picnamestar">
+                <img src={json[i].picture } width="18%"></img>
+                <p><a href={"/user?id="+ json[i].fdb_user_id}>{json[i].fdb_nickname}</a>さん</p>
+                <Rating name="half-rating" defaultValue={json[i].star} precision={0.5} readOnly/>
+                </div>
+                <div className="feedbackcomment">
+                <p style={{fontWeight:"bold" ,marginBottom: 5}}>コメント</p>  
+                <p style={{marginTop: 5}}>{json[i].content}</p>
+                </div>
+              </div>  
+              )
+          }
+      }
+      return list
+  }
+
+
 
   return (
     <div className="matchedUserInfo">
@@ -173,14 +242,14 @@ const UserProfile = () => {
           <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
-            評価(このへんはあとで機能追加するとこ)
-            <ReactStars
+            平均評価:
+            {/*<ReactStars
               count={5}
               onChange={ratingChanged}
               size={24}
               activeColor="#ffd700"
-            />
-            <label>実績: 件</label>
+            />*/}{/* これやりたいけどできない<Rating name="half-rating" defaultValue={parseInt(avgScoreOfStar,10)} precision={0.5} readOnly/>*/}
+            {avgScoreOfStar}/5
           </Grid>
 
           <Grid>
@@ -215,6 +284,9 @@ const UserProfile = () => {
               onClick={pendingUserForRequest}
             >保留する</Button>
           </Grid>
+
+          <h2>このユーザーの評価</h2>
+          {JSONparse()}
         </Grid>
       </Box>
     </div>
