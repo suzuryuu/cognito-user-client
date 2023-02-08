@@ -232,34 +232,34 @@ export default function MenuAppBar() {
   /*検索バー　プロフィールアイコン */
   // 検索ボタンとホームに戻るリンクがほしい->任せる
   return (<Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static" style={{ backgroundColor: "#f78b60", height: 160, display: "flex" }}>
+    <AppBar position="static" style={{ backgroundColor: "#f78b60", height: 120, display: "flex" }}>
       <Grid container justifyContent={"center"}  style={{}}columnGap={5} className="functions">
         <a href="/" className="titleHref"><SportsEsportsIcon></SportsEsportsIcon>Mu-Tech</a>
         <Button
           variant="contained"
           color="warning"
-          style={{ height: 100, width: 200, marginTop: 20 }}
+          style={{ height: 50, width: 200, marginTop: 30 }}
           component={Link}
           to="/matching"
         ><Search></Search></Button>
         <Button
           variant="contained"
           color="warning"
-          style={{ height: 100, width: 200, marginTop: 20 }}
+          style={{ height: 50, width: 200, marginTop: 30 }}
           component={Link}
           to="/requests"
         ><NotificationsActiveIcon></NotificationsActiveIcon>(<p style={{ color: 'yellow' }}>{notifycount}</p>)</Button>
         <Button
           variant="contained"
           color="warning"
-          style={{ height: 100, width: 200, marginTop: 20 }}
+          style={{ height: 50, width: 200, marginTop: 30 }}
           component={Link}
           to="/requests/yourself"
         ><SendIcon></SendIcon>(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)</Button>
         <Button
           variant="contained"
           color="warning"
-          style={{ height: 100, width: 200, marginTop: 20 }}
+          style={{ height: 50, width: 200, marginTop: 30 }}
           component={Link}
           to="/requests/pending"
         ><PendingIcon></PendingIcon>保留したユーザー(<p>{pendingUserCount}</p>)</Button>
@@ -272,7 +272,7 @@ export default function MenuAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               >
-              <AccountCircle sx={{ fontSize: 50,paddingTop: 5 }}/>
+              <AccountCircle sx={{ fontSize: 50,paddingTop: 3 }}/>
             
             </IconButton>
           </a>

@@ -242,23 +242,20 @@ const UserProfile = () => {
           <Grid><p style={{ fontSize: 12,color: "gray"}}>ID:{userID}</p></Grid>
           {/*星マーク指定　星の数 星のサイズ*/}
           <Grid>
-            平均評価:
-            {/*<ReactStars
-              count={5}
-              onChange={ratingChanged}
-              size={24}
-              activeColor="#ffd700"
-            />*/}{/* これやりたいけどできない<Rating name="half-rating" defaultValue={parseInt(avgScoreOfStar,10)} precision={0.5} readOnly/>*/}
-            {avgScoreOfStar}/5
+          <p style={{ fontWeight: "bold"}}>平均評価</p>
+          <h3 class="result-rating-rate">
+            <span class="star5_rating" data-rate={avgScoreOfStar}></span>
+            <span class="number_rating">{avgScoreOfStar}</span>
+          </h3>
           </Grid>
-
-          <Grid>
-            <p>自己紹介:{intro}</p>
-          </Grid>
-          <Grid>
-            <p>教えたいスキルがあるゲーム:{haveSkill}</p>
-            <p>教わりたいスキルがあるゲーム:{wantSkill}</p>
-          </Grid>
+    
+            <Grid>
+              <p><b>自己紹介:</b>{intro}</p>
+            </Grid>
+            <Grid>
+                <p><b>教えたいスキルがあるゲーム:</b>{haveSkill}</p>
+                <p><b>教わりたいスキルがあるゲーム:</b>{wantSkill}</p>
+            </Grid>
           <Grid item xs={5} sm={8} pt={5}>
             <Button
               variant="contained"

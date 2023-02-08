@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../../App.css'
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button'
+import {Button} from '@mui/material'
 import Grid from "@mui/material/Grid";
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import '../../../style/reqIndex.css'

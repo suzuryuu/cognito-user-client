@@ -3,7 +3,7 @@ import '../../App.css'
 import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 import SignOut from '../../page/auth/SignOut'
-import Button from '@material-ui/core/Button'
+import {Button} from '@mui/material'
 import Grid from "@mui/material/Grid";
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'

@@ -1,7 +1,7 @@
 const awsConfiguration = {
     region: 'ap-northeast-1',
-    UserPoolId: 'xxxxxxxxxxxxxxxxxxx',
-    ClientId: 'xxxxxxxxxxxxxxxxxxxxx'
+    UserPoolId: 'xxxxxxxxxxxxxxxx',
+    ClientId: 'xxxxxxxxxxxxxxxxxx'
 };
   
 export default awsConfiguration;
