@@ -60,18 +60,10 @@ const PendingUserIndex = () => {
                 list.push(
                     <div>
                         <Grid item xs={12} className="reqIndex">
-                            <p>保留中のユーザーID:{userid}</p>
+                            <h2 style={{ paddingTop: 20}}><Link to={idToQueryPath}>{userid}</Link></h2>
                             <Button
                                 variant="contained"
-                                color="primary"
-                                style={{ height: 50, width: 100}}
-                                component={Link}
-                                to={idToQueryPath}
-                            >詳細
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="secondary"
+                                color="error"
                                 style={{ height: 50, width: 100}}
                                 onClick={onClickDeletePending}
                             >削除

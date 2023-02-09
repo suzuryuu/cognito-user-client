@@ -189,16 +189,16 @@ const Matching = () => {
             </Grid>*/}
                 <TextField
                     name="taskName"
-                    label="教えたい技術"
+                    label="教えたい"
                     sx={{ display: "flex", maxWidth: 360 }}
-                    helperText="あなたがマッチング相手に教えたい技術を入力"
+                    helperText="マッチング相手に教えたい技術orゲーム名を入力"
                     onChange={haveSkillHandler}
                 />
                 <TextField
                     name="taskName"
-                    label="教わりたい技術"
+                    label="教わりたい"
                     sx={{ display: "flex", maxWidth: 360 }}
-                    helperText="あなたがマッチング相手に教わりたい技術を入力"
+                    helperText="マッチング相手に教わりたい技術orゲーム名を入力"
                     onChange={wantSkillHandler}
                 />
                 <Button

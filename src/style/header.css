@@ -8,4 +8,13 @@
     font-size: 40px;
     font-weight: bold;
     text-decoration:none;
+    padding-left: 50px;
+}
+
+@media screen and (max-width:1290px) {
+    /*　画面サイズが1024pxからはここを読み込む　*/
+    .headerContent{
+        height: 300px;
+        color: aliceblue;
+    }
 }

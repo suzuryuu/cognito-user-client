@@ -1,6 +1,6 @@
 .reqIndex{
     
-    background-color: lightcyan;
+    background-color: #e4eef5;
     min-height:200px;
     max-height: 100%;
     width: 500px;
@@ -9,11 +9,13 @@
 }
 
 .reqIndexAccepted{
-    background-color: rgb(211, 164, 243);
+    background-color: #e4eef5;
     height:200px;
     width: 500px;
+    outline: solid 1px greenyellow;
     border-radius: 10px;
-    box-shadow: 2px 2px 4px gray
+    box-shadow: 2px 2px 4px gray;
+
 }
 .reqIndex p{
     padding-top: 10px;

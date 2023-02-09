@@ -2,9 +2,9 @@
     align-items: center;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 700px;
+    height: 600px;
   }
-  
+   
   .title{
    /* position: absolute;
     width: 100%;*/
@@ -18,18 +18,18 @@
   .yohaku{
     margin: 40px;
   }
+
+  .chatBox{
+    background-color: #f3dbcd;
+  }
   
-  .chatMessage{
+  .chatMessages{
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
-    background-color: lightcyan;
-    min-height: 80px;
-    max-height: 100%;
-    width: 420px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 4px gray;
   }
   .mychatMessage{
+    display: flex;
     margin-left: auto;
     margin-right: auto;
     background-color: lightskyblue;
@@ -38,16 +38,21 @@
     width: 420px;
     border-radius: 10px;
     box-shadow: 2px 2px 4px gray;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
  
-  .chatBox{
-    
+  .chatIcon{
+    width: 50px;
+    padding-left: 35px;
   }
-
+   
   textarea{
+    margin-top: 40px;
     resize: none;
     font-size: 19px;
     background:white;
+    border-radius: 10px;
     height: 130px;
     width: 500px;
   }
@@ -76,12 +81,107 @@
     color: #FFF;
     transition: 0.3s ease-in-out;
     font-weight: 600;
-    background: #6bb6ff;
+    background: #df844f;
     border-radius: 8px;
-    border-bottom: solid 5px #1d7fde;
+    border-bottom: solid 5px #be5907;
   }
   
   .button:hover {
-    border-bottom: solid 2px #1d7fde;
+    border-bottom: solid 2px #be5907;
     transform: translateY(3px);
   }
+
+
+/*吹き出し*/
+.balloon_l,
+.balloon_r{
+  margin: 30px 0;
+  display:flex;
+  
+  align-items: flex-start; /*縦位置を上揃え*/
+/*   align-items: center; */ /*縦位置を真ん中揃え*/
+}
+.balloon_r{
+  justify-content:flex-end;
+}
+.faceicon img{
+  width: 80px; /*任意のサイズ*/
+  height: auto;
+}
+.balloon_r .faceicon{
+  margin-left:25px;
+}
+.balloon_l .faceicon{
+  margin-right:25px;
+}
+.balloon_r .faceicon{
+  order:2 !important;
+}
+.says {
+  max-width:500px; /*最大幅は任意*/
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 17px 13px 15px 18px;
+  border-radius: 12px;
+  background: #9ad5f5;/*色は任意*/
+  box-sizing:border-box;
+  margin:0 !important;
+  line-height:1.5;
+  box-shadow: 2px 2px 4px gray;
+
+/*   align-items: center; */
+}
+.says p{
+  margin:8px 0 0 !important; 
+}
+.says p:first-child{
+  margin-top:0 !important;
+}
+
+/* 矢印 */
+.says:after {
+  content: "";
+  position: absolute;
+  border: 10px solid transparent;
+/*   margin-top:-3px;  */
+}
+.balloon_l .says:after {
+  left: -28px;
+  border-right: 22px solid #9ad5f5;
+}
+
+.mysays {
+  max-width:500px; /*最大幅は任意*/
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 17px 13px 15px 18px;
+  border-radius: 12px;
+  background: #1c97da;/*色は任意*/
+  box-sizing:border-box;
+  margin:0 !important;
+  line-height:1.5;
+  box-shadow: 2px 2px 4px gray;
+
+/*   align-items: center; */
+}
+.mysays p{
+  margin:8px 0 0 !important; 
+}
+.mysays p:first-child{
+  margin-top:0 !important;
+}
+.mysays:after {
+  content: "";
+  position: absolute;
+  border: 10px solid transparent;
+/*   margin-top:-3px;  */
+}
+
+/* border left right で矢印の向きを調整できる*/
+
+.balloon_r .mysays:after {
+  right: -28px;
+  border-left: 22px solid #1c97da;
+}

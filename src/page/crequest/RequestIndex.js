@@ -3,7 +3,7 @@ import '../../App.css'
 import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 import SignOut from '../../page/auth/SignOut'
-import Button from '@material-ui/core/Button'
+import{ Button } from '@mui/material'
 import Grid from "@mui/material/Grid";
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
@@ -98,8 +98,17 @@ const RequestIndex = () => {
                     list.push(
                         <div>
                         <Grid item xs={12} className="reqIndexAccepted">
-                        <p>id:{linkToNormalUserProfile}</p>
-                        <p>リクエストを{message}<ChatIcon></ChatIcon>{dmLink}</p>
+                        <p style={{fontWeight: "bold", paddingTop: 20}}>{linkToNormalUserProfile}</p>
+                        <p>リクエストを{message}</p>
+                        <p>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            style={{ height: 50, width: 140 }}
+                            component={Link}
+                            to={pathForChat}
+                            >チャット<ChatIcon></ChatIcon></Button>
+                        </p>
                         </Grid>
                     </div>
                     )
@@ -108,7 +117,7 @@ const RequestIndex = () => {
                     list.push(
                         <div>
                         <Grid item xs={12} className="reqIndex">
-                        <p>id:{linkToDetails}</p>
+                        <p style={{fontWeight: "bold", paddingTop: 20}}>{linkToDetails}</p>
                         <p>リクエストを{message}{dmLink}</p>
                         </Grid>
                     </div>

@@ -3,7 +3,7 @@ import '../../App.css'
 import '../../style/reqIndex.css'
 import { Link } from 'react-router-dom';
 import SignOut from '../../page/auth/SignOut'
-import {Button} from '@mui/material'
+import { Button } from '@mui/material'
 import Grid from "@mui/material/Grid";
 import { CognitoUserPool } from "amazon-cognito-identity-js"
 import awsConfiguration from '../../conf/awsauth'
@@ -50,9 +50,6 @@ const MyRequestIndex = () => {
         })
     }, [])
 
-
-    
-
     const JSONparse = () => {
         var list = []
         // JSONResultStrは最初空なので空リストを返す
@@ -74,6 +71,8 @@ const MyRequestIndex = () => {
                 const chatRoomId = json[i].room_id;
                 const pathForChat = "/chat?id=" + chatRoomId + "&uid=" + requestedID;
 
+
+                // ここらへんuser情報取得API呼べばいいのかもしれないけど値の受け渡しでバグる。stateを使うと全部同じ名前と画像になる
                 // リクエストIDの確認 console.log(requestedID + "のPK:" + requestPK)
                 //　状態分け
                 var message = "";
@@ -88,29 +87,29 @@ const MyRequestIndex = () => {
                 }
                 const idToQueryPath = "/user?id=" + requestedID
 
-                const onClickDeleteRequest = async() =>{
-                    const confirmDelete = window.confirm('本当にリクエストを削除しますか？(コーチング終了後に削除をしてください)'); 
-                    if(confirmDelete === true){ // default: true
+                const onClickDeleteRequest = async () => {
+                    const confirmDelete = window.confirm('本当にリクエストを削除しますか？(コーチング終了後に削除をしてください)');
+                    if (confirmDelete === true) { // default: true
                         const API_ENDPOINT = apigatewayConf.END_POINT_URL
                         const route = "/dev/coaching/destroyreq"
                         const query = "?crPK=" + requestPK
                         const reqUrl = API_ENDPOINT + route + query
-                    
+
                         try {
-                          const response = await axios.delete(reqUrl,
-                            {
-                              headers: {
-                                'X-Api-Key': apigatewayConf.API_KEY,
-                                'Content-Type': 'text/plain',
-                              }
-                            }
-                          );
-                          console.log(response.data)
-                          alert('リクエストを削除しました')
-                          window.location.href = "/requests/yourself"
+                            const response = await axios.delete(reqUrl,
+                                {
+                                    headers: {
+                                        'X-Api-Key': apigatewayConf.API_KEY,
+                                        'Content-Type': 'text/plain',
+                                    }
+                                }
+                            );
+                            console.log(response.data)
+                            alert('リクエストを削除しました')
+                            window.location.href = "/requests/yourself"
                         } catch (error) {
-                          console.error(error)
-                          alert("削除処理にエラーが発生しました。")
+                            console.error(error)
+                            alert("削除処理にエラーが発生しました。")
                         }
                     }
                 }
@@ -121,7 +120,7 @@ const MyRequestIndex = () => {
                         // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
                         <div>
                             <Grid item xs={12} className="reqIndex">
-                                <p>id:<Link to={idToQueryPath}>{requestedID}</Link></p>
+                                <p style={{fontWeight: "bold", paddingTop: 20}}><Link to={idToQueryPath}>{requestedID}</Link></p>
                                 <p>リクエストは{message}{link}</p>
                                 {/*<p>user-id:{parsed[i].id}</p>*/}
                             </Grid>
@@ -133,12 +132,20 @@ const MyRequestIndex = () => {
                         // listでDOM操作を仮で行ってますここをMUIで加工するといいかも
                         <div>
                             <Grid item xs={12} className="reqIndexAccepted">
-                                <p>id:<Link to={idToQueryPath}>{requestedID}</Link></p>
-                                <p>リクエストが{message}<ChatIcon></ChatIcon>{link}</p>
-                                <p>コーチングが終了しましたか？:
+                                <p style={{fontWeight: "bold",paddingTop: 20}}><Link to={idToQueryPath}>{requestedID}</Link></p>
+                                <p>リクエストが{message}</p>
+                                <p>
                                     <Button
                                         variant="contained"
-                                        color="secondary"
+                                        color="success"
+                                        style={{ height: 50, width: 140 }}
+                                        component={Link}
+                                        to={pathForChat}
+                                    >チャット<ChatIcon></ChatIcon></Button>
+                                    &nbsp;
+                                    <Button
+                                        variant="contained"
+                                        color="error"
                                         style={{ height: 50, width: 140 }}
                                         onClick={onClickDeleteRequest}
                                     >リクエスト削除</Button>
@@ -154,7 +161,7 @@ const MyRequestIndex = () => {
     }
     return (
         <div><h2>あなたが送ったコーチングリクエストの一覧</h2>
-            <p style={{ color: '', fontSize: 13 }}>最新順表示。承認されてるものは色が濃くなっています。</p>
+            <p style={{ color: '', fontSize: 13 }}>最新順表示。承認されてるものは強調表示されてます。</p>
             <p style={{ color: '', fontSize: 13 }}>お互いにコーチングが終了したという認識がある場合にリクエストの削除をしてください</p>
             <Grid container justifyContent={'center'} columnGap={5} className='myreqUserContainer'>
                 {JSONparse()}

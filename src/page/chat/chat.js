@@ -28,9 +28,9 @@ const ChatWithMatchedUser = () => {
         const matchingRoute = '/dev/users'
         var queryParam = '?userid=' + currentUser.ID
 
-        if(useridType == "current"){
+        if (useridType == "current") {
             queryParam = '?userid=' + currentUser.ID
-        }else if(useridType == "another"){
+        } else if (useridType == "another") {
             queryParam = '?userid=' + chatPartnerId
         }
 
@@ -42,9 +42,9 @@ const ChatWithMatchedUser = () => {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': '*',
             }).then((res) => {
-                if(useridType == "current"){
+                if (useridType == "current") {
                     setJSONStr(JSON.stringify(res.data))
-                }else if(useridType == "another"){
+                } else if (useridType == "another") {
                     setPartnerInfo(JSON.stringify(res.data))
                 }
                 console.log(res.data)
@@ -64,6 +64,7 @@ const ChatWithMatchedUser = () => {
     var json = ""
     var nickname = ""
     var userID = ""
+    var picture = ""
     /*var haveSkill = ""
     var wantSkill = ""
     var intro = ""*/
@@ -74,6 +75,7 @@ const ChatWithMatchedUser = () => {
         json = JSON.parse(JSONResultStr)
         nickname = json[0].nickname
         userID = json[0].id
+        picture = json[0].picture
         /*haveSkill = json[0].haveSkill
         wantSkill = json[0].wantSkill
         intro = json[0].intro*/
@@ -83,13 +85,15 @@ const ChatWithMatchedUser = () => {
     var pJson = ""
     var pUID = ""
     var pNickname = ""
+    var pPictureData = ""
 
-    if(JSONPartnerInfo == '[]'){
+    if (JSONPartnerInfo == '[]') {
         pNickname = "usr not found"
-    }else if (!JSONPartnerInfo == '') {
+    } else if (!JSONPartnerInfo == '') {
         pJson = JSON.parse(JSONPartnerInfo)
         pNickname = pJson[0].nickname
         pUID = pJson[0].id
+        pPictureData = pJson[0].picture
     }
 
     // チャットメッセージ一覧を読み込み時に取得する
@@ -133,26 +137,34 @@ const ChatWithMatchedUser = () => {
             const json = JSON.parse(ChatJSONStr)
             for (var i = 0; i < json.length; i++) {
                 const idForDevideMessageColor = json[i].user_id;
-                if(idForDevideMessageColor == currentUser.ID){
+                if (idForDevideMessageColor == currentUser.ID) {
                     list.push(
-                        <div class='mychatMessage'>
-                            <p>{json[i].nickname}({json[i].created_at})</p>
-                            <p>{json[i].message}</p>
+                        <div class="balloon_r">
+                            <div class="faceicon">
+                                <img src={picture}></img>
+                            </div>
+                            <p class="mysays">
+                                {json[i].message}
+                                <p style={{fontSize: 10, color: "white", paddingTop: 5, paddingLeft: 5}}>({json[i].created_at})</p>
+                            </p>
                         </div>,
                         /*<p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
                         <p>内容:{json[i].message}</p>,*/
                     )
-
-                }else{
-
-                list.push(
-                    <div class='chatMessage'>
-                        <p>{json[i].nickname}({json[i].created_at})</p>
-                        <p>{json[i].message}</p>
-                    </div>,
-                    /*<p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
-                    <p>内容:{json[i].message}</p>,*/
-                )
+                } else {
+                    list.push(
+                        <div class="balloon_l">
+                            <div class="faceicon">
+                                <img src={pPictureData}></img>
+                            </div>
+                            <p class="says">
+                                {json[i].message}
+                                <p style={{fontSize: 10, color: "gray", paddingTop: 5, paddingLeft: 5}}>({json[i].created_at})</p>
+                            </p>
+                        </div>,
+                        /*<p>投稿者:{json[i].nickname}({json[i].created_at})</p>,
+                        <p>内容:{json[i].message}</p>,*/
+                    )
                 }
             }
         }
@@ -217,17 +229,20 @@ const ChatWithMatchedUser = () => {
             //return chatMessageList;
 
         }, 500);
-
         PostChatMessage()
     }
 
     return (
-
         <div className="chatwithmatchuser">
             <div class="center">
-                <div class="title">ダイレクトメッセージ:{pNickname}(id:{pUID})</div><br />
+                <div class="title">
+                    <img src={pPictureData} width="5%"></img>
+                    <h3>{pNickname}(ID:{pUID})</h3>
+                </div><br />
                 {/*ユーザの名前*/}
+                <div className="chatMessages">
                 {JSONparse()}
+                </div>
                 {/*<div class="yohaku"></div>
                 {/*入力場所*/}
             </div>
