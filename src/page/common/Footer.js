@@ -15,7 +15,7 @@ export default function Footer() {
   return (
     <div className="FooterContent">
         <h2 style={{color: "white", paddingTop: 40}}>Copyright 2023 team22</h2>
-        <a href="#" style={{ color: "white", fontSize: 20}}>
+        <a href="/userule" style={{ color: "white", fontSize: 20}}>
            利用規約
         </a>
     </div>

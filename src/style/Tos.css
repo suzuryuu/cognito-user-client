@@ -1,0 +1,62 @@
+/*文字の位置（利用規約）*/
+.centermoji{
+    text-align: center;
+}
+/*文字の書体とサイズ指定処理*/
+.mojimidashi{
+    font-size: 20pt;
+    font-family: '游ゴシック Medium', sans-serif;
+    font-weight: bold;
+}
+
+/*罫線の処理*/
+.keisen{
+  height: 5px;
+  background-color: rgb(238, 128, 25);
+  width: 100%;
+  border: none;
+}
+
+/*ボタンの処理*/
+.btn {
+    display: inline-block;
+    width: 200px; /* 横幅 */
+    height: 60px; /* 縦幅 */
+    line-height: 60px; /* 行の高さ(heightと同じ値にする) */
+    text-decoration: none; /* aタグのアンダーラインを消す */
+    overflow: hidden; /* はみ出し部分を隠す */
+    cursor: pointer; /* カーソルをポインターにする */
+  }
+
+  /*利用規約の上にマウスを置くと文字が入れ替えの処理*/
+  .btn__text {
+    position: absolute;
+    left: 0;
+    display: block;
+    height: 100%; /* 縦幅をボタンと同じにする */
+    width: 100%; /* 横幅をボタンと同じにする */
+    color: rgb(26, 26, 26); /* 文字色 */
+    font-size: 25pt;
+    font-weight: bold; /* 文字の太さ */
+    text-align: center; /* テキストを中央揃え */
+    transition: all 0.3s; /* アニメーション実行時間 */
+  }
+  
+  /* ボタンのテキスト(デフォルトのテキスト) */
+  .btn__text:nth-child(1) {
+    top: 0;
+  }
+  
+  /* ボタンのテキスト(隠れているテキスト) */
+  .btn__text:nth-child(2) {
+    top: -100%;
+  }
+  
+  /* ボタンホバーアクション */
+  .btn:hover .btn__text:nth-child(1) {
+    top: 100%;
+  }
+  
+  .btn:hover .btn__text:nth-child(2) {
+    top: 0;
+  }

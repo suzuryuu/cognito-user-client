@@ -96,7 +96,7 @@ const SignUp = () => {
           />
         </div>
         <div className="formField">
-          <label>利用規約に同意する</label>
+          <label><a href="/userule">利用規約</a>に同意する</label>
           <div className="check"><input
             type="checkbox"
             onChange={()=>toggleCheckbox()}

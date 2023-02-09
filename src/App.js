@@ -34,6 +34,7 @@ import TESTTITLE from './page/front-end-test/TitleTEST';
 import TestHome from './page/front-end-test/TESTHome';
 import Titleunder from './page/front-end-test/TestTitleUnder';
 import UserFeedBackPage from './page/user/FeedBack';
+import Tos from './page/common/Tos';
 
 // mini TODO resetpassword実装
 
@@ -87,6 +88,8 @@ const App = () => {
           <Route path='/testHome' element={<TestHome />}/>
           <Route path='/testTitleUnder' element={<Titleunder />}/>
           <Route path='/testTitle' element={<TESTTITLE />}/>
+          {/** 利用規約 */}
+          <Route path="/userule" element={<Tos/>}/>
         </Routes>
         
         </BrowserRouter>
@@ -100,6 +103,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/verify" element={<Verification/>}/>
+        <Route path="/userule" element={<Tos/>}/>
+      
         </Routes>
         </div>
       </BrowserRouter>
