@@ -130,7 +130,7 @@ const RequestIndex = () => {
     }
     return(
     <div><h2>あなたに届いたリクエスト一覧</h2>
-        <p style={{ color: '', fontSize: 13 }}>最新順表示。承認したものは色が濃くなっています。</p>
+        <p style={{ color: '', fontSize: 13 }}>最新順表示。承認したものは強調表示されてます。</p>
         <Grid container justifyContent={'center'} columnGap={5}  className='myreqUserContainer'>
             {JSONparse()}
         </Grid>
