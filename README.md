@@ -122,6 +122,9 @@ npm start
 
 # API Gateway Doc
 エンドポイントはTeamsのapi-url.txtを参照
+
+APIはAPI Gatewayの"dev"ステージにデプロイされてます。
+CORS有効化済み。
 ## マッチング(GET)
 m-result?wskill={教わりたいスキル,ゲーム}&hskill={教えたいスキル,ゲーム}
 
