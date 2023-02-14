@@ -9,10 +9,11 @@ const tableName = "CRequest"
 exports.handler = async (event, context, callback) => {
     // POST bodyから値取った時
     //event.body.hoge;
-    var p_request_uid = "hogeId-02"
-    var s_request_uid = "hogeId-02"
-    var s_uid = "送り主FooBarID3"
-    
+   var Prequested_uid = event.queryStringParameters.reqUID
+   var s_uid = event.queryStringParameters.senderUID
+   
+   // var Prequested_uid = event.body[0].reqUID
+    //var s_uid = event.body[0].senderUID
     // idをランダム文字列にする
     var S="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     var N=16
@@ -21,10 +22,10 @@ exports.handler = async (event, context, callback) => {
     TableName: tableName,
     Item: {
         id: randomStr,
-        Prequest_uid: p_request_uid,
-        Srequest_uid: s_request_uid,
+        requested_uid: Prequested_uid,
         sender_uid: s_uid,
-        reqStatus: 'unconfirm'
+        reqStatus: 'unconfirm',
+        room_id: 'none'
     },
   };
    const result = await docClient.put(params).promise();
@@ -34,14 +35,14 @@ exports.handler = async (event, context, callback) => {
         statusCode: 200,
         headers:{
             'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-            'Access-Control-Allow-Credentials' : true
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST',
+            'Access-Control-Allow-Credentials' : 'true'
             
         },
         body: JSON.stringify([
             {
-                "req_target_uid": p_request_uid,
+                "requested_uid": Prequested_uid,
                 "sender_uid": s_uid
             }
         ]),

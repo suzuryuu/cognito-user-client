@@ -6,29 +6,25 @@ const docClient = new AWS.DynamoDB.DocumentClient({
 
 exports.handler = async(event, context) => {
     
-    var idFromAPIGateway = event.queryStringParameters.userid;
-   
+    var idFromAPIGateway = event.queryStringParameters.userid
     var params = {
-            "TableName": 'User',
-            "KeyConditionExpression": "#id = :id",//検索条件
-            "ExpressionAttributeNames":{
-                "#id": "id", // パーティションキーとソートキーの実際の名前
-            },
-            "ExpressionAttributeValues": {
-                ":id": idFromAPIGateway, // パーティションキーとソートキーの入力値
-            }
+        "TableName" : "PendingUser",
+        "IndexName": 'ForPendingSearch', // グローバルセカンダリインデックス 自作の検索定義?的なもん
+            
+        "KeyConditionExpression": "#pendinguid = :pendinguid",//検索条件
+        "ExpressionAttributeNames":{
+            "#pendinguid": "pendinguid", // パーティションキーとソートキーの実際の名前
+        },
+        "ExpressionAttributeValues": {
+            ":pendinguid": idFromAPIGateway, // パーティションキーとソートキーの入力値
+        }
     }
     var matchedResult = await docClient.query(params, function(err, data){
         if(err){
             console.log('データー取得失敗')
             console.log(err)
         }else{
-            data.Items.forEach(function(user, index){
-                console.log("MatchedUserID:" +user.id)
-                console.log("マッチしたユーザー:" +user.nickname);
-                console.log("ユーザーが教えたいもの:" + user.haveSkill)
-                console.log("ユーザーが教わりたいもの:" + user.wantSkill)
-            })
+            console.log('データー取得成功')
         }
     }).promise()
     
@@ -43,7 +39,8 @@ exports.handler = async(event, context) => {
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-            'Access-Control-Allow-Credentials' : true  
+            'Access-Control-Allow-Credentials' : 'true'
+            
         },
         body: JSON.stringify(items),
     }

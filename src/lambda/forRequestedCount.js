@@ -10,16 +10,14 @@ exports.handler = async(event, context) => {
     var idFromAPIGateway = event.queryStringParameters.requid
     var params = {
         "TableName": 'CRequest',
-        "IndexName": 'creqIndex', // グローバルセカンダリインデックス 自作の検索定義?的なもん
+        "IndexName": 'REQUID_INDEX', // グローバルセカンダリインデックス 自作の検索定義?的なもん
             
-        "KeyConditionExpression": "#Prequest_uid = :Prequest_uid and #Srequest_uid = :Srequest_uid",//検索条件
+        "KeyConditionExpression": "#requested_uid = :requested_uid",//検索条件
         "ExpressionAttributeNames":{
-            "#Prequest_uid": "Prequest_uid", // パーティションキーとソートキーの実際の名前
-            "#Srequest_uid": "Srequest_uid",
+            "#requested_uid": "requested_uid", // パーティションキーとソートキーの実際の名前
         },
         "ExpressionAttributeValues": {
-            ":Prequest_uid": idFromAPIGateway, // パーティションキーとソートキーの入力値
-            ":Srequest_uid": idFromAPIGateway,
+            ":requested_uid": idFromAPIGateway, // パーティションキーとソートキーの入力値
         }
     }
     
@@ -49,7 +47,7 @@ exports.handler = async(event, context) => {
         statusCode: 200,
         headers:{
             'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
             'Access-Control-Allow-Credentials' : true
             

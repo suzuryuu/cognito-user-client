@@ -4,18 +4,19 @@ const docClient = new AWS.DynamoDB.DocumentClient({
     region: "ap-northeast-1"
 })
 
+// ユーザー評価一覧取得ラムダ
 exports.handler = async(event, context) => {
     
-    var idFromAPIGateway = event.queryStringParameters.userid;
+    var idFromAPIGateway = event.queryStringParameters.id;
    
     var params = {
-            "TableName": 'User',
-            "KeyConditionExpression": "#id = :id",//検索条件
+            "TableName": 'FeedBack',
+            "KeyConditionExpression": "#user_id = :user_id",//検索条件
             "ExpressionAttributeNames":{
-                "#id": "id", // パーティションキーとソートキーの実際の名前
+                "#user_id": "user_id", // パーティションキーとソートキーの実際の名前
             },
             "ExpressionAttributeValues": {
-                ":id": idFromAPIGateway, // パーティションキーとソートキーの入力値
+                ":user_id": idFromAPIGateway, // パーティションキーとソートキーの入力値
             }
     }
     var matchedResult = await docClient.query(params, function(err, data){
@@ -23,12 +24,7 @@ exports.handler = async(event, context) => {
             console.log('データー取得失敗')
             console.log(err)
         }else{
-            data.Items.forEach(function(user, index){
-                console.log("MatchedUserID:" +user.id)
-                console.log("マッチしたユーザー:" +user.nickname);
-                console.log("ユーザーが教えたいもの:" + user.haveSkill)
-                console.log("ユーザーが教わりたいもの:" + user.wantSkill)
-            })
+          console.log("データ取得成功")
         }
     }).promise()
     
@@ -43,7 +39,8 @@ exports.handler = async(event, context) => {
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-            'Access-Control-Allow-Credentials' : true  
+            'Access-Control-Allow-Credentials' : true
+            
         },
         body: JSON.stringify(items),
     }
