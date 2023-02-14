@@ -1,9 +1,15 @@
+# これは何か
+卒業制作webアプリケーション「Mu-Tech」のReactクライアントです
+
+ゲームスキルの相互コーチングを行うサービスとなっています。
+
+README作成者: 福島
 # 出来てること
 ## ユーザー関係
 Cognito利用で
 - 新規登録
 - コード確認、再送
-- ログイン(この時DynamoのUserテーブルにidとemailが保存される)
+- ログイン(この時DynamoのUserテーブルにidとemail,default iconが保存される)
 - ユーザー情報編集機能(名前、自己紹介、教えたい技術、教わりたい技術、アイコン)
 - ユーザーの評価機能(☆(5段階)とコメント)
 - ログアウト
@@ -21,6 +27,7 @@ Cognito利用で
 - マッチングが成立した際のチャット風掲示板の実装
 - コーチング終了時のリクエスト削除(送り主側)
 
+
 ※AWS Lambdaの関数自体ではサービスを成立させるための機能は実装済みです。
 
 ## 出来ていないこと
@@ -28,6 +35,20 @@ Cognito利用で
 - マッチングの履歴を取る
 - 評価機能の☆の必須化、入力してないときのエラーハンドハンドリングが出来てない(F12コンソールでhttpリクエストのエラーは確認できる)
 
+- 通報機能(以下やる場合のやり方)
+
+1. そのユーザーの通報ボタンを押すと通報テーブルに被通報者と通報者のidがポストされる
+
+2. dynamoDBの管理画面で被通報者の通報された回数(idのカウント)が一定数(10件以上)確認できたらcognitoユーザー管理で無効化
+
+3. 無効化は悪意ある通報の可能性も考えて敢えて手動でやる
+
+
+通報テーブルの構造
+```
+reported_uid (被通報者, パーティションキー)
+reporter_uid  (通報者, ソートキー)
+```
 
 履歴系でもしやるなら
 ```
@@ -102,27 +123,81 @@ npm start
 # API Gateway Doc
 エンドポイントはTeamsのapi-url.txtを参照
 ## マッチング(GET)
-/dev/m-result?wskill={教わりたいスキル,ゲーム}&hskill={教えたいスキル,ゲーム}
+m-result?wskill={教わりたいスキル,ゲーム}&hskill={教えたいスキル,ゲーム}
 
 ## コーチングリクエストの送信(POST)
-/dev/coaching/send?reqUID={コーチングリクエスト対象者UID}&senderUID={送り主ID(自分のID)}
+coaching/send?reqUID={コーチングリクエスト対象者UID}&senderUID={送り主ID(自分のID)}
 
 ## リクエスト状態書き換え(POST)
-/dev/coaching/chreq?crPK={リクエストモデルのid}&reqsts={リクエスト状態 accept or decline}
+coaching/chreq?crPK={リクエストモデルのid}&reqsts={リクエスト状態 accept or decline}
+
+## リクエスト削除(DELETE)
+coaching/destroyreq?crPK={リクエストモデルのid}
+
+## リクエスト保留(POST)
+coaching/pending?uid={保留対象者}&&puid={current user id(cognito)}
+## リクエスト保留ユーザー一覧(GET)
+coaching/getpending?userid={保留対象ユーザー}
 
 ## IDからUser情報取得(GET)
-/dev/users?userid={ユーザーのid(マッチしたユーザーのidから取得しているもの)}
+users?userid={ユーザーのid(マッチしたユーザーのidから取得しているもの)}
 
 ## 送られてきたリクエストの一覧を取得(GET)
-/dev/coaching/notify?requid={current user id(cognito)}
+coaching/notify?requid={current user id(cognito)}
 
 ## 自分が送ったリクエストの一覧を取得(GET)
-/dev/coaching/myreq?suid={current user id(cognito)}
+coaching/myreq?suid={current user id(cognito)}
 
 ## ユーザー情報編集(POST)(別APIでつくってる為エンドポイント変わってます。)
-/deploy0_0/send
+deploy0_0/send
 
-## cognitoユーザープールからユーザーを削除
-/dev/user/destroy?userid={current user id}
-## dynamoDB Userテーブルからユーザーを削除
-/dev/user/destroydb?userid={current user id}
+## cognitoユーザープールからユーザーを削除(GET)
+user/destroy?userid={current user id}
+## dynamoDB Userテーブルからユーザーを削除(GET)
+user/destroydb?userid={current user id}
+
+ユーザー情報編集、ユーザー削除はAPI名がことなる(エンドポイントが違う)
+
+## チャットメッセージ送信(POST)
+chat/create (bodyで値受け渡し)
+
+body送信例
+```js
+
+ // チャット投稿API呼び出し(これは動く)
+    const PostChatMessage = async () => {
+        // POSTで投稿するList型データ
+        const valueForPostChat = {
+            room_id: chatRoomId,
+            nickname: nickname,
+            uid: currentUser.ID,
+            message: message
+        }
+
+        const URL = apigatewayConf.END_POINT_URL + "/dev/chat/create"
+
+        try {
+            const response = await axios.post(URL, valueForPostChat,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apigatewayConf.API_KEY
+                    }
+                });
+            console.log("チャットに投稿できました:")
+            console.log(response.data)
+            //alert('チャット投稿成功')
+        } catch (error) {
+            console.error(error)
+            alert('リクエスト処理に失敗しました')
+        }
+    }
+```
+
+## チャットメッセージ一覧取得(GET)
+chat/getchats?roomid={チャットメッセージのid}
+
+## 評価送信(POST)
+feedback/post  (bodyで値受け渡し)
+## 評価一覧取得(GET)
+feedback/get?id={評価対象者id}
