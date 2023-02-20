@@ -31,6 +31,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 
 
+
 // 認証情報使用
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
@@ -38,9 +39,42 @@ const userPool = new CognitoUserPool({
 })
 const cognitoUser = userPool.getCurrentUser()
 
+var currentUserID = 'User-ID-Value-From-Cognito' // 値を代入したいのでvarで定義
+// 認証してる状態じゃないと取得できないので
+if (cognitoUser != null) {
+    currentUserID = cognitoUser.getUsername() //認証要素をemailにして名前をnicknameでとってるからidがここにある
+} 
 
 
 export default function MenuAppBar() {
+
+  /*プロフィール画像処理*/
+  const [pview, setpview] = useState(false);
+
+
+  const API_ENDPOINT = apigatewayConf.END_POINT_URL
+  const matchingRoute = '/dev/users'
+  const queryParam = "?userid="+currentUserID;
+  const requestUrl = API_ENDPOINT + matchingRoute + queryParam
+
+  // ページのレンダでAPIリクエストを送る場合はuseEffectを使用する
+
+  useEffect(() => {
+      axios.get(requestUrl, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+      }).then((res) => {
+        // console.log("画像データ"+ res.data[0].picture)
+        setpview(
+          res.data[0].picture
+        )
+        console.log(res)
+        console.log("データ取得成功")
+      }).catch((e)=>{
+          // 基本問題ないのになぜかエラー起きる(APIリクエストを送るのが非同期だから)
+          // alert('データ取得エラー')
+      })
+  }, [])
 
   /*検索バー　プロフィールアイコン */
   // 検索ボタンとホームに戻るリンクがほしい->任せる
@@ -54,14 +88,17 @@ export default function MenuAppBar() {
       <Grid container justifyContent={"left"}  style={{}}columnGap={5} className="functions">
         <a href="/" className="titleHref"><SportsEsportsIcon></SportsEsportsIcon>Mu-Tech</a>
         <a href="/profile">
-      <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          >
-          <AccountCircle sx={{ fontSize: 50, paddingTop: 3}}/>
-        </IconButton>
+        <img
+              style={{
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                objectFit: "cover",
+                marginTop: 30,
+              }}
+              /*プロフィール画像*/
+              src={pview}
+            />
       </a>
       </Grid>
     </AppBar>

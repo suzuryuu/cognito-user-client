@@ -172,6 +172,7 @@ const Signed = () => {
     <div className="authorizedMode">
       <h2><HomeIcon></HomeIcon>HOME</h2>
       <Grid container justifyContent={"center"} style={{}} columnGap={5} className="functions">
+        
         <Button
           variant="contained"
           color="warning"
@@ -179,6 +180,7 @@ const Signed = () => {
           component={Link}
           to="/matching"
         ><Search></Search></Button>
+        
         <Button
           variant="contained"
           color="warning"
@@ -186,6 +188,7 @@ const Signed = () => {
           component={Link}
           to="/requests"
         ><NotificationsActiveIcon></NotificationsActiveIcon>(<p style={{ color: 'yellow' }}>{notifycount}</p>)</Button>
+        
         <Button
           variant="contained"
           color="warning"
@@ -193,6 +196,7 @@ const Signed = () => {
           component={Link}
           to="/requests/yourself"
         ><SendIcon></SendIcon>(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)</Button>
+        
         <Button
           variant="contained"
           color="warning"
@@ -200,13 +204,14 @@ const Signed = () => {
           component={Link}
           to="/requests/pending"
         ><PendingIcon></PendingIcon>保留したユーザー(<p>{pendingUserCount}</p>)</Button>
-        <div className="usercontent" style={{}}>
-        </div>
+      
+
       </Grid>
       <p className='newstitle' style={{ fontWeight: "bold" }}>最近のおすすめニュース</p>
       <div className='newscontent'>
         <Grid container justifyContent={'center'} columnGap={3} className='newsContainer' style={{}}>
-          <div className="borderOutline">
+
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >ダイヤで沼っていたxxさん「あること」に気づきアセンダントへ。</p>
@@ -221,7 +226,7 @@ const Signed = () => {
             </div>
           </div>
 
-          <div className="borderOutline">
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >まさか!?ヨル使いのエキスパート現る!!!～逆張りに学べ～</p>
@@ -236,7 +241,7 @@ const Signed = () => {
             </div>
           </div>
 
-          <div className="borderOutline">
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >コーチングによりX帯到達! 「マッチングした相手のアドバイスのおかげで...</p>
@@ -251,8 +256,9 @@ const Signed = () => {
             </div>
           </div>
         </Grid>
-        <Grid container justifyContent={'center'} columnGap={3} className='newsContainer2' style={{ paddingTop: 50, paddingBottom: 100 }}>
-          <div className="borderOutline">
+        <Grid container justifyContent={'center'} columnGap={3} className='newsContainer2'>
+          
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >平均評価☆4.8のxxさんによる教え方のコツとは?</p>
@@ -267,7 +273,7 @@ const Signed = () => {
             </div>
           </div>
 
-          <div className="borderOutline">
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >プレデターに挑戦中の猛者現る!!!(xxさん)</p>
@@ -282,7 +288,7 @@ const Signed = () => {
             </div>
           </div>
 
-          <div className="borderOutline">
+          <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>
               <p style={{ fontWeight: "bold" }} >プラチナ4で沼っていたけどダイヤに到達したzzさん。何の意識を変えた?</p>
