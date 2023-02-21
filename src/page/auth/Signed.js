@@ -32,6 +32,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import Search from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Margin } from '@mui/icons-material';
 
 // 認証情報使用
 const userPool = new CognitoUserPool({
@@ -170,45 +171,15 @@ const Signed = () => {
 
   return (
     <div className="authorizedMode">
-      <h2><HomeIcon></HomeIcon>HOME</h2>
-      <Grid container justifyContent={"center"} style={{}} columnGap={5} className="functions">
-        
-        <Button
-          variant="contained"
-          color="warning"
-          style={{ height: 50, width: 200, marginTop: 30 }}
-          component={Link}
-          to="/matching"
-        ><Search></Search></Button>
-        
-        <Button
-          variant="contained"
-          color="warning"
-          style={{ height: 50, width: 200, marginTop: 30 }}
-          component={Link}
-          to="/requests"
-        ><NotificationsActiveIcon></NotificationsActiveIcon>(<p style={{ color: 'yellow' }}>{notifycount}</p>)</Button>
-        
-        <Button
-          variant="contained"
-          color="warning"
-          style={{ height: 50, width: 200, marginTop: 30 }}
-          component={Link}
-          to="/requests/yourself"
-        ><SendIcon></SendIcon>(承認:<p style={{ color: 'yellow' }}>{acceptedCount}</p>/<p style={{ color: 'white' }}>{requestedYourSelfCount}</p>)</Button>
-        
-        <Button
-          variant="contained"
-          color="warning"
-          style={{ height: 50, width: 200, marginTop: 30 }}
-          component={Link}
-          to="/requests/pending"
-        ><PendingIcon></PendingIcon>保留したユーザー(<p>{pendingUserCount}</p>)</Button>
-      
 
-      </Grid>
+        <Grid container justifyContent={'center'} columnGap={3} className='newsContainer' style={{}}>
+          <h2 className="home" ><HomeIcon></HomeIcon>HOME</h2>
+        </Grid>
+
       <p className='newstitle' style={{ fontWeight: "bold" }}>最近のおすすめニュース</p>
+      
       <div className='newscontent'>
+        
         <Grid container justifyContent={'center'} columnGap={3} className='newsContainer' style={{}}>
 
           <div className="borderOutline" style={{marginBottom: 20}}>
@@ -255,9 +226,12 @@ const Signed = () => {
               >この記事を見る</Button>
             </div>
           </div>
-        </Grid>
-        <Grid container justifyContent={'center'} columnGap={3} className='newsContainer2'>
+
+          </Grid>
           
+          <Grid container justifyContent={'center'} columnGap={3} className='newsContainer2'>
+
+        
           <div className="borderOutline" style={{marginBottom: 20}}>
             <div className="newsgridItem">
               <br></br>

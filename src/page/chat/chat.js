@@ -155,7 +155,7 @@ const ChatWithMatchedUser = () => {
                     list.push(
                         <div class="balloon_l">
                             <div class="faceicon">
-                                <img src={pPictureData}></img>
+                                <img src={pPictureData} width="5%"></img> 
                             </div>
                             <p class="says">
                                 {json[i].message}
@@ -236,8 +236,7 @@ const ChatWithMatchedUser = () => {
         <div className="chatwithmatchuser">
             <div class="center">
                 <div class="title">
-                    <img src={pPictureData} width="5%"></img>
-                    <h3>{pNickname}(ID:{pUID})</h3>
+                    <img src={pPictureData} width="5%"></img> {pNickname}
                 </div><br />
                 {/*ユーザの名前*/}
                 <div className="chatMessages">
@@ -259,6 +258,7 @@ const ChatWithMatchedUser = () => {
             ></input>
     <button onClick={OnClickUpdateChat}>送信</button>*/}
         </div>
+
     )
 }
 

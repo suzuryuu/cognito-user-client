@@ -8,6 +8,7 @@
   .title{
    /* position: absolute;
     width: 100%;*/
+    width: auto;
     background: #273246;
     padding: 10px;
     text-align: center;
@@ -21,6 +22,7 @@
 
   .chatBox{
     background-color: #f3dbcd;
+    height: 260px;
   }
   
   .chatMessages{
@@ -49,12 +51,13 @@
    
   textarea{
     margin-top: 40px;
+    margin-bottom: 10px;
     resize: none;
     font-size: 19px;
     background:white;
     border-radius: 10px;
     height: 130px;
-    width: 500px;
+    width: 450px;
   }
   
   .arrow_box{
@@ -75,7 +78,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 0 auto;
+    margin: auto;
     max-width: 240px;
     padding: 10px 25px;
     color: #FFF;
